@@ -1,10 +1,10 @@
 # Express Compatibility Deviations
 
-This package reflects the `expressjs-clr` runtime behavior.
+This package reflects the `express-clr` runtime behavior.
 
 Authoritative deviations live in:
 
-- `../expressjs-clr/docs/deviations.md`
+- `../express-clr/docs/deviations.md`
 
 Key current items:
 
@@ -17,4 +17,4 @@ Key current items:
 7. Handler dispatch in runtime is reflection-free; unsupported delegate signatures are ignored instead of reflection invocation.
 8. Runtime JSON support is reflection-free and guarantees primitives, dictionaries, arrays/lists, and `JsonElement`/`JsonDocument` shapes. Arbitrary CLR object/anonymous-object reflection serialization is intentionally not provided.
 
-Deviations should shrink over time and are validated through the runtime test matrix in `expressjs-clr`.
+Deviations should shrink over time and are validated through the runtime test matrix in `express-clr`.

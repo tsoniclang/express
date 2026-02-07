@@ -1,10 +1,10 @@
 # Generation Workflow
 
-This repository publishes generated TypeScript bindings for `expressjs-clr`.
+This repository publishes generated TypeScript bindings for `express-clr`.
 
 ## Prerequisites
 
-- `../expressjs-clr` exists and is built in `Release`.
+- `../express-clr` exists and is built in `Release`.
 - `../tsbindgen` exists and builds.
 - `../dotnet/versions/<major>` exists.
 - `../aspnetcore` exists.
@@ -27,7 +27,7 @@ Equivalent script:
 1. Validates dependencies and runtime paths.
 2. Cleans `versions/<major>/` generated output.
 3. Builds `tsbindgen` in `Release`.
-4. Generates bindings from `expressjs-clr` assembly.
+4. Generates bindings from `express-clr` assembly.
 5. Copies `README.md` and `LICENSE`.
 6. Prunes output to package-focused files:
    - `index.d.ts`

@@ -1,30 +1,30 @@
-# @tsonic/expressjs
+# @tsonic/express
 
-`@tsonic/expressjs` is the generated TypeScript package for the `expressjs-clr` runtime.
+`@tsonic/express` is the generated TypeScript package for the `express-clr` runtime.
 
 ## Documentation Ownership
 
 Use this split:
 
-- Runtime behavior, parity decisions, and architecture: `expressjs-clr`
-- Package consumption, generation, and publishing workflow: `expressjs` (this repo)
+- Runtime behavior, parity decisions, and architecture: `express-clr`
+- Package consumption, generation, and publishing workflow: `express` (this repo)
 
 ## Versioning Model
 
 This repo is versioned by .NET major:
 
-- .NET 10 -> `versions/10/` -> npm `@tsonic/expressjs@10.x`
+- .NET 10 -> `versions/10/` -> npm `@tsonic/express@10.x`
 
 ## Install
 
 ```bash
-npm install @tsonic/expressjs @tsonic/dotnet @tsonic/core
+npm install @tsonic/express @tsonic/dotnet @tsonic/core
 ```
 
 ## Usage
 
 ```ts
-import { express } from "@tsonic/expressjs/index.js";
+import { express } from "@tsonic/express/index.js";
 
 const app = express.create();
 
@@ -41,7 +41,7 @@ app.listen(3000);
 npm run generate:10
 ```
 
-The generator reads `expressjs-clr` build outputs and regenerates `versions/10/`.
+The generator reads `express-clr` build outputs and regenerates `versions/10/`.
 
 ## Publish
 
