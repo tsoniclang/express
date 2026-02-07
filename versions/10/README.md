@@ -1,19 +1,30 @@
-# @tsonic/expressjs
+# @tsonic/express
 
-TypeScript bindings for the ASP.NET Core-backed `expressjs-clr` runtime.
+`@tsonic/express` is the generated TypeScript package for the `express-clr` runtime.
 
-This package provides the Express-style API surface for Tsonic projects targeting .NET 10.
+## Documentation Ownership
+
+Use this split:
+
+- Runtime behavior, parity decisions, and architecture: `express-clr`
+- Package consumption, generation, and publishing workflow: `express` (this repo)
+
+## Versioning Model
+
+This repo is versioned by .NET major:
+
+- .NET 10 -> `versions/10/` -> npm `@tsonic/express@10.x`
 
 ## Install
 
 ```bash
-npm install @tsonic/expressjs @tsonic/dotnet @tsonic/core
+npm install @tsonic/express @tsonic/dotnet @tsonic/core
 ```
 
-## Quick Start
+## Usage
 
 ```ts
-import { express } from "@tsonic/expressjs/index.js";
+import { express } from "@tsonic/express/index.js";
 
 const app = express.create();
 
@@ -24,16 +35,25 @@ app.get("/", (req, res) => {
 app.listen(3000);
 ```
 
-## API Notes
+## Generate Types
 
-- Callable `express()` is represented as `express.create()` / `express.app()`.
-- Some verbs use C#-safe names (`lock_`, `m_search`).
-- Use `method("...")` for exact custom verb strings.
+```bash
+npm run generate:10
+```
 
-## Source Repositories
+The generator reads `express-clr` build outputs and regenerates `versions/10/`.
 
-- Runtime implementation: `tsoniclang/expressjs-clr`
-- Package generation source: `tsoniclang/expressjs`
+## Publish
+
+```bash
+npm run publish:10
+```
+
+## Documentation Map
+
+- Generation workflow: `docs/generation.md`
+- Release workflow: `docs/release.md`
+- Current compatibility notes: `docs/deviations.md`
 
 ## License
 

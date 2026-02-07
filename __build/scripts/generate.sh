@@ -1,5 +1,5 @@
 #!/bin/bash
-# Generate TypeScript declarations for expressjs CLR library.
+# Generate TypeScript declarations for express CLR library.
 #
 # Usage:
 #   ./__build/scripts/generate.sh [dotnetMajor]
@@ -9,7 +9,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
 TSBINDGEN_DIR="$PROJECT_DIR/../tsbindgen"
-EXPRESSJS_CLR_DIR="$PROJECT_DIR/../expressjs-clr"
+EXPRESS_CLR_DIR="$PROJECT_DIR/../express-clr"
 
 DOTNET_MAJOR="${1:-10}"
 OUT_DIR="$PROJECT_DIR/versions/$DOTNET_MAJOR"
@@ -21,14 +21,14 @@ DOTNET_HOME="${DOTNET_HOME:-$HOME/.dotnet}"
 DOTNET_RUNTIME_PATH="$DOTNET_HOME/shared/Microsoft.NETCore.App/$DOTNET_VERSION"
 ASPNETCORE_RUNTIME_PATH="$DOTNET_HOME/shared/Microsoft.AspNetCore.App/$DOTNET_VERSION"
 
-EXPRESSJS_DLL="$EXPRESSJS_CLR_DIR/artifacts/bin/expressjs/Release/net${DOTNET_MAJOR}.0/expressjs.dll"
+EXPRESS_DLL="$EXPRESS_CLR_DIR/artifacts/bin/express/Release/net${DOTNET_MAJOR}.0/express.dll"
 
 echo "================================================================"
-echo "Generating ExpressJS CLR TypeScript Declarations"
+echo "Generating Express CLR TypeScript Declarations"
 echo "================================================================"
 echo ""
 echo "Configuration:"
-echo "  expressjs.dll: $EXPRESSJS_DLL"
+echo "  express.dll: $EXPRESS_DLL"
 echo "  .NET Runtime:  $DOTNET_RUNTIME_PATH"
 echo "  ASP.NET Ref:   $ASPNETCORE_RUNTIME_PATH"
 echo "  BCL Library:   $DOTNET_LIB"
@@ -37,9 +37,9 @@ echo "  tsbindgen:     $TSBINDGEN_DIR"
 echo "  Output:        $OUT_DIR"
 echo ""
 
-if [ ! -f "$EXPRESSJS_DLL" ]; then
-    echo "ERROR: expressjs.dll not found at $EXPRESSJS_DLL"
-    echo "Build it first: cd ../expressjs-clr && dotnet build src/expressjs/expressjs.csproj -c Release"
+if [ ! -f "$EXPRESS_DLL" ]; then
+    echo "ERROR: express.dll not found at $EXPRESS_DLL"
+    echo "Build it first: cd ../express-clr && dotnet build src/express/express.csproj -c Release"
     exit 1
 fi
 
@@ -88,18 +88,18 @@ echo "  Done"
 
 echo "[3/3] Generating TypeScript declarations..."
 dotnet run --project src/tsbindgen/tsbindgen.csproj --no-build -c Release -- \
-    generate -a "$EXPRESSJS_DLL" -o "$OUT_DIR" \
-    -n "expressjs" \
+    generate -a "$EXPRESS_DLL" -o "$OUT_DIR" \
+    -n "express" \
     --ref-dir "$DOTNET_RUNTIME_PATH" \
     --ref-dir "$ASPNETCORE_RUNTIME_PATH" \
     --lib "$DOTNET_LIB" \
     --lib "$ASPNETCORE_LIB" \
-    --namespace-map "expressjs=index"
+    --namespace-map "express=index"
 
 cp -f "$PROJECT_DIR/README.md" "$OUT_DIR/README.md"
 cp -f "$PROJECT_DIR/LICENSE" "$OUT_DIR/LICENSE"
 
-# Keep package output focused on expressjs namespace surface.
+# Keep package output focused on express namespace surface.
 find "$OUT_DIR" -mindepth 1 -maxdepth 1 -type d ! -name 'index' -exec rm -rf {} \;
 find "$OUT_DIR" -mindepth 1 -maxdepth 1 -type f \
   ! -name 'index.d.ts' \

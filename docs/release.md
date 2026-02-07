@@ -4,7 +4,7 @@ This repo publishes one package per .NET major under `versions/<major>/`.
 
 ## .NET 10 Release Steps
 
-1. Ensure `expressjs-clr` changes are merged and pulled to `main`.
+1. Ensure `express-clr` changes are merged and pulled to `main`.
 2. Regenerate bindings:
 
 ```bash
@@ -22,16 +22,16 @@ npm run publish:10
 
 ## Post-Publish Checks
 
-- Confirm npm package page for `@tsonic/expressjs`.
+- Confirm npm package page for `@tsonic/express`.
 - Verify install from a clean sample:
 
 ```bash
-npm i @tsonic/expressjs@10
+npm i @tsonic/express@10
 ```
 
 - Smoke-check import and basic usage.
 
 ## Notes
 
-- Runtime behavior changes belong to `expressjs-clr`.
+- Runtime behavior changes belong to `express-clr`.
 - This repo should only contain generated API/package-facing artifacts and docs.
