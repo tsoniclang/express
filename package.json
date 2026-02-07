@@ -1,0 +1,10 @@
+{
+  "name": "@tsonic/expressjs-repo",
+  "private": true,
+  "description": "Repo for @tsonic/expressjs (versioned by .NET major in versions/<major>/)",
+  "type": "module",
+  "scripts": {
+    "generate:10": "./__build/scripts/generate.sh 10",
+    "publish:10": "npm publish ./versions/10 --access public"
+  }
+}

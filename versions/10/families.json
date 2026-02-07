@@ -1,0 +1,51 @@
+{
+  "Microsoft.Extensions.DependencyInjection.ObjectFactory": {
+    "stem": "ObjectFactory",
+    "namespace": "Microsoft.Extensions.DependencyInjection",
+    "minArity": 0,
+    "maxArity": 1,
+    "isDelegate": true
+  },
+  "Microsoft.Extensions.Logging.ILogger": {
+    "stem": "ILogger",
+    "namespace": "Microsoft.Extensions.Logging",
+    "minArity": 0,
+    "maxArity": 1,
+    "isDelegate": false
+  },
+  "Microsoft.Extensions.Logging.Abstractions.NullLogger": {
+    "stem": "NullLogger",
+    "namespace": "Microsoft.Extensions.Logging.Abstractions",
+    "minArity": 0,
+    "maxArity": 1,
+    "isDelegate": false
+  },
+  "Microsoft.Extensions.ObjectPool.ObjectPool": {
+    "stem": "ObjectPool",
+    "namespace": "Microsoft.Extensions.ObjectPool",
+    "minArity": 0,
+    "maxArity": 1,
+    "isDelegate": false
+  },
+  "Microsoft.Extensions.Options.ConfigureNamedOptions": {
+    "stem": "ConfigureNamedOptions",
+    "namespace": "Microsoft.Extensions.Options",
+    "minArity": 1,
+    "maxArity": 6,
+    "isDelegate": false
+  },
+  "Microsoft.Extensions.Options.PostConfigureOptions": {
+    "stem": "PostConfigureOptions",
+    "namespace": "Microsoft.Extensions.Options",
+    "minArity": 1,
+    "maxArity": 6,
+    "isDelegate": false
+  },
+  "Microsoft.Extensions.Options.ValidateOptions": {
+    "stem": "ValidateOptions",
+    "namespace": "Microsoft.Extensions.Options",
+    "minArity": 1,
+    "maxArity": 6,
+    "isDelegate": false
+  }
+}
