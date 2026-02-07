@@ -1,0 +1,25 @@
+{
+  "name": "@tsonic/expressjs",
+  "version": "10.0.0",
+  "description": "TypeScript type definitions for Express.js style API on ASP.NET Core",
+  "type": "module",
+  "keywords": [
+    "express",
+    "typescript",
+    "types",
+    "tsonic",
+    "dotnet",
+    "aspnetcore",
+    "net10"
+  ],
+  "author": "Tsonic Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsoniclang/expressjs.git"
+  },
+  "peerDependencies": {
+    "@tsonic/dotnet": "^10.0.1",
+    "@tsonic/core": "^10.0.1"
+  }
+}
