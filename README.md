@@ -1,20 +1,21 @@
 # @tsonic/expressjs
 
-TypeScript type definitions for the ASP.NET Core-backed `expressjs-clr` runtime.
+`@tsonic/expressjs` is the generated TypeScript package for the `expressjs-clr` runtime.
 
-## Versioning
+## Documentation Ownership
 
-This repo is versioned by **.NET major**:
+Use this split:
 
-- **.NET 10** → `versions/10/` → npm: `@tsonic/expressjs@10.x`
+- Runtime behavior, parity decisions, and architecture: `expressjs-clr`
+- Package consumption, generation, and publishing workflow: `expressjs` (this repo)
 
-Publish with:
+## Versioning Model
 
-```bash
-npm publish versions/10 --access public
-```
+This repo is versioned by .NET major:
 
-## Installation
+- .NET 10 -> `versions/10/` -> npm `@tsonic/expressjs@10.x`
+
+## Install
 
 ```bash
 npm install @tsonic/expressjs @tsonic/dotnet @tsonic/core
@@ -34,17 +35,25 @@ app.get("/", (req, res) => {
 app.listen(3000);
 ```
 
-## Development
-
-Regenerate types from `expressjs-clr`:
+## Generate Types
 
 ```bash
 npm run generate:10
 ```
 
-Compatibility notes:
+The generator reads `expressjs-clr` build outputs and regenerates `versions/10/`.
 
-- `docs/deviations.md`
+## Publish
+
+```bash
+npm run publish:10
+```
+
+## Documentation Map
+
+- Generation workflow: `docs/generation.md`
+- Release workflow: `docs/release.md`
+- Current compatibility notes: `docs/deviations.md`
 
 ## License
 

@@ -1,13 +1,18 @@
 # Express Compatibility Deviations
 
-This project targets high API parity with Express 5.x while running on ASP.NET Core primitives.
+This package reflects the `expressjs-clr` runtime behavior.
 
-Current known deviations:
+Authoritative deviations live in:
 
-1. `express()` callable form is represented as `express.create()` / `express.app()` in CLR-first usage.
-2. `next('router')` is currently treated as router-exit in the flattened pipeline and may short-circuit broader stacks.
-3. Path-pattern behavior for advanced Express 5 patterns is best-effort; core string and `:param` routes are covered.
-4. Middleware option semantics (`json/raw/text/urlencoded/static`) are close but not byte-for-byte identical with Node middleware internals.
-5. Cookie signing compatibility is best-effort and not a drop-in replacement for `cookie-parser` edge behavior.
+- `../expressjs-clr/docs/deviations.md`
 
-All deviations should be minimized over time, with behavior validated by tests.
+Key current items:
+
+1. `express()` callable form is represented as `express.create()` / `express.app()`.
+2. C#-safe method names are used for some verbs (`lock_`, `m_search`), with `method("...")` for exact-verb routing.
+3. `next('router')` remains best-effort under flattened mount behavior.
+4. Advanced path-pattern behavior is best-effort; common string and `:param` patterns are covered.
+5. Built-in parser/static middleware behavior is close, not byte-for-byte identical to upstream Node middleware internals.
+6. Cookie signing/signed-cookie behavior is best-effort, not a full `cookie-parser` edge-case clone.
+
+Deviations should shrink over time and are validated through the runtime test matrix in `expressjs-clr`.

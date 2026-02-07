@@ -1,26 +1,16 @@
 # @tsonic/expressjs
 
-TypeScript type definitions for the ASP.NET Core-backed `expressjs-clr` runtime.
+TypeScript bindings for the ASP.NET Core-backed `expressjs-clr` runtime.
 
-## Versioning
+This package provides the Express-style API surface for Tsonic projects targeting .NET 10.
 
-This repo is versioned by **.NET major**:
-
-- **.NET 10** → `versions/10/` → npm: `@tsonic/expressjs@10.x`
-
-Publish with:
-
-```bash
-npm publish versions/10 --access public
-```
-
-## Installation
+## Install
 
 ```bash
 npm install @tsonic/expressjs @tsonic/dotnet @tsonic/core
 ```
 
-## Usage
+## Quick Start
 
 ```ts
 import { express } from "@tsonic/expressjs/index.js";
@@ -34,17 +24,16 @@ app.get("/", (req, res) => {
 app.listen(3000);
 ```
 
-## Development
+## API Notes
 
-Regenerate types from `expressjs-clr`:
+- Callable `express()` is represented as `express.create()` / `express.app()`.
+- Some verbs use C#-safe names (`lock_`, `m_search`).
+- Use `method("...")` for exact custom verb strings.
 
-```bash
-npm run generate:10
-```
+## Source Repositories
 
-Compatibility notes:
-
-- `docs/deviations.md`
+- Runtime implementation: `tsoniclang/expressjs-clr`
+- Package generation source: `tsoniclang/expressjs`
 
 ## License
 
