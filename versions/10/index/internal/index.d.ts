@@ -6,14 +6,23 @@
 import type { sbyte, byte, short, ushort, int, uint, long, ulong, int128, uint128, half, float, double, decimal, nint, nuint, char } from '@tsonic/core/types.js';
 
 // Import types from other namespaces
-import type { Dictionary, IEnumerable, List } from "@tsonic/dotnet/System.Collections.Generic.js";
-import * as System_Internal from "@tsonic/dotnet/System.js";
-import type { Action, AsyncCallback, Boolean as ClrBoolean, Byte, DateTime, Exception, IAsyncResult, ICloneable, Int32, Int64, IntPtr, MulticastDelegate, Nullable, Object as ClrObject, String as ClrString, Void } from "@tsonic/dotnet/System.js";
-import * as System_Runtime_Serialization_Internal from "@tsonic/dotnet/System.Runtime.Serialization.js";
-import type { ISerializable } from "@tsonic/dotnet/System.Runtime.Serialization.js";
-import type { Task } from "@tsonic/dotnet/System.Threading.Tasks.js";
+import type { Dictionary_2 as Dictionary, IEnumerable_1 as IEnumerable, List_1 as List } from "@tsonic/dotnet/System.Collections.Generic/internal/index.js";
+import * as System_Runtime_Serialization_Internal from "@tsonic/dotnet/System.Runtime.Serialization/internal/index.js";
+import type { ISerializable } from "@tsonic/dotnet/System.Runtime.Serialization/internal/index.js";
+import type { Task } from "@tsonic/dotnet/System.Threading.Tasks/internal/index.js";
+import * as System_Internal from "@tsonic/dotnet/System/internal/index.js";
+import type { Action, Action_1, Action_2, AsyncCallback, Boolean as ClrBoolean, Byte, DateTime, Exception, IAsyncResult, ICloneable, Int32, Int64, IntPtr, MulticastDelegate, Nullable_1 as Nullable, Object as ClrObject, String as ClrString, Void } from "@tsonic/dotnet/System/internal/index.js";
 
 export type CookieEncoder = (value: string) => string;
+
+
+export type ErrorRequestHandler = (err: Exception, req: Request, res: Response, next: NextFunction) => Task;
+
+
+export type ErrorRequestHandlerReturn = (err: Exception, req: Request, res: Response, next: NextFunction) => unknown | undefined;
+
+
+export type ErrorRequestHandlerSync = (err: Exception, req: Request, res: Response, next: NextFunction) => void;
 
 
 export type MediaTypeMatcher = (req: Request) => boolean;
@@ -31,10 +40,25 @@ export type QueryParser = (queryString: string) => unknown | undefined;
 export type RequestHandler = (req: Request, res: Response, next: NextFunction) => Task;
 
 
+export type RequestHandlerReturn = (req: Request, res: Response, next: NextFunction) => unknown | undefined;
+
+
+export type RequestHandlerSync = (req: Request, res: Response, next: NextFunction) => void;
+
+
+export type RouteHandler = (req: Request, res: Response) => Task;
+
+
+export type RouteHandlerReturn = (req: Request, res: Response) => unknown | undefined;
+
+
+export type RouteHandlerSync = (req: Request, res: Response) => void;
+
+
 export type SetHeadersHandler = (res: Response, path: string, stat: FileStat) => void;
 
 
-export type TemplateEngine = (path: string, options: Dictionary<System_Internal.String, unknown>, callback: Action<Exception, System_Internal.String>) => void;
+export type TemplateEngine = (path: string, options: Dictionary<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>) => void;
 
 
 export type TrustProxyEvaluator = (ip: string) => boolean;
@@ -44,6 +68,8 @@ export type VerifyBodyHandler = (req: Request, res: Response, buffer: byte[], en
 
 
 export interface Application$instance extends Router {
+    readonly __tsonic_type_express_Application: never;
+
     readonly locals: Dictionary<System_Internal.String, unknown | undefined>;
     mountpath: unknown;
     readonly router: Router;
@@ -54,6 +80,12 @@ export interface Application$instance extends Router {
     engine(ext: string, callback: TemplateEngine): Application;
     get(name: string): unknown | undefined;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): unknown;
+    get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): unknown;
+    get(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): unknown;
+    get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): unknown;
+    get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): unknown;
+    get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): unknown;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): unknown;
     listen(path: string, callback?: Action): AppServer;
     listen(port: int, callback?: Action): AppServer;
@@ -63,13 +95,31 @@ export interface Application$instance extends Router {
     param(name: string, callback: ParamHandler): Router;
     param(name: string, callback: ParamHandler): unknown;
     path(): string;
-    render(view: string, callback: Action<Exception, System_Internal.String>): void;
-    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>, callback: Action<Exception, System_Internal.String>): void;
+    render(view: string, callback: Action_2<Exception, System_Internal.String>): void;
+    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): void;
     set(name: string, value: unknown): Application;
     use(callback: unknown, ...callbacks: unknown[]): Application;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Application;
     use(callback: unknown, ...callbacks: unknown[]): Router;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    use(callback: RouteHandler, ...callbacks: RouteHandler[]): unknown;
+    use(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): unknown;
+    use(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): unknown;
+    use(callback: RequestHandler, ...callbacks: RequestHandler[]): unknown;
+    use(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): unknown;
+    use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): unknown;
+    use(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): unknown;
+    use(callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): unknown;
+    use(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): unknown;
+    use(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): unknown;
+    use(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): unknown;
+    use(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): unknown;
+    use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): unknown;
+    use(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): unknown;
+    use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): unknown;
+    use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): unknown;
+    use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): unknown;
+    use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): unknown;
     use(callback: unknown, ...callbacks: unknown[]): unknown;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): unknown;
 }
@@ -83,11 +133,13 @@ export const Application: {
 export type Application = Application$instance;
 
 export interface AppServer$instance {
+    readonly __tsonic_type_express_AppServer: never;
+
     readonly host: string | undefined;
     listening: boolean;
     readonly path: string | undefined;
     readonly port: Nullable<System_Internal.Int32>;
-    close(callback?: Action<Exception>): void;
+    close(callback?: Action_1<Exception>): void;
 }
 
 
@@ -99,6 +151,8 @@ export const AppServer: {
 export type AppServer = AppServer$instance;
 
 export interface ByteRange$instance {
+    readonly __tsonic_type_express_ByteRange: never;
+
     end: long;
     start: long;
 }
@@ -112,6 +166,8 @@ export const ByteRange: {
 export type ByteRange = ByteRange$instance;
 
 export interface CookieOptions$instance {
+    readonly __tsonic_type_express_CookieOptions: never;
+
     get domain(): string | undefined;
     set domain(value: string | undefined);
     get encode(): CookieEncoder | undefined;
@@ -138,6 +194,8 @@ export const CookieOptions: {
 export type CookieOptions = CookieOptions$instance;
 
 export interface DownloadOptions$instance {
+    readonly __tsonic_type_express_DownloadOptions: never;
+
     acceptRanges: boolean;
     cacheControl: boolean;
     dotfiles: string;
@@ -158,6 +216,8 @@ export const DownloadOptions: {
 export type DownloadOptions = DownloadOptions$instance;
 
 export interface FileStat$instance {
+    readonly __tsonic_type_express_FileStat: never;
+
     modifiedAt: DateTime;
     size: long;
 }
@@ -171,6 +231,8 @@ export const FileStat: {
 export type FileStat = FileStat$instance;
 
 export interface JsonOptions$instance {
+    readonly __tsonic_type_express_JsonOptions: never;
+
     inflate: boolean;
     get limit(): unknown | undefined;
     set limit(value: unknown | undefined);
@@ -192,6 +254,8 @@ export const JsonOptions: {
 export type JsonOptions = JsonOptions$instance;
 
 export interface RangeOptions$instance {
+    readonly __tsonic_type_express_RangeOptions: never;
+
     combine: boolean;
 }
 
@@ -204,6 +268,8 @@ export const RangeOptions: {
 export type RangeOptions = RangeOptions$instance;
 
 export interface RangeResult$instance {
+    readonly __tsonic_type_express_RangeResult: never;
+
     readonly ranges: List<ByteRange>;
     type: string;
 }
@@ -217,6 +283,8 @@ export const RangeResult: {
 export type RangeResult = RangeResult$instance;
 
 export interface RawOptions$instance {
+    readonly __tsonic_type_express_RawOptions: never;
+
     inflate: boolean;
     get limit(): unknown | undefined;
     set limit(value: unknown | undefined);
@@ -235,6 +303,8 @@ export const RawOptions: {
 export type RawOptions = RawOptions$instance;
 
 export interface Request$instance {
+    readonly __tsonic_type_express_Request: never;
+
     get app(): Application | undefined;
     set app(value: Application | undefined);
     baseUrl: string;
@@ -282,6 +352,8 @@ export const Request: {
 export type Request = Request$instance;
 
 export interface Response$instance {
+    readonly __tsonic_type_express_Response: never;
+
     readonly app: Application | undefined;
     headersSent: boolean;
     readonly locals: Dictionary<System_Internal.String, unknown | undefined>;
@@ -294,7 +366,7 @@ export interface Response$instance {
     clearCookie(name: string, options?: CookieOptions): Response;
     contentType(type: string): Response;
     cookie(name: string, value: unknown, options?: CookieOptions): Response;
-    download(path: string, filename?: string, options?: DownloadOptions, fn?: Action<Exception>): Response;
+    download(path: string, filename?: string, options?: DownloadOptions, fn?: Action_1<Exception>): Response;
     end(data?: unknown, encoding?: string, callback?: Action): Response;
     format(handlers: Dictionary<System_Internal.String, Action>): Response;
     get(field: string): string | undefined;
@@ -307,10 +379,10 @@ export interface Response$instance {
     redirect(status: int, path: string): Response;
     render(view: string): Response;
     render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>): Response;
-    render(view: string, callback: Action<Exception, System_Internal.String>): Response;
-    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>, callback: Action<Exception, System_Internal.String>): Response;
+    render(view: string, callback: Action_2<Exception, System_Internal.String>): Response;
+    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): Response;
     send(body?: unknown): Response;
-    sendFile(path: string, options?: SendFileOptions, fn?: Action<Exception>): Response;
+    sendFile(path: string, options?: SendFileOptions, fn?: Action_1<Exception>): Response;
     sendStatus(code: int): Response;
     set(field: string, value: unknown): Response;
     set(fields: Dictionary<System_Internal.String, System_Internal.String>): Response;
@@ -328,63 +400,257 @@ export const Response: {
 export type Response = Response$instance;
 
 export interface Route$instance extends RoutingHost_1<Route> {
+    readonly __tsonic_type_express_Route: never;
+
     readonly path: unknown;
+    all(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    all(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    all(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    all(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    all(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    all(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     all(callback: unknown, ...callbacks: unknown[]): Route;
     all(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    all(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    all(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    all(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    all(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    all(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    all(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     all(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     checkout(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    checkout(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    checkout(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    checkout(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    checkout(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    checkout(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    checkout(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     copy(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    copy(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    copy(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    copy(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    copy(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    copy(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    copy(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     copy(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     delete(callback: unknown, ...callbacks: unknown[]): Route;
+    delete(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    delete(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    delete(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    delete(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    delete(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    delete(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     delete(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    delete(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    delete(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    delete(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    delete(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    delete(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    delete(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     delete(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     get(callback: unknown, ...callbacks: unknown[]): Route;
+    get(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    get(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    get(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    get(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    get(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    get(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     get(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    get(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     head(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    head(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    head(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    head(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    head(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    head(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    head(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     head(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     lock_(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    lock_(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    lock_(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    lock_(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    lock_(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    lock_(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    lock_(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     m_search(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    m_search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    m_search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    m_search(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    m_search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    m_search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    m_search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     merge(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    merge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    merge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    merge(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    merge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    merge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    merge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     merge(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     method(method: string, routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    method(method: string, path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    method(method: string, path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    method(method: string, path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    method(method: string, path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    method(method: string, path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    method(method: string, path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     mkactivity(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    mkactivity(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    mkactivity(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    mkactivity(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    mkactivity(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    mkactivity(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    mkactivity(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     mkcol(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    mkcol(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    mkcol(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    mkcol(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    mkcol(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    mkcol(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    mkcol(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     move(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    move(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    move(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    move(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    move(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    move(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    move(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     move(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     notify(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    notify(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    notify(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    notify(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    notify(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    notify(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    notify(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     notify(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     options(callback: unknown, ...callbacks: unknown[]): Route;
+    options(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    options(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    options(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    options(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    options(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    options(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     options(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    options(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    options(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    options(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    options(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    options(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    options(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     options(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     patch(callback: unknown, ...callbacks: unknown[]): Route;
+    patch(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    patch(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    patch(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    patch(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    patch(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    patch(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     patch(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    patch(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    patch(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    patch(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    patch(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    patch(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    patch(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     patch(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     post(callback: unknown, ...callbacks: unknown[]): Route;
+    post(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    post(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    post(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    post(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    post(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    post(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     post(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    post(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    post(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    post(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    post(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    post(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    post(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     post(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     purge(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    purge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    purge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    purge(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    purge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    purge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    purge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     purge(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     put(callback: unknown, ...callbacks: unknown[]): Route;
+    put(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    put(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    put(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    put(callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    put(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    put(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     put(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    put(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    put(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    put(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    put(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    put(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    put(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     put(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     report(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    report(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    report(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    report(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    report(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    report(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    report(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     report(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     search(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    search(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     search(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     subscribe(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    subscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    subscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    subscribe(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    subscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    subscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    subscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     trace(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    trace(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    trace(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    trace(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    trace(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    trace(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    trace(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     trace(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     unlock(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    unlock(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    unlock(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    unlock(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    unlock(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    unlock(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    unlock(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     unsubscribe(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
+    unsubscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
+    unsubscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
+    unsubscribe(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Route;
+    unsubscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
+    unsubscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
+    unsubscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
     unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
 }
 
@@ -396,61 +662,232 @@ export const Route: {
 export type Route = Route$instance;
 
 export interface Router$instance extends RoutingHost_1<Router> {
+    readonly __tsonic_type_express_Router: never;
+
     all(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    all(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    all(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    all(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    all(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    all(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    all(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     all(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    checkout(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    checkout(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    checkout(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    checkout(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    checkout(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    checkout(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     copy(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    copy(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    copy(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    copy(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    copy(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    copy(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    copy(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     copy(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     delete(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    delete(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    delete(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    delete(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    delete(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    delete(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    delete(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     delete(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    get(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     head(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    head(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    head(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    head(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    head(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    head(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    head(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     head(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    lock_(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    lock_(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    lock_(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    lock_(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    lock_(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    lock_(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    m_search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    m_search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    m_search(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    m_search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    m_search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    m_search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     merge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    merge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    merge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    merge(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    merge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    merge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    merge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     merge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    method(method: string, path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    method(method: string, path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    method(method: string, path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    method(method: string, path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    method(method: string, path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    method(method: string, path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    mkactivity(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    mkactivity(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    mkactivity(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    mkactivity(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    mkactivity(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    mkactivity(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    mkcol(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    mkcol(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    mkcol(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    mkcol(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    mkcol(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    mkcol(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     move(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    move(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    move(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    move(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    move(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    move(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    move(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     move(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     notify(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    notify(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    notify(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    notify(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    notify(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    notify(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    notify(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     notify(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     options(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    options(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    options(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    options(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    options(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    options(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    options(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     options(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     param(name: string, callback: ParamHandler): Router;
     param(name: string, callback: ParamHandler): Router;
     patch(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    patch(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    patch(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    patch(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    patch(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    patch(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    patch(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     patch(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     post(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    post(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    post(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    post(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    post(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    post(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    post(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     post(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     purge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    purge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    purge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    purge(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    purge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    purge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    purge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     purge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     put(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    put(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    put(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    put(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    put(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    put(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    put(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     put(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     report(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    report(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    report(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    report(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    report(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    report(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    report(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     report(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     route(path: unknown): Route;
+    route(path: string): Route;
     search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    search(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    subscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    subscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    subscribe(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    subscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    subscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    subscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     trace(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    trace(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    trace(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    trace(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    trace(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    trace(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    trace(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     trace(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    unlock(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    unlock(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    unlock(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    unlock(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    unlock(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    unlock(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    unsubscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    unsubscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    unsubscribe(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    unsubscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    unsubscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    unsubscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     use(callback: unknown, ...callbacks: unknown[]): Router;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
+    use(callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    use(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    use(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    use(callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    use(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
+    use(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): Router;
+    use(callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): Router;
+    use(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): Router;
+    use(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    use(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    use(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    use(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
+    use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): Router;
+    use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): Router;
+    use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): Router;
     use(callback: unknown, ...callbacks: unknown[]): Router;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
 }
@@ -464,6 +901,8 @@ export const Router: {
 export type Router = Router$instance;
 
 export interface RouterOptions$instance {
+    readonly __tsonic_type_express_RouterOptions: never;
+
     caseSensitive: boolean;
     mergeParams: boolean;
     strict: boolean;
@@ -478,33 +917,204 @@ export const RouterOptions: {
 export type RouterOptions = RouterOptions$instance;
 
 export interface RoutingHost_1$instance<TSelf extends RoutingHost_1<TSelf>> {
+    readonly __tsonic_type_express_RoutingHost_1: never;
+
+    all(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    all(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    all(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    all(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    all(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    all(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     all(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    checkout(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    checkout(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    checkout(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    checkout(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    checkout(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    checkout(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    copy(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    copy(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    copy(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    copy(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    copy(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    copy(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     copy(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    delete(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    delete(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    delete(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    delete(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    delete(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    delete(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     delete(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    get(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    head(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    head(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    head(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    head(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    head(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    head(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     head(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    lock_(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    lock_(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    lock_(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    lock_(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    lock_(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    lock_(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    m_search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    m_search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    m_search(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    m_search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    m_search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    m_search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    merge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    merge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    merge(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    merge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    merge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    merge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     merge(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    method(method: string, path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    method(method: string, path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    method(method: string, path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    method(method: string, path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    method(method: string, path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    method(method: string, path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    mkactivity(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    mkactivity(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    mkactivity(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    mkactivity(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    mkactivity(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    mkactivity(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    mkcol(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    mkcol(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    mkcol(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    mkcol(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    mkcol(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    mkcol(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    move(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    move(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    move(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    move(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    move(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    move(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     move(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    notify(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    notify(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    notify(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    notify(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    notify(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    notify(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     notify(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    options(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    options(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    options(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    options(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    options(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    options(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     options(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
     param(name: string, callback: ParamHandler): TSelf;
+    patch(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    patch(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    patch(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    patch(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    patch(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    patch(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     patch(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    post(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    post(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    post(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    post(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    post(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    post(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     post(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    purge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    purge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    purge(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    purge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    purge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    purge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     purge(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    put(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    put(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    put(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    put(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    put(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    put(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     put(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    report(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    report(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    report(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    report(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    report(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    report(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     report(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    route(path: string): Route;
     route(path: unknown): Route;
+    search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    search(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     search(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    subscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    subscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    subscribe(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    subscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    subscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    subscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    trace(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    trace(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    trace(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    trace(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    trace(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    trace(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     trace(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    unlock(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    unlock(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    unlock(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    unlock(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    unlock(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    unlock(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    unsubscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    unsubscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    unsubscribe(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    unsubscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    unsubscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    unsubscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
     unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
+    use(callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    use(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    use(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    use(callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    use(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
+    use(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): TSelf;
+    use(callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): TSelf;
+    use(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): TSelf;
+    use(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
+    use(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
+    use(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
+    use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
+    use(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
+    use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
+    use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): TSelf;
+    use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): TSelf;
+    use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): TSelf;
     use(callback: unknown, ...callbacks: unknown[]): TSelf;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): TSelf;
 }
@@ -517,6 +1127,8 @@ export const RoutingHost_1: (abstract new<TSelf extends RoutingHost_1<TSelf>>() 
 export type RoutingHost_1<TSelf extends RoutingHost_1<TSelf>> = RoutingHost_1$instance<TSelf>;
 
 export interface SendFileOptions$instance {
+    readonly __tsonic_type_express_SendFileOptions: never;
+
     acceptRanges: boolean;
     cacheControl: boolean;
     dotfiles: string;
@@ -537,6 +1149,8 @@ export const SendFileOptions: {
 export type SendFileOptions = SendFileOptions$instance;
 
 export interface StaticOptions$instance {
+    readonly __tsonic_type_express_StaticOptions: never;
+
     acceptRanges: boolean;
     cacheControl: boolean;
     dotfiles: string;
@@ -563,6 +1177,8 @@ export const StaticOptions: {
 export type StaticOptions = StaticOptions$instance;
 
 export interface TextOptions$instance {
+    readonly __tsonic_type_express_TextOptions: never;
+
     defaultCharset: string;
     inflate: boolean;
     get limit(): unknown | undefined;
@@ -582,6 +1198,8 @@ export const TextOptions: {
 export type TextOptions = TextOptions$instance;
 
 export interface UrlEncodedOptions$instance {
+    readonly __tsonic_type_express_UrlEncodedOptions: never;
+
     depth: int;
     extended: boolean;
     inflate: boolean;
