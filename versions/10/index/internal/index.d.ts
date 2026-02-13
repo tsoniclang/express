@@ -6,12 +6,12 @@
 import type { sbyte, byte, short, ushort, int, uint, long, ulong, int128, uint128, half, float, double, decimal, nint, nuint, char } from '@tsonic/core/types.js';
 
 // Import types from other namespaces
-import type { Dictionary_2 as Dictionary, IEnumerable_1 as IEnumerable, List_1 as List } from "@tsonic/dotnet/System.Collections.Generic/internal/index.js";
+import type { Dictionary_2, IEnumerable_1, List_1 } from "@tsonic/dotnet/System.Collections.Generic/internal/index.js";
 import * as System_Runtime_Serialization_Internal from "@tsonic/dotnet/System.Runtime.Serialization/internal/index.js";
 import type { ISerializable } from "@tsonic/dotnet/System.Runtime.Serialization/internal/index.js";
 import type { Task } from "@tsonic/dotnet/System.Threading.Tasks/internal/index.js";
 import * as System_Internal from "@tsonic/dotnet/System/internal/index.js";
-import type { Action, Action_1, Action_2, AsyncCallback, Boolean as ClrBoolean, Byte, DateTime, Exception, IAsyncResult, ICloneable, Int32, Int64, IntPtr, MulticastDelegate, Nullable_1 as Nullable, Object as ClrObject, String as ClrString, Void } from "@tsonic/dotnet/System/internal/index.js";
+import type { Action, Action_1, Action_2, AsyncCallback, Boolean as ClrBoolean, Byte, DateTime, Exception, IAsyncResult, ICloneable, Int32, Int64, IntPtr, MulticastDelegate, Nullable_1, Object as ClrObject, String as ClrString, Void } from "@tsonic/dotnet/System/internal/index.js";
 
 export type CookieEncoder = (value: string) => string;
 
@@ -58,7 +58,7 @@ export type RouteHandlerSync = (req: Request, res: Response) => void;
 export type SetHeadersHandler = (res: Response, path: string, stat: FileStat) => void;
 
 
-export type TemplateEngine = (path: string, options: Dictionary<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>) => void;
+export type TemplateEngine = (path: string, options: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>) => void;
 
 
 export type TrustProxyEvaluator = (ip: string) => boolean;
@@ -70,7 +70,7 @@ export type VerifyBodyHandler = (req: Request, res: Response, buffer: byte[], en
 export interface Application$instance extends Router {
     readonly __tsonic_type_express_Application: never;
 
-    readonly locals: Dictionary<System_Internal.String, unknown | undefined>;
+    readonly locals: Dictionary_2<System_Internal.String, unknown | undefined>;
     mountpath: unknown;
     readonly router: Router;
     disable(name: string): Application;
@@ -96,7 +96,7 @@ export interface Application$instance extends Router {
     param(name: string, callback: ParamHandler): unknown;
     path(): string;
     render(view: string, callback: Action_2<Exception, System_Internal.String>): void;
-    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): void;
+    render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): void;
     set(name: string, value: unknown): Application;
     use(callback: unknown, ...callbacks: unknown[]): Application;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Application;
@@ -138,13 +138,13 @@ export interface AppServer$instance {
     readonly host: string | undefined;
     listening: boolean;
     readonly path: string | undefined;
-    readonly port: Nullable<System_Internal.Int32>;
+    readonly port: Nullable_1<System_Internal.Int32>;
     close(callback?: Action_1<Exception>): void;
 }
 
 
 export const AppServer: {
-    new(port: Nullable<System_Internal.Int32>, host: string, path: string, closeAction: Action): AppServer;
+    new(port: Nullable_1<System_Internal.Int32>, host: string, path: string, closeAction: Action): AppServer;
 };
 
 
@@ -172,9 +172,9 @@ export interface CookieOptions$instance {
     set domain(value: string | undefined);
     get encode(): CookieEncoder | undefined;
     set encode(value: CookieEncoder | undefined);
-    expires: Nullable<DateTime>;
+    expires: Nullable_1<DateTime>;
     httpOnly: boolean;
-    maxAge: Nullable<System_Internal.Int64>;
+    maxAge: Nullable_1<System_Internal.Int64>;
     partitioned: boolean;
     path: string;
     get priority(): string | undefined;
@@ -199,7 +199,7 @@ export interface DownloadOptions$instance {
     acceptRanges: boolean;
     cacheControl: boolean;
     dotfiles: string;
-    headers: Dictionary<System_Internal.String, System_Internal.String>;
+    headers: Dictionary_2<System_Internal.String, System_Internal.String>;
     immutable: boolean;
     lastModified: boolean;
     maxAge: unknown;
@@ -270,7 +270,7 @@ export type RangeOptions = RangeOptions$instance;
 export interface RangeResult$instance {
     readonly __tsonic_type_express_RangeResult: never;
 
-    readonly ranges: List<ByteRange>;
+    readonly ranges: List_1<ByteRange>;
     type: string;
 }
 
@@ -310,27 +310,27 @@ export interface Request$instance {
     baseUrl: string;
     get body(): unknown | undefined;
     set body(value: unknown | undefined);
-    cookies: Dictionary<System_Internal.String, System_Internal.String>;
+    cookies: Dictionary_2<System_Internal.String, System_Internal.String>;
     fresh: boolean;
     host: string;
     hostname: string;
     ip: string;
-    ips: List<System_Internal.String>;
+    ips: List_1<System_Internal.String>;
     method: string;
     originalUrl: string;
-    params: Dictionary<System_Internal.String, unknown | undefined>;
+    params: Dictionary_2<System_Internal.String, unknown | undefined>;
     path: string;
     protocol: string;
-    query: Dictionary<System_Internal.String, unknown | undefined>;
+    query: Dictionary_2<System_Internal.String, unknown | undefined>;
     get res(): Response | undefined;
     set res(value: Response | undefined);
     get route(): Route | undefined;
     set route(value: Route | undefined);
     readonly secure: boolean;
     signed: boolean;
-    signedCookies: Dictionary<System_Internal.String, System_Internal.String>;
+    signedCookies: Dictionary_2<System_Internal.String, System_Internal.String>;
     readonly stale: boolean;
-    subdomains: List<System_Internal.String>;
+    subdomains: List_1<System_Internal.String>;
     xhr: boolean;
     accepts(...types: string[]): unknown | undefined;
     acceptsCharsets(...charsets: string[]): unknown | undefined;
@@ -356,36 +356,36 @@ export interface Response$instance {
 
     readonly app: Application | undefined;
     headersSent: boolean;
-    readonly locals: Dictionary<System_Internal.String, unknown | undefined>;
+    readonly locals: Dictionary_2<System_Internal.String, unknown | undefined>;
     get req(): Request | undefined;
     set req(value: Request | undefined);
     statusCode: int;
     append(field: string, value: string): Response;
-    append(field: string, values: IEnumerable<System_Internal.String>): Response;
+    append(field: string, values: IEnumerable_1<System_Internal.String>): Response;
     attachment(filename?: string): Response;
     clearCookie(name: string, options?: CookieOptions): Response;
     contentType(type: string): Response;
     cookie(name: string, value: unknown, options?: CookieOptions): Response;
     download(path: string, filename?: string, options?: DownloadOptions, fn?: Action_1<Exception>): Response;
     end(data?: unknown, encoding?: string, callback?: Action): Response;
-    format(handlers: Dictionary<System_Internal.String, Action>): Response;
+    format(handlers: Dictionary_2<System_Internal.String, Action>): Response;
     get(field: string): string | undefined;
     header(field: string, value: unknown): Response;
     json(body?: unknown): Response;
     jsonp(body?: unknown): Response;
-    links(links: Dictionary<System_Internal.String, System_Internal.String>): Response;
+    links(links: Dictionary_2<System_Internal.String, System_Internal.String>): Response;
     location(path: string): Response;
     redirect(path: string): Response;
     redirect(status: int, path: string): Response;
     render(view: string): Response;
-    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>): Response;
+    render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>): Response;
     render(view: string, callback: Action_2<Exception, System_Internal.String>): Response;
-    render(view: string, viewLocals: Dictionary<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): Response;
+    render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): Response;
     send(body?: unknown): Response;
     sendFile(path: string, options?: SendFileOptions, fn?: Action_1<Exception>): Response;
     sendStatus(code: int): Response;
     set(field: string, value: unknown): Response;
-    set(fields: Dictionary<System_Internal.String, System_Internal.String>): Response;
+    set(fields: Dictionary_2<System_Internal.String, System_Internal.String>): Response;
     status(code: int): Response;
     type(type: string): Response;
     vary(field: string): Response;
@@ -1132,7 +1132,7 @@ export interface SendFileOptions$instance {
     acceptRanges: boolean;
     cacheControl: boolean;
     dotfiles: string;
-    headers: Dictionary<System_Internal.String, System_Internal.String>;
+    headers: Dictionary_2<System_Internal.String, System_Internal.String>;
     immutable: boolean;
     lastModified: boolean;
     maxAge: unknown;
