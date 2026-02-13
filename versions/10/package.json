@@ -19,7 +19,7 @@
     "url": "https://github.com/tsoniclang/express.git"
   },
   "peerDependencies": {
-    "@tsonic/dotnet": "10.0.11",
-    "@tsonic/core": "10.0.11"
+    "@tsonic/dotnet": "10.0.12",
+    "@tsonic/core": "10.0.12"
   }
 }
