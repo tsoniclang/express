@@ -105,6 +105,7 @@ find "$OUT_DIR" -mindepth 1 -maxdepth 1 -type f \
   ! -name 'index.d.ts' \
   ! -name 'index.js' \
   ! -name 'families.json' \
+  ! -name 'tsonic.bindings.json' \
   ! -name 'package.json' \
   ! -name 'README.md' \
   ! -name 'LICENSE' \

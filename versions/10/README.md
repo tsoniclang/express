@@ -10,13 +10,8 @@ Use this package to write Express-like apps in TypeScript and compile them to na
 mkdir my-api && cd my-api
 tsonic init
 
-# Install ASP.NET Core bindings (required)
-tsonic add framework Microsoft.AspNetCore.App @tsonic/aspnetcore
-
-# Install Express runtime + bindings
-tsonic add nuget express <version> @tsonic/express
-
-npm install
+# Install Express runtime + bindings (and required ASP.NET Core deps)
+tsonic add npm @tsonic/express
 npm run dev
 ```
 
