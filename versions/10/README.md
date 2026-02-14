@@ -116,8 +116,8 @@ server.close();
 
 ## Advanced docs
 
-- https://github.com/tsoniclang/express/blob/main/docs/advanced.md (routers, handlers, middleware patterns)
-- https://github.com/tsoniclang/express/blob/main/docs/deviations.md (known compatibility gaps / parity notes)
+- `docs/advanced.md` (routers, handlers, middleware patterns)
+- `docs/deviations.md` (known compatibility gaps / parity notes)
 
 ## Versioning Model
 

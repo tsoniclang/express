@@ -80,48 +80,44 @@ export interface Application$instance extends Router {
     engine(ext: string, callback: TemplateEngine): Application;
     get(name: string): unknown | undefined;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
-    get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): unknown;
-    get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): unknown;
-    get(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): unknown;
-    get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): unknown;
-    get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): unknown;
-    get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): unknown;
-    get(path: unknown, callback: unknown, ...callbacks: unknown[]): unknown;
+    get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    get(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
     listen(path: string, callback?: Action): AppServer;
     listen(port: int, callback?: Action): AppServer;
     listen(port: int, host: string, callback?: Action): AppServer;
     listen(port: int, host: string, backlog: int, callback?: Action): AppServer;
     param(names: string[], callback: ParamHandler): Application;
     param(name: string, callback: ParamHandler): Router;
-    param(name: string, callback: ParamHandler): unknown;
     path(): string;
     render(view: string, callback: Action_2<Exception, System_Internal.String>): void;
     render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): void;
     set(name: string, value: unknown): Application;
     use(callback: unknown, ...callbacks: unknown[]): Application;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Application;
+    use(callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    use(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    use(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    use(callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    use(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
+    use(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): Router;
+    use(callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): Router;
+    use(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): Router;
+    use(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
+    use(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
+    use(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): Router;
+    use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
+    use(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
+    use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
+    use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): Router;
+    use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): Router;
+    use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): Router;
     use(callback: unknown, ...callbacks: unknown[]): Router;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
-    use(callback: RouteHandler, ...callbacks: RouteHandler[]): unknown;
-    use(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): unknown;
-    use(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): unknown;
-    use(callback: RequestHandler, ...callbacks: RequestHandler[]): unknown;
-    use(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): unknown;
-    use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): unknown;
-    use(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): unknown;
-    use(callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): unknown;
-    use(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): unknown;
-    use(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): unknown;
-    use(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): unknown;
-    use(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): unknown;
-    use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): unknown;
-    use(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): unknown;
-    use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): unknown;
-    use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): unknown;
-    use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): unknown;
-    use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): unknown;
-    use(callback: unknown, ...callbacks: unknown[]): unknown;
-    use(path: unknown, callback: unknown, ...callbacks: unknown[]): unknown;
 }
 
 
@@ -417,7 +413,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     all(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     all(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     all(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    all(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     checkout(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     checkout(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     checkout(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -425,7 +420,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     checkout(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     checkout(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     checkout(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     copy(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     copy(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     copy(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -433,7 +427,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     copy(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     copy(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     copy(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    copy(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     delete(callback: unknown, ...callbacks: unknown[]): Route;
     delete(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     delete(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -448,7 +441,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     delete(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     delete(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     delete(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    delete(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     get(callback: unknown, ...callbacks: unknown[]): Route;
     get(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     get(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -463,7 +455,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    get(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     head(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     head(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     head(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -471,7 +462,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     head(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     head(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     head(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    head(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     lock_(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     lock_(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     lock_(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -479,7 +469,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     lock_(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     lock_(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     lock_(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     m_search(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     m_search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     m_search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -487,7 +476,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     m_search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     m_search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     m_search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     merge(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     merge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     merge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -495,7 +483,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     merge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     merge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     merge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    merge(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     method(method: string, routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     method(method: string, path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     method(method: string, path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -503,7 +490,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     method(method: string, path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     method(method: string, path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     method(method: string, path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     mkactivity(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     mkactivity(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     mkactivity(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -511,7 +497,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     mkactivity(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     mkactivity(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     mkactivity(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     mkcol(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     mkcol(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     mkcol(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -519,7 +504,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     mkcol(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     mkcol(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     mkcol(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     move(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     move(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     move(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -527,7 +511,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     move(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     move(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     move(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    move(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     notify(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     notify(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     notify(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -535,7 +518,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     notify(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     notify(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     notify(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    notify(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     options(callback: unknown, ...callbacks: unknown[]): Route;
     options(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     options(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -550,7 +532,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     options(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     options(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     options(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    options(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     patch(callback: unknown, ...callbacks: unknown[]): Route;
     patch(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     patch(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -565,7 +546,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     patch(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     patch(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     patch(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    patch(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     post(callback: unknown, ...callbacks: unknown[]): Route;
     post(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     post(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -580,7 +560,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     post(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     post(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     post(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    post(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     purge(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     purge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     purge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -588,7 +567,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     purge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     purge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     purge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    purge(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     put(callback: unknown, ...callbacks: unknown[]): Route;
     put(callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     put(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -603,7 +581,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     put(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     put(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     put(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    put(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     report(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     report(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     report(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -611,7 +588,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     report(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     report(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     report(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    report(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     search(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -619,7 +595,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    search(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     subscribe(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     subscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     subscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -627,7 +602,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     subscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     subscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     subscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     trace(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     trace(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     trace(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -635,7 +609,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     trace(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     trace(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     trace(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    trace(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     unlock(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     unlock(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     unlock(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -643,7 +616,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     unlock(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     unlock(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     unlock(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     unsubscribe(routePath: unknown, callback: unknown, ...callbacks: unknown[]): Route;
     unsubscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Route;
     unsubscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Route;
@@ -651,7 +623,6 @@ export interface Route$instance extends RoutingHost_1<Route> {
     unsubscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Route;
     unsubscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Route;
     unsubscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Route;
-    unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Route;
 }
 
 
@@ -671,7 +642,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     all(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     all(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     all(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    all(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     checkout(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     checkout(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -679,7 +649,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     checkout(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     checkout(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     checkout(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    checkout(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     copy(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     copy(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     copy(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -687,7 +656,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     copy(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     copy(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     copy(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    copy(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     delete(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     delete(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     delete(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -695,7 +663,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     delete(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     delete(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     delete(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    delete(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     get(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     get(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     get(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -703,7 +670,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     get(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     get(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    get(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     head(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     head(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     head(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -711,7 +677,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     head(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     head(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     head(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    head(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     lock_(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     lock_(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -719,7 +684,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     lock_(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     lock_(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     lock_(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    lock_(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     m_search(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     m_search(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -727,7 +691,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     m_search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     m_search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     m_search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    m_search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     merge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     merge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     merge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -735,7 +698,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     merge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     merge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     merge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    merge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     method(method: string, path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     method(method: string, path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -743,7 +705,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     method(method: string, path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     method(method: string, path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     method(method: string, path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    method(method: string, path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     mkactivity(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     mkactivity(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -751,7 +712,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     mkactivity(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     mkactivity(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     mkactivity(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    mkactivity(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     mkcol(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     mkcol(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -759,7 +719,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     mkcol(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     mkcol(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     mkcol(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    mkcol(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     move(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     move(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     move(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -767,7 +726,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     move(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     move(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     move(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    move(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     notify(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     notify(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     notify(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -775,7 +733,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     notify(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     notify(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     notify(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    notify(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     options(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     options(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     options(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -783,8 +740,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     options(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     options(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     options(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    options(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
-    param(name: string, callback: ParamHandler): Router;
     param(name: string, callback: ParamHandler): Router;
     patch(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     patch(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
@@ -793,7 +748,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     patch(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     patch(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     patch(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    patch(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     post(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     post(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     post(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -801,7 +755,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     post(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     post(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     post(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    post(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     purge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     purge(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     purge(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -809,7 +762,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     purge(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     purge(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     purge(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    purge(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     put(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     put(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     put(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -817,7 +769,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     put(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     put(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     put(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    put(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     report(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     report(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     report(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -825,7 +776,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     report(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     report(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     report(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    report(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     route(path: unknown): Route;
     route(path: string): Route;
     search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
@@ -835,7 +785,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     search(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     search(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     search(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    search(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     subscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     subscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -843,7 +792,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     subscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     subscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     subscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    subscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     trace(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     trace(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     trace(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -851,7 +799,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     trace(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     trace(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     trace(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    trace(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     unlock(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     unlock(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -859,7 +806,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     unlock(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     unlock(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     unlock(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    unlock(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     unsubscribe(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
     unsubscribe(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): Router;
@@ -867,7 +813,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     unsubscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
     unsubscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): Router;
     unsubscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): Router;
-    unsubscribe(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     use(callback: unknown, ...callbacks: unknown[]): Router;
     use(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
     use(callback: RouteHandler, ...callbacks: RouteHandler[]): Router;
@@ -888,8 +833,6 @@ export interface Router$instance extends RoutingHost_1<Router> {
     use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): Router;
     use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): Router;
     use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): Router;
-    use(callback: unknown, ...callbacks: unknown[]): Router;
-    use(path: unknown, callback: unknown, ...callbacks: unknown[]): Router;
 }
 
 
