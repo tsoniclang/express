@@ -4,7 +4,7 @@
       { "id": "Microsoft.AspNetCore.App", "types": "@tsonic/aspnetcore" }
     ],
     "packageReferences": [
-      { "id": "Tsonic.Express", "version": "1.0.1", "types": "@tsonic/express" }
+      { "id": "Tsonic.Express", "version": "1.0.4", "types": "@tsonic/express" }
     ]
   }
 }
