@@ -1,17 +1,40 @@
 # @tsonic/express
 
-Express-style HTTP server APIs for **Tsonic** (TypeScript → .NET).
+Express-style HTTP server APIs for **Tsonic**.
+
+This package is part of Tsonic: https://tsonic.org.
 
 Use this package to write Express-like apps in TypeScript and compile them to native binaries with `tsonic`.
+
+## Prerequisites
+
+- Install the .NET 10 SDK (required by Tsonic): https://dotnet.microsoft.com/download
+- Verify: `dotnet --version`
 
 ## Quick Start (new project)
 
 ```bash
 mkdir my-api && cd my-api
-tsonic init
+npx --yes tsonic@latest init
 
-# Install Express runtime + bindings (and required ASP.NET Core deps)
-tsonic add npm @tsonic/express
+# Install Express runtime + bindings (installs required ASP.NET Core deps too)
+npx --yes tsonic@latest add npm @tsonic/express
+
+# Replace the default App.ts with a minimal API
+cat > packages/my-api/src/App.ts <<'EOF'
+import { express } from "@tsonic/express/index.js";
+
+export function main(): void {
+  const app = express.create();
+
+  app.get("/", (_req, res) => {
+    res.json({ ok: true });
+  });
+
+  app.listen(3000);
+}
+EOF
+
 npm run dev
 ```
 
@@ -71,7 +94,7 @@ Error middleware:
 
 ```ts
 app.use((err, _req, res, _next) => {
-  res.status(500).json({ error: String(err) });
+  res.status(500).json({ error: `${err}` });
 });
 ```
 
@@ -116,14 +139,15 @@ server.close();
 
 ## Advanced docs
 
-- `docs/advanced.md` (routers, handlers, middleware patterns)
-- `docs/deviations.md` (known compatibility gaps / parity notes)
+- [docs/advanced.md](docs/advanced.md) (routers, handlers, middleware patterns)
+- [docs/deviations.md](docs/deviations.md) (known compatibility gaps / parity notes)
+- [docs/generation.md](docs/generation.md) (how this package is generated)
 
 ## Versioning Model
 
-This repo is versioned by .NET major:
+This repo is versioned by runtime major:
 
-- .NET 10 -> `versions/10/` -> npm `@tsonic/express@10.x`
+- `10` -> `versions/10/` -> npm `@tsonic/express@10.x`
 
 ## License
 

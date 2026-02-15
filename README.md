@@ -94,7 +94,7 @@ Error middleware:
 
 ```ts
 app.use((err, _req, res, _next) => {
-  res.status(500).json({ error: String(err) });
+  res.status(500).json({ error: `${err}` });
 });
 ```
 
