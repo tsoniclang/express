@@ -6,14 +6,35 @@ This package is part of Tsonic: https://tsonic.org.
 
 Use this package to write Express-like apps in TypeScript and compile them to native binaries with `tsonic`.
 
+## Prerequisites
+
+- Install the .NET 10 SDK (required by Tsonic): https://dotnet.microsoft.com/download
+- Verify: `dotnet --version`
+
 ## Quick Start (new project)
 
 ```bash
 mkdir my-api && cd my-api
-tsonic init
+npx --yes tsonic@latest init
 
-# Install Express runtime + bindings
-tsonic add npm @tsonic/express
+# Install Express runtime + bindings (installs required ASP.NET Core deps too)
+npx --yes tsonic@latest add npm @tsonic/express
+
+# Replace the default App.ts with a minimal API
+cat > packages/my-api/src/App.ts <<'EOF'
+import { express } from "@tsonic/express/index.js";
+
+export function main(): void {
+  const app = express.create();
+
+  app.get("/", (_req, res) => {
+    res.json({ ok: true });
+  });
+
+  app.listen(3000);
+}
+EOF
+
 npm run dev
 ```
 
@@ -118,8 +139,9 @@ server.close();
 
 ## Advanced docs
 
-- `docs/advanced.md` (routers, handlers, middleware patterns)
-- `docs/deviations.md` (known compatibility gaps / parity notes)
+- [docs/advanced.md](docs/advanced.md) (routers, handlers, middleware patterns)
+- [docs/deviations.md](docs/deviations.md) (known compatibility gaps / parity notes)
+- [docs/generation.md](docs/generation.md) (how this package is generated)
 
 ## Versioning Model
 
