@@ -39,8 +39,8 @@ app.use((req, _res, next) => {
 Error handlers have `(err, req, res, next)` shape:
 
 ```ts
-app.use((err, _req, res, _next) => {
-  res.status(500).json({ error: String(err) });
+app.useError((err, _req, res, _next) => {
+  res.status(500).json({ error: `${err}` });
 });
 ```
 
@@ -107,4 +107,3 @@ res.set("x-powered-by", "tsonic");
 res.cookie("sid", "abc123");
 res.clearCookie("sid");
 ```
-
