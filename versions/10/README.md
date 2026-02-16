@@ -33,6 +33,7 @@ export function main(): void {
 
   app.listen(3000);
 }
+
 EOF
 
 npm run dev
@@ -55,6 +56,7 @@ export function main(): void {
 
   app.listen(3000);
 }
+
 ```
 
 ## Basic API Surface
@@ -66,6 +68,7 @@ import { express } from "@tsonic/express/index.js";
 
 const app = express.create();
 const router = express.Router();
+
 ```
 
 ### Routing
@@ -75,10 +78,11 @@ Common verbs:
 ```ts
 app.get("/health", (_req, res) => res.send("ok"));
 app.post("/items", (req, res) => res.json(req.body));
-app.put("/items/:id", (req, res) => res.send(req.params["id"]));
+app.put("/items/:id", (req, res) => res.send(req.param("id")));
 app.delete("/items/:id", (_req, res) => res.sendStatus(204));
 app.patch("/items/:id", (_req, res) => res.sendStatus(204));
 app.all("/anything", (_req, res) => res.send("matched"));
+
 ```
 
 ### Middleware
@@ -88,12 +92,13 @@ app.use((req, _res, next) => {
   // Do something with req
   next();
 });
+
 ```
 
 Error middleware:
 
 ```ts
-app.use((err, _req, res, _next) => {
+app.useError((err, _req, res, _next) => {
   res.status(500).json({ error: `${err}` });
 });
 ```
@@ -122,12 +127,14 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.text());
 app.use(express.raw());
+
 ```
 
 ### Static files
 
 ```ts
 app.use(express.static("./public"));
+
 ```
 
 ### Listen / close
@@ -135,6 +142,7 @@ app.use(express.static("./public"));
 ```ts
 const server = app.listen(3000);
 server.close();
+
 ```
 
 ## Advanced docs
@@ -152,3 +160,5 @@ This repo is versioned by runtime major:
 ## License
 
 MIT
+
+

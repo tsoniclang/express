@@ -81,6 +81,11 @@ find . -maxdepth 1 -type d ! -name '.' -exec rm -rf {} \; 2>/dev/null || true
 rm -f *.d.ts *.js 2>/dev/null || true
 echo "  Done"
 
+echo "[1.5/3] Rendering README..."
+cd "$PROJECT_DIR"
+node ./__build/scripts/render-readme.mjs "$DOTNET_MAJOR"
+echo "  Done"
+
 echo "[2/3] Building tsbindgen..."
 cd "$TSBINDGEN_DIR"
 dotnet build src/tsbindgen/tsbindgen.csproj -c Release --verbosity quiet
@@ -98,9 +103,18 @@ dotnet run --project src/tsbindgen/tsbindgen.csproj --no-build -c Release -- \
 
 cp -f "$PROJECT_DIR/README.md" "$OUT_DIR/README.md"
 cp -f "$PROJECT_DIR/LICENSE" "$OUT_DIR/LICENSE"
+rm -rf "$OUT_DIR/docs" 2>/dev/null || true
+cp -R "$PROJECT_DIR/docs" "$OUT_DIR/docs"
+
+echo "Post-processing generated declarations..."
+cd "$PROJECT_DIR"
+node ./__build/scripts/postprocess-generated.mjs "$DOTNET_MAJOR"
 
 # Keep package output focused on express namespace surface.
-find "$OUT_DIR" -mindepth 1 -maxdepth 1 -type d ! -name 'index' -exec rm -rf {} \;
+find "$OUT_DIR" -mindepth 1 -maxdepth 1 -type d \
+  ! -name 'index' \
+  ! -name 'docs' \
+  -exec rm -rf {} \;
 find "$OUT_DIR" -mindepth 1 -maxdepth 1 -type f \
   ! -name 'index.d.ts' \
   ! -name 'index.js' \

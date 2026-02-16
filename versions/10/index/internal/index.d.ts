@@ -312,6 +312,7 @@ export interface Request$instance {
     get(field: string): string | undefined;
     header(field: string): string | undefined;
     is(...types: string[]): unknown | undefined;
+    param(name: string): string | undefined;
     range(size: long, options?: RangeOptions): unknown;
     setHeader(name: string, value: string): void;
 }
@@ -654,24 +655,14 @@ export interface RoutingHost_1$instance<TSelf extends RoutingHost_1<TSelf>> {
     unsubscribe(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
     unsubscribe(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
     unsubscribe(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
-    use(callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
-    use(callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
-    use(callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
     use(callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
-    use(callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
     use(callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
-    use(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): TSelf;
-    use(callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): TSelf;
-    use(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): TSelf;
-    use(path: string, callback: RouteHandler, ...callbacks: RouteHandler[]): TSelf;
-    use(path: string, callback: RouteHandlerReturn, ...callbacks: RouteHandlerReturn[]): TSelf;
-    use(path: string, callback: RouteHandlerSync, ...callbacks: RouteHandlerSync[]): TSelf;
     use(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): TSelf;
-    use(path: string, callback: RequestHandlerReturn, ...callbacks: RequestHandlerReturn[]): TSelf;
     use(path: string, callback: RequestHandlerSync, ...callbacks: RequestHandlerSync[]): TSelf;
-    use(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): TSelf;
-    use(path: string, callback: ErrorRequestHandlerReturn, ...callbacks: ErrorRequestHandlerReturn[]): TSelf;
-    use(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): TSelf;
+    useError(callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): TSelf;
+    useError(callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): TSelf;
+    useError(path: string, callback: ErrorRequestHandler, ...callbacks: ErrorRequestHandler[]): TSelf;
+    useError(path: string, callback: ErrorRequestHandlerSync, ...callbacks: ErrorRequestHandlerSync[]): TSelf;
 }
 
 

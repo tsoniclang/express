@@ -3525,7 +3525,7 @@
         {
           "stableId": "express:express.Request::accepts(System.String[]):System.Object",
           "clrName": "accepts",
-          "metadataToken": 100663622,
+          "metadataToken": 100663627,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "accepts|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3545,7 +3545,7 @@
         {
           "stableId": "express:express.Request::acceptsCharsets(System.String[]):System.Object",
           "clrName": "acceptsCharsets",
-          "metadataToken": 100663623,
+          "metadataToken": 100663628,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "acceptsCharsets|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3565,7 +3565,7 @@
         {
           "stableId": "express:express.Request::acceptsEncodings(System.String[]):System.Object",
           "clrName": "acceptsEncodings",
-          "metadataToken": 100663624,
+          "metadataToken": 100663629,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "acceptsEncodings|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3585,7 +3585,7 @@
         {
           "stableId": "express:express.Request::acceptsLanguages(System.String[]):System.Object",
           "clrName": "acceptsLanguages",
-          "metadataToken": 100663625,
+          "metadataToken": 100663630,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "acceptsLanguages|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3605,7 +3605,7 @@
         {
           "stableId": "express:express.Request::get(System.String):System.String",
           "clrName": "get",
-          "metadataToken": 100663626,
+          "metadataToken": 100663631,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "get|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -3625,7 +3625,7 @@
         {
           "stableId": "express:express.Request::header(System.String):System.String",
           "clrName": "header",
-          "metadataToken": 100663627,
+          "metadataToken": 100663632,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "header|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -3643,9 +3643,29 @@
           "isExtensionMethod": false
         },
         {
+          "stableId": "express:express.Request::param(System.String):System.String",
+          "clrName": "param",
+          "metadataToken": 100663633,
+          "canonicalSignature": "(System.String):System.String",
+          "normalizedSignature": "param|(System.String):System.String|static=false",
+          "emitScope": "ClassSurface",
+          "provenance": "Original",
+          "arity": 0,
+          "parameterCount": 1,
+          "isStatic": false,
+          "isAbstract": false,
+          "isVirtual": false,
+          "isOverride": false,
+          "isSealed": false,
+          "visibility": "Public",
+          "declaringClrType": "express.Request",
+          "declaringAssemblyName": "express",
+          "isExtensionMethod": false
+        },
+        {
           "stableId": "express:express.Request::is(System.String[]):System.Object",
           "clrName": "is",
-          "metadataToken": 100663628,
+          "metadataToken": 100663634,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "is|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3665,7 +3685,7 @@
         {
           "stableId": "express:express.Request::range(System.Int64,express.RangeOptions):System.Object",
           "clrName": "range",
-          "metadataToken": 100663629,
+          "metadataToken": 100663635,
           "canonicalSignature": "(System.Int64,express.RangeOptions):System.Object",
           "normalizedSignature": "range|(System.Int64,express.RangeOptions):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3685,7 +3705,7 @@
         {
           "stableId": "express:express.Request::setHeader(System.String,System.String):System.Void",
           "clrName": "setHeader",
-          "metadataToken": 100663630,
+          "metadataToken": 100663636,
           "canonicalSignature": "(System.String,System.String):System.Void",
           "normalizedSignature": "setHeader|(System.String,System.String):System.Void|static=false",
           "emitScope": "ClassSurface",
@@ -3707,7 +3727,7 @@
         {
           "stableId": "express:express.Request::app:express.Application",
           "clrName": "app",
-          "metadataToken": 385876047,
+          "metadataToken": 385876049,
           "canonicalSignature": ":express.Application",
           "normalizedSignature": "app|:express.Application|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3726,7 +3746,7 @@
         {
           "stableId": "express:express.Request::baseUrl:System.String",
           "clrName": "baseUrl",
-          "metadataToken": 385876048,
+          "metadataToken": 385876050,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "baseUrl|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3745,7 +3765,7 @@
         {
           "stableId": "express:express.Request::body:System.Object",
           "clrName": "body",
-          "metadataToken": 385876049,
+          "metadataToken": 385876051,
           "canonicalSignature": ":System.Object",
           "normalizedSignature": "body|:System.Object|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3764,7 +3784,7 @@
         {
           "stableId": "express:express.Request::cookies:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "cookies",
-          "metadataToken": 385876050,
+          "metadataToken": 385876052,
           "canonicalSignature": ":System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "cookies|:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3783,7 +3803,7 @@
         {
           "stableId": "express:express.Request::fresh:System.Boolean",
           "clrName": "fresh",
-          "metadataToken": 385876051,
+          "metadataToken": 385876053,
           "canonicalSignature": ":System.Boolean",
           "normalizedSignature": "fresh|:System.Boolean|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3802,7 +3822,7 @@
         {
           "stableId": "express:express.Request::host:System.String",
           "clrName": "host",
-          "metadataToken": 385876052,
+          "metadataToken": 385876054,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "host|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3821,7 +3841,7 @@
         {
           "stableId": "express:express.Request::hostname:System.String",
           "clrName": "hostname",
-          "metadataToken": 385876053,
+          "metadataToken": 385876055,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "hostname|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3840,7 +3860,7 @@
         {
           "stableId": "express:express.Request::ip:System.String",
           "clrName": "ip",
-          "metadataToken": 385876054,
+          "metadataToken": 385876056,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "ip|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3859,7 +3879,7 @@
         {
           "stableId": "express:express.Request::ips:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "ips",
-          "metadataToken": 385876055,
+          "metadataToken": 385876057,
           "canonicalSignature": ":System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "ips|:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3878,7 +3898,7 @@
         {
           "stableId": "express:express.Request::method:System.String",
           "clrName": "method",
-          "metadataToken": 385876056,
+          "metadataToken": 385876058,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "method|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3897,7 +3917,7 @@
         {
           "stableId": "express:express.Request::originalUrl:System.String",
           "clrName": "originalUrl",
-          "metadataToken": 385876057,
+          "metadataToken": 385876059,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "originalUrl|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3916,7 +3936,7 @@
         {
           "stableId": "express:express.Request::params:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "params",
-          "metadataToken": 385876058,
+          "metadataToken": 385876060,
           "canonicalSignature": ":System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "params|:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3935,7 +3955,7 @@
         {
           "stableId": "express:express.Request::path:System.String",
           "clrName": "path",
-          "metadataToken": 385876059,
+          "metadataToken": 385876061,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "path|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3954,7 +3974,7 @@
         {
           "stableId": "express:express.Request::protocol:System.String",
           "clrName": "protocol",
-          "metadataToken": 385876060,
+          "metadataToken": 385876062,
           "canonicalSignature": ":System.String",
           "normalizedSignature": "protocol|:System.String|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3973,7 +3993,7 @@
         {
           "stableId": "express:express.Request::query:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "query",
-          "metadataToken": 385876061,
+          "metadataToken": 385876063,
           "canonicalSignature": ":System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "query|:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -3992,7 +4012,7 @@
         {
           "stableId": "express:express.Request::res:express.Response",
           "clrName": "res",
-          "metadataToken": 385876062,
+          "metadataToken": 385876064,
           "canonicalSignature": ":express.Response",
           "normalizedSignature": "res|:express.Response|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4011,7 +4031,7 @@
         {
           "stableId": "express:express.Request::route:express.Route",
           "clrName": "route",
-          "metadataToken": 385876063,
+          "metadataToken": 385876065,
           "canonicalSignature": ":express.Route",
           "normalizedSignature": "route|:express.Route|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4030,7 +4050,7 @@
         {
           "stableId": "express:express.Request::signed:System.Boolean",
           "clrName": "signed",
-          "metadataToken": 385876064,
+          "metadataToken": 385876066,
           "canonicalSignature": ":System.Boolean",
           "normalizedSignature": "signed|:System.Boolean|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4049,7 +4069,7 @@
         {
           "stableId": "express:express.Request::signedCookies:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "signedCookies",
-          "metadataToken": 385876065,
+          "metadataToken": 385876067,
           "canonicalSignature": ":System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "signedCookies|:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4068,7 +4088,7 @@
         {
           "stableId": "express:express.Request::subdomains:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "subdomains",
-          "metadataToken": 385876066,
+          "metadataToken": 385876068,
           "canonicalSignature": ":System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "subdomains|:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4087,7 +4107,7 @@
         {
           "stableId": "express:express.Request::xhr:System.Boolean",
           "clrName": "xhr",
-          "metadataToken": 385876067,
+          "metadataToken": 385876069,
           "canonicalSignature": ":System.Boolean",
           "normalizedSignature": "xhr|:System.Boolean|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4106,7 +4126,7 @@
         {
           "stableId": "express:express.Request::secure:System.Boolean",
           "clrName": "secure",
-          "metadataToken": 385876068,
+          "metadataToken": 385876070,
           "canonicalSignature": ":System.Boolean",
           "normalizedSignature": "secure|:System.Boolean|static=false|accessor=get",
           "emitScope": "ClassSurface",
@@ -4125,7 +4145,7 @@
         {
           "stableId": "express:express.Request::stale:System.Boolean",
           "clrName": "stale",
-          "metadataToken": 385876069,
+          "metadataToken": 385876071,
           "canonicalSignature": ":System.Boolean",
           "normalizedSignature": "stale|:System.Boolean|static=false|accessor=get",
           "emitScope": "ClassSurface",
@@ -4147,7 +4167,7 @@
       "constructors": [
         {
           "stableId": "express:express.Request::.ctor():void",
-          "metadataToken": 100663618,
+          "metadataToken": 100663623,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -4177,7 +4197,7 @@
         {
           "stableId": "express:express.Response::append(System.String,System.String):express.Response",
           "clrName": "append",
-          "metadataToken": 100663642,
+          "metadataToken": 100663648,
           "canonicalSignature": "(System.String,System.String):express.Response",
           "normalizedSignature": "append|(System.String,System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4197,7 +4217,7 @@
         {
           "stableId": "express:express.Response::append(System.String,System.Collections.Generic.IEnumerable_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "append",
-          "metadataToken": 100663643,
+          "metadataToken": 100663649,
           "canonicalSignature": "(System.String,System.Collections.Generic.IEnumerable_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "append|(System.String,System.Collections.Generic.IEnumerable_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4217,7 +4237,7 @@
         {
           "stableId": "express:express.Response::attachment(System.String):express.Response",
           "clrName": "attachment",
-          "metadataToken": 100663644,
+          "metadataToken": 100663650,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "attachment|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4237,7 +4257,7 @@
         {
           "stableId": "express:express.Response::cookie(System.String,System.Object,express.CookieOptions):express.Response",
           "clrName": "cookie",
-          "metadataToken": 100663645,
+          "metadataToken": 100663651,
           "canonicalSignature": "(System.String,System.Object,express.CookieOptions):express.Response",
           "normalizedSignature": "cookie|(System.String,System.Object,express.CookieOptions):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4257,7 +4277,7 @@
         {
           "stableId": "express:express.Response::clearCookie(System.String,express.CookieOptions):express.Response",
           "clrName": "clearCookie",
-          "metadataToken": 100663646,
+          "metadataToken": 100663652,
           "canonicalSignature": "(System.String,express.CookieOptions):express.Response",
           "normalizedSignature": "clearCookie|(System.String,express.CookieOptions):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4277,7 +4297,7 @@
         {
           "stableId": "express:express.Response::download(System.String,System.String,express.DownloadOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "download",
-          "metadataToken": 100663647,
+          "metadataToken": 100663653,
           "canonicalSignature": "(System.String,System.String,express.DownloadOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "download|(System.String,System.String,express.DownloadOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4297,7 +4317,7 @@
         {
           "stableId": "express:express.Response::end(System.Object,System.String,System.Action):express.Response",
           "clrName": "end",
-          "metadataToken": 100663648,
+          "metadataToken": 100663654,
           "canonicalSignature": "(System.Object,System.String,System.Action):express.Response",
           "normalizedSignature": "end|(System.Object,System.String,System.Action):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4317,7 +4337,7 @@
         {
           "stableId": "express:express.Response::format(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Action,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "format",
-          "metadataToken": 100663649,
+          "metadataToken": 100663655,
           "canonicalSignature": "(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Action,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "format|(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Action,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4337,7 +4357,7 @@
         {
           "stableId": "express:express.Response::get(System.String):System.String",
           "clrName": "get",
-          "metadataToken": 100663650,
+          "metadataToken": 100663656,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "get|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -4357,7 +4377,7 @@
         {
           "stableId": "express:express.Response::json(System.Object):express.Response",
           "clrName": "json",
-          "metadataToken": 100663651,
+          "metadataToken": 100663657,
           "canonicalSignature": "(System.Object):express.Response",
           "normalizedSignature": "json|(System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4377,7 +4397,7 @@
         {
           "stableId": "express:express.Response::jsonp(System.Object):express.Response",
           "clrName": "jsonp",
-          "metadataToken": 100663652,
+          "metadataToken": 100663658,
           "canonicalSignature": "(System.Object):express.Response",
           "normalizedSignature": "jsonp|(System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4397,7 +4417,7 @@
         {
           "stableId": "express:express.Response::links(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "links",
-          "metadataToken": 100663653,
+          "metadataToken": 100663659,
           "canonicalSignature": "(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "links|(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4417,7 +4437,7 @@
         {
           "stableId": "express:express.Response::location(System.String):express.Response",
           "clrName": "location",
-          "metadataToken": 100663654,
+          "metadataToken": 100663660,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "location|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4437,7 +4457,7 @@
         {
           "stableId": "express:express.Response::redirect(System.String):express.Response",
           "clrName": "redirect",
-          "metadataToken": 100663655,
+          "metadataToken": 100663661,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "redirect|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4457,7 +4477,7 @@
         {
           "stableId": "express:express.Response::redirect(System.Int32,System.String):express.Response",
           "clrName": "redirect",
-          "metadataToken": 100663656,
+          "metadataToken": 100663662,
           "canonicalSignature": "(System.Int32,System.String):express.Response",
           "normalizedSignature": "redirect|(System.Int32,System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4477,7 +4497,7 @@
         {
           "stableId": "express:express.Response::render(System.String):express.Response",
           "clrName": "render",
-          "metadataToken": 100663657,
+          "metadataToken": 100663663,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "render|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4497,7 +4517,7 @@
         {
           "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
-          "metadataToken": 100663658,
+          "metadataToken": 100663664,
           "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4517,7 +4537,7 @@
         {
           "stableId": "express:express.Response::render(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
-          "metadataToken": 100663659,
+          "metadataToken": 100663665,
           "canonicalSignature": "(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "render|(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4537,7 +4557,7 @@
         {
           "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
-          "metadataToken": 100663660,
+          "metadataToken": 100663666,
           "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4557,7 +4577,7 @@
         {
           "stableId": "express:express.Response::send(System.Object):express.Response",
           "clrName": "send",
-          "metadataToken": 100663661,
+          "metadataToken": 100663667,
           "canonicalSignature": "(System.Object):express.Response",
           "normalizedSignature": "send|(System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4577,7 +4597,7 @@
         {
           "stableId": "express:express.Response::sendFile(System.String,express.SendFileOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "sendFile",
-          "metadataToken": 100663662,
+          "metadataToken": 100663668,
           "canonicalSignature": "(System.String,express.SendFileOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "sendFile|(System.String,express.SendFileOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4597,7 +4617,7 @@
         {
           "stableId": "express:express.Response::sendStatus(System.Int32):express.Response",
           "clrName": "sendStatus",
-          "metadataToken": 100663663,
+          "metadataToken": 100663669,
           "canonicalSignature": "(System.Int32):express.Response",
           "normalizedSignature": "sendStatus|(System.Int32):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4617,7 +4637,7 @@
         {
           "stableId": "express:express.Response::set(System.String,System.Object):express.Response",
           "clrName": "set",
-          "metadataToken": 100663664,
+          "metadataToken": 100663670,
           "canonicalSignature": "(System.String,System.Object):express.Response",
           "normalizedSignature": "set|(System.String,System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4637,7 +4657,7 @@
         {
           "stableId": "express:express.Response::set(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "set",
-          "metadataToken": 100663665,
+          "metadataToken": 100663671,
           "canonicalSignature": "(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "set|(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4657,7 +4677,7 @@
         {
           "stableId": "express:express.Response::header(System.String,System.Object):express.Response",
           "clrName": "header",
-          "metadataToken": 100663666,
+          "metadataToken": 100663672,
           "canonicalSignature": "(System.String,System.Object):express.Response",
           "normalizedSignature": "header|(System.String,System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4677,7 +4697,7 @@
         {
           "stableId": "express:express.Response::status(System.Int32):express.Response",
           "clrName": "status",
-          "metadataToken": 100663667,
+          "metadataToken": 100663673,
           "canonicalSignature": "(System.Int32):express.Response",
           "normalizedSignature": "status|(System.Int32):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4697,7 +4717,7 @@
         {
           "stableId": "express:express.Response::type(System.String):express.Response",
           "clrName": "type",
-          "metadataToken": 100663668,
+          "metadataToken": 100663674,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "type|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4717,7 +4737,7 @@
         {
           "stableId": "express:express.Response::contentType(System.String):express.Response",
           "clrName": "contentType",
-          "metadataToken": 100663669,
+          "metadataToken": 100663675,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "contentType|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4737,7 +4757,7 @@
         {
           "stableId": "express:express.Response::vary(System.String):express.Response",
           "clrName": "vary",
-          "metadataToken": 100663670,
+          "metadataToken": 100663676,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "vary|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4759,7 +4779,7 @@
         {
           "stableId": "express:express.Response::req:express.Request",
           "clrName": "req",
-          "metadataToken": 385876071,
+          "metadataToken": 385876073,
           "canonicalSignature": ":express.Request",
           "normalizedSignature": "req|:express.Request|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4778,7 +4798,7 @@
         {
           "stableId": "express:express.Response::locals:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "locals",
-          "metadataToken": 385876072,
+          "metadataToken": 385876074,
           "canonicalSignature": ":System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "normalizedSignature": "locals|:System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=get",
           "emitScope": "ClassSurface",
@@ -4797,7 +4817,7 @@
         {
           "stableId": "express:express.Response::statusCode:System.Int32",
           "clrName": "statusCode",
-          "metadataToken": 385876073,
+          "metadataToken": 385876075,
           "canonicalSignature": ":System.Int32",
           "normalizedSignature": "statusCode|:System.Int32|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4816,7 +4836,7 @@
         {
           "stableId": "express:express.Response::headersSent:System.Boolean",
           "clrName": "headersSent",
-          "metadataToken": 385876074,
+          "metadataToken": 385876076,
           "canonicalSignature": ":System.Boolean",
           "normalizedSignature": "headersSent|:System.Boolean|static=false|accessor=getset",
           "emitScope": "ClassSurface",
@@ -4835,7 +4855,7 @@
         {
           "stableId": "express:express.Response::app:express.Application",
           "clrName": "app",
-          "metadataToken": 385876075,
+          "metadataToken": 385876077,
           "canonicalSignature": ":express.Application",
           "normalizedSignature": "app|:express.Application|static=false|accessor=get",
           "emitScope": "ClassSurface",
@@ -4857,7 +4877,7 @@
       "constructors": [
         {
           "stableId": "express:express.Response::.ctor():void",
-          "metadataToken": 100663639,
+          "metadataToken": 100663645,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -4890,7 +4910,7 @@
         {
           "stableId": "express:express.Route::all(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663685,
+          "metadataToken": 100663691,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "all|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4910,7 +4930,7 @@
         {
           "stableId": "express:express.Route::all(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663686,
+          "metadataToken": 100663692,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "all|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4930,7 +4950,7 @@
         {
           "stableId": "express:express.Route::all(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663687,
+          "metadataToken": 100663693,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "all|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4950,7 +4970,7 @@
         {
           "stableId": "express:express.Route::all(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663688,
+          "metadataToken": 100663694,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "all|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4970,7 +4990,7 @@
         {
           "stableId": "express:express.Route::all(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663689,
+          "metadataToken": 100663695,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "all|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4990,7 +5010,7 @@
         {
           "stableId": "express:express.Route::all(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663690,
+          "metadataToken": 100663696,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "all|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5010,7 +5030,7 @@
         {
           "stableId": "express:express.Route::delete(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663696,
+          "metadataToken": 100663702,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "delete|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5030,7 +5050,7 @@
         {
           "stableId": "express:express.Route::delete(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663697,
+          "metadataToken": 100663703,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "delete|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5050,7 +5070,7 @@
         {
           "stableId": "express:express.Route::delete(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663698,
+          "metadataToken": 100663704,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "delete|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5070,7 +5090,7 @@
         {
           "stableId": "express:express.Route::delete(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663699,
+          "metadataToken": 100663705,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "delete|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5090,7 +5110,7 @@
         {
           "stableId": "express:express.Route::delete(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663700,
+          "metadataToken": 100663706,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "delete|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5110,7 +5130,7 @@
         {
           "stableId": "express:express.Route::delete(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663701,
+          "metadataToken": 100663707,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "delete|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5130,7 +5150,7 @@
         {
           "stableId": "express:express.Route::get(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663704,
+          "metadataToken": 100663710,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "get|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5150,7 +5170,7 @@
         {
           "stableId": "express:express.Route::get(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663705,
+          "metadataToken": 100663711,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "get|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5170,7 +5190,7 @@
         {
           "stableId": "express:express.Route::get(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663706,
+          "metadataToken": 100663712,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "get|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5190,7 +5210,7 @@
         {
           "stableId": "express:express.Route::get(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663707,
+          "metadataToken": 100663713,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "get|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5210,7 +5230,7 @@
         {
           "stableId": "express:express.Route::get(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663708,
+          "metadataToken": 100663714,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "get|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5230,7 +5250,7 @@
         {
           "stableId": "express:express.Route::get(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663709,
+          "metadataToken": 100663715,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "get|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5250,7 +5270,7 @@
         {
           "stableId": "express:express.Route::options(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663721,
+          "metadataToken": 100663727,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "options|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5270,7 +5290,7 @@
         {
           "stableId": "express:express.Route::options(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663722,
+          "metadataToken": 100663728,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "options|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5290,7 +5310,7 @@
         {
           "stableId": "express:express.Route::options(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663723,
+          "metadataToken": 100663729,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "options|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5310,7 +5330,7 @@
         {
           "stableId": "express:express.Route::options(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663724,
+          "metadataToken": 100663730,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "options|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5330,7 +5350,7 @@
         {
           "stableId": "express:express.Route::options(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663725,
+          "metadataToken": 100663731,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "options|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5350,7 +5370,7 @@
         {
           "stableId": "express:express.Route::options(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663726,
+          "metadataToken": 100663732,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "options|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5370,7 +5390,7 @@
         {
           "stableId": "express:express.Route::patch(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663729,
+          "metadataToken": 100663735,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "patch|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5390,7 +5410,7 @@
         {
           "stableId": "express:express.Route::patch(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663730,
+          "metadataToken": 100663736,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "patch|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5410,7 +5430,7 @@
         {
           "stableId": "express:express.Route::patch(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663731,
+          "metadataToken": 100663737,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "patch|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5430,7 +5450,7 @@
         {
           "stableId": "express:express.Route::patch(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663732,
+          "metadataToken": 100663738,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "patch|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5450,7 +5470,7 @@
         {
           "stableId": "express:express.Route::patch(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663733,
+          "metadataToken": 100663739,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "patch|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5470,7 +5490,7 @@
         {
           "stableId": "express:express.Route::patch(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663734,
+          "metadataToken": 100663740,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "patch|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5490,7 +5510,7 @@
         {
           "stableId": "express:express.Route::post(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663737,
+          "metadataToken": 100663743,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "post|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5510,7 +5530,7 @@
         {
           "stableId": "express:express.Route::post(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663738,
+          "metadataToken": 100663744,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "post|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5530,7 +5550,7 @@
         {
           "stableId": "express:express.Route::post(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663739,
+          "metadataToken": 100663745,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "post|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5550,7 +5570,7 @@
         {
           "stableId": "express:express.Route::post(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663740,
+          "metadataToken": 100663746,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "post|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5570,7 +5590,7 @@
         {
           "stableId": "express:express.Route::post(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663741,
+          "metadataToken": 100663747,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "post|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5590,7 +5610,7 @@
         {
           "stableId": "express:express.Route::post(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663742,
+          "metadataToken": 100663748,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "post|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5610,7 +5630,7 @@
         {
           "stableId": "express:express.Route::put(express.RouteHandler,express.RouteHandler[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663746,
+          "metadataToken": 100663752,
           "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):express.Route",
           "normalizedSignature": "put|(express.RouteHandler,express.RouteHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5630,7 +5650,7 @@
         {
           "stableId": "express:express.Route::put(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663747,
+          "metadataToken": 100663753,
           "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route",
           "normalizedSignature": "put|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5650,7 +5670,7 @@
         {
           "stableId": "express:express.Route::put(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663748,
+          "metadataToken": 100663754,
           "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route",
           "normalizedSignature": "put|(express.RouteHandlerSync,express.RouteHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5670,7 +5690,7 @@
         {
           "stableId": "express:express.Route::put(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663749,
+          "metadataToken": 100663755,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "put|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5690,7 +5710,7 @@
         {
           "stableId": "express:express.Route::put(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663750,
+          "metadataToken": 100663756,
           "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route",
           "normalizedSignature": "put|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5710,7 +5730,7 @@
         {
           "stableId": "express:express.Route::put(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663751,
+          "metadataToken": 100663757,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route",
           "normalizedSignature": "put|(express.RequestHandlerSync,express.RequestHandlerSync[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -6572,7 +6592,7 @@
         {
           "stableId": "express:express.Route::path:System.Object",
           "clrName": "path",
-          "metadataToken": 385876080,
+          "metadataToken": 385876082,
           "canonicalSignature": ":System.Object",
           "normalizedSignature": "path|:System.Object|static=false|accessor=get",
           "emitScope": "ClassSurface",
@@ -6615,7 +6635,7 @@
         {
           "stableId": "express:express.Router::param(System.String,express.ParamHandler):express.Router",
           "clrName": "param",
-          "metadataToken": 100663785,
+          "metadataToken": 100663791,
           "canonicalSignature": "(System.String,express.ParamHandler):express.Router",
           "normalizedSignature": "param|(System.String,express.ParamHandler):express.Router|static=false",
           "emitScope": "ClassSurface",
@@ -6639,7 +6659,7 @@
       "constructors": [
         {
           "stableId": "express:express.Router::.ctor(express.RouterOptions):void",
-          "metadataToken": 100663759,
+          "metadataToken": 100663765,
           "canonicalSignature": "(express.RouterOptions):void",
           "normalizedSignature": "constructor|(express.RouterOptions):void|static=false",
           "isStatic": false,
@@ -6763,7 +6783,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663804,
+          "metadataToken": 100663810,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6783,7 +6803,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663805,
+          "metadataToken": 100663811,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6803,7 +6823,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663806,
+          "metadataToken": 100663812,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6823,7 +6843,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663807,
+          "metadataToken": 100663813,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6843,7 +6863,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663808,
+          "metadataToken": 100663814,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6863,7 +6883,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663809,
+          "metadataToken": 100663815,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6883,7 +6903,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663810,
+          "metadataToken": 100663816,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6903,7 +6923,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663811,
+          "metadataToken": 100663817,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6923,7 +6943,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663812,
+          "metadataToken": 100663818,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6943,7 +6963,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663813,
+          "metadataToken": 100663819,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6963,7 +6983,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663814,
+          "metadataToken": 100663820,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -6983,7 +7003,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663815,
+          "metadataToken": 100663821,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7003,7 +7023,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663816,
+          "metadataToken": 100663822,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7023,7 +7043,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663817,
+          "metadataToken": 100663823,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7043,7 +7063,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663818,
+          "metadataToken": 100663824,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7063,7 +7083,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663819,
+          "metadataToken": 100663825,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7083,7 +7103,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663820,
+          "metadataToken": 100663826,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7103,7 +7123,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663821,
+          "metadataToken": 100663827,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7123,7 +7143,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663822,
+          "metadataToken": 100663828,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7143,7 +7163,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663823,
+          "metadataToken": 100663829,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7163,7 +7183,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663824,
+          "metadataToken": 100663830,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7183,7 +7203,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663825,
+          "metadataToken": 100663831,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7203,7 +7223,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663826,
+          "metadataToken": 100663832,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7223,7 +7243,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663827,
+          "metadataToken": 100663833,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7243,7 +7263,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663828,
+          "metadataToken": 100663834,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7263,7 +7283,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663829,
+          "metadataToken": 100663835,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7283,7 +7303,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663830,
+          "metadataToken": 100663836,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7303,7 +7323,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663831,
+          "metadataToken": 100663837,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7323,7 +7343,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663832,
+          "metadataToken": 100663838,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7343,7 +7363,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663833,
+          "metadataToken": 100663839,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7363,7 +7383,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663834,
+          "metadataToken": 100663840,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7383,7 +7403,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663835,
+          "metadataToken": 100663841,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7403,7 +7423,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663836,
+          "metadataToken": 100663842,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7423,7 +7443,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663837,
+          "metadataToken": 100663843,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7443,7 +7463,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663838,
+          "metadataToken": 100663844,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7463,7 +7483,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663839,
+          "metadataToken": 100663845,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7483,7 +7503,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663840,
+          "metadataToken": 100663846,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7503,7 +7523,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663841,
+          "metadataToken": 100663847,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7523,7 +7543,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663842,
+          "metadataToken": 100663848,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7543,7 +7563,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663843,
+          "metadataToken": 100663849,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7563,7 +7583,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663844,
+          "metadataToken": 100663850,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7583,7 +7603,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663845,
+          "metadataToken": 100663851,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7603,7 +7623,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663846,
+          "metadataToken": 100663852,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7623,7 +7643,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663847,
+          "metadataToken": 100663853,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7643,7 +7663,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663848,
+          "metadataToken": 100663854,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7663,7 +7683,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663849,
+          "metadataToken": 100663855,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7683,7 +7703,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663850,
+          "metadataToken": 100663856,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7703,7 +7723,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663851,
+          "metadataToken": 100663857,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7723,7 +7743,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663852,
+          "metadataToken": 100663858,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7743,7 +7763,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663853,
+          "metadataToken": 100663859,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7763,7 +7783,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663854,
+          "metadataToken": 100663860,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7783,7 +7803,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663855,
+          "metadataToken": 100663861,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7803,7 +7823,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663856,
+          "metadataToken": 100663862,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7823,7 +7843,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663857,
+          "metadataToken": 100663863,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7843,7 +7863,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663858,
+          "metadataToken": 100663864,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7863,7 +7883,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663859,
+          "metadataToken": 100663865,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7883,7 +7903,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663860,
+          "metadataToken": 100663866,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7903,7 +7923,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663861,
+          "metadataToken": 100663867,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7923,7 +7943,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663862,
+          "metadataToken": 100663868,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7943,7 +7963,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663863,
+          "metadataToken": 100663869,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7963,7 +7983,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663864,
+          "metadataToken": 100663870,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -7983,7 +8003,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663865,
+          "metadataToken": 100663871,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8003,7 +8023,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663866,
+          "metadataToken": 100663872,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8023,7 +8043,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663867,
+          "metadataToken": 100663873,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8043,7 +8063,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663868,
+          "metadataToken": 100663874,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8063,7 +8083,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663869,
+          "metadataToken": 100663875,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8083,7 +8103,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663870,
+          "metadataToken": 100663876,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8103,7 +8123,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663871,
+          "metadataToken": 100663877,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8123,7 +8143,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663872,
+          "metadataToken": 100663878,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8143,7 +8163,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663873,
+          "metadataToken": 100663879,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8163,7 +8183,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663874,
+          "metadataToken": 100663880,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8183,7 +8203,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663875,
+          "metadataToken": 100663881,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8203,7 +8223,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663876,
+          "metadataToken": 100663882,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8223,7 +8243,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663877,
+          "metadataToken": 100663883,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8243,7 +8263,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663878,
+          "metadataToken": 100663884,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8263,7 +8283,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663879,
+          "metadataToken": 100663885,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8283,7 +8303,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663880,
+          "metadataToken": 100663886,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8303,7 +8323,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663881,
+          "metadataToken": 100663887,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8323,7 +8343,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663882,
+          "metadataToken": 100663888,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8343,7 +8363,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663883,
+          "metadataToken": 100663889,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8363,7 +8383,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663884,
+          "metadataToken": 100663890,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8383,7 +8403,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663885,
+          "metadataToken": 100663891,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8403,7 +8423,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663886,
+          "metadataToken": 100663892,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8423,7 +8443,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663887,
+          "metadataToken": 100663893,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8443,7 +8463,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663888,
+          "metadataToken": 100663894,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8463,7 +8483,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663889,
+          "metadataToken": 100663895,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8483,7 +8503,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663890,
+          "metadataToken": 100663896,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8503,7 +8523,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663891,
+          "metadataToken": 100663897,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8523,7 +8543,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663892,
+          "metadataToken": 100663898,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8543,7 +8563,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663893,
+          "metadataToken": 100663899,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8563,7 +8583,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663894,
+          "metadataToken": 100663900,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8583,7 +8603,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663895,
+          "metadataToken": 100663901,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8603,7 +8623,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663896,
+          "metadataToken": 100663902,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8623,7 +8643,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663897,
+          "metadataToken": 100663903,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8643,7 +8663,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663898,
+          "metadataToken": 100663904,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8663,7 +8683,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663899,
+          "metadataToken": 100663905,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8683,7 +8703,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663900,
+          "metadataToken": 100663906,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8703,7 +8723,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663901,
+          "metadataToken": 100663907,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8723,7 +8743,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663902,
+          "metadataToken": 100663908,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8743,7 +8763,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663903,
+          "metadataToken": 100663909,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8763,7 +8783,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663904,
+          "metadataToken": 100663910,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8783,7 +8803,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663905,
+          "metadataToken": 100663911,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8803,7 +8823,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663906,
+          "metadataToken": 100663912,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8823,7 +8843,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663907,
+          "metadataToken": 100663913,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8843,7 +8863,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663908,
+          "metadataToken": 100663914,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8863,7 +8883,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663909,
+          "metadataToken": 100663915,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8883,7 +8903,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663910,
+          "metadataToken": 100663916,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8903,7 +8923,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663911,
+          "metadataToken": 100663917,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8923,7 +8943,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663912,
+          "metadataToken": 100663918,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8943,7 +8963,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663913,
+          "metadataToken": 100663919,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8963,7 +8983,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663914,
+          "metadataToken": 100663920,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -8983,7 +9003,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663915,
+          "metadataToken": 100663921,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9003,7 +9023,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663916,
+          "metadataToken": 100663922,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9023,7 +9043,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663917,
+          "metadataToken": 100663923,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9043,7 +9063,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663918,
+          "metadataToken": 100663924,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9063,7 +9083,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663919,
+          "metadataToken": 100663925,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9083,7 +9103,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663920,
+          "metadataToken": 100663926,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9103,7 +9123,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663921,
+          "metadataToken": 100663927,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9123,7 +9143,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663922,
+          "metadataToken": 100663928,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9143,7 +9163,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663923,
+          "metadataToken": 100663929,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9163,7 +9183,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663924,
+          "metadataToken": 100663930,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9183,7 +9203,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663925,
+          "metadataToken": 100663931,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9203,7 +9223,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663926,
+          "metadataToken": 100663932,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9223,7 +9243,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663927,
+          "metadataToken": 100663933,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9243,7 +9263,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663928,
+          "metadataToken": 100663934,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9263,7 +9283,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663929,
+          "metadataToken": 100663935,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9283,7 +9303,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663930,
+          "metadataToken": 100663936,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9303,7 +9323,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663931,
+          "metadataToken": 100663937,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9323,7 +9343,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663932,
+          "metadataToken": 100663938,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9343,7 +9363,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663933,
+          "metadataToken": 100663939,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9363,7 +9383,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663934,
+          "metadataToken": 100663940,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9383,7 +9403,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663935,
+          "metadataToken": 100663941,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9403,7 +9423,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663936,
+          "metadataToken": 100663942,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9423,7 +9443,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663937,
+          "metadataToken": 100663943,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9443,7 +9463,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663938,
+          "metadataToken": 100663944,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9463,7 +9483,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663939,
+          "metadataToken": 100663945,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9483,7 +9503,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663940,
+          "metadataToken": 100663946,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9503,7 +9523,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663941,
+          "metadataToken": 100663947,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9523,7 +9543,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663942,
+          "metadataToken": 100663948,
           "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9543,7 +9563,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663943,
+          "metadataToken": 100663949,
           "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9563,7 +9583,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663944,
+          "metadataToken": 100663950,
           "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9583,7 +9603,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663945,
+          "metadataToken": 100663951,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9603,7 +9623,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663946,
+          "metadataToken": 100663952,
           "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9623,7 +9643,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663947,
+          "metadataToken": 100663953,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9641,69 +9661,9 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.RoutingHost\u00601::use(express.RouteHandler,express.RouteHandler[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663948,
-          "canonicalSignature": "(express.RouteHandler,express.RouteHandler[]):TSelf",
-          "normalizedSignature": "use|(express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663949,
-          "canonicalSignature": "(express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
-          "normalizedSignature": "use|(express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663950,
-          "canonicalSignature": "(express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
-          "normalizedSignature": "use|(express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
           "stableId": "express:express.RoutingHost\u00601::use(express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "use",
-          "metadataToken": 100663951,
+          "metadataToken": 100663954,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "use|(express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9721,29 +9681,9 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.RoutingHost\u00601::use(express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663952,
-          "canonicalSignature": "(express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
-          "normalizedSignature": "use|(express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
           "stableId": "express:express.RoutingHost\u00601::use(express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "use",
-          "metadataToken": 100663953,
+          "metadataToken": 100663955,
           "canonicalSignature": "(express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "use|(express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9761,129 +9701,9 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.RoutingHost\u00601::use(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663954,
-          "canonicalSignature": "(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
-          "normalizedSignature": "use|(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(express.ErrorRequestHandlerReturn,express.ErrorRequestHandlerReturn[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663955,
-          "canonicalSignature": "(express.ErrorRequestHandlerReturn,express.ErrorRequestHandlerReturn[]):TSelf",
-          "normalizedSignature": "use|(express.ErrorRequestHandlerReturn,express.ErrorRequestHandlerReturn[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663956,
-          "canonicalSignature": "(express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
-          "normalizedSignature": "use|(express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 2,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663957,
-          "canonicalSignature": "(System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 3,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663958,
-          "canonicalSignature": "(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 3,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663959,
-          "canonicalSignature": "(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 3,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
           "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "use",
-          "metadataToken": 100663960,
+          "metadataToken": 100663956,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "use|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9901,29 +9721,9 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663961,
-          "canonicalSignature": "(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 3,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
           "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "use",
-          "metadataToken": 100663962,
+          "metadataToken": 100663957,
           "canonicalSignature": "(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "use|(System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -9941,11 +9741,51 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663963,
+          "stableId": "express:express.RoutingHost\u00601::useError(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
+          "clrName": "useError",
+          "metadataToken": 100663958,
+          "canonicalSignature": "(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
+          "normalizedSignature": "useError|(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf|static=false",
+          "emitScope": "ClassSurface",
+          "provenance": "Original",
+          "arity": 0,
+          "parameterCount": 2,
+          "isStatic": false,
+          "isAbstract": false,
+          "isVirtual": false,
+          "isOverride": false,
+          "isSealed": false,
+          "visibility": "Public",
+          "declaringClrType": "express.RoutingHost\u00601",
+          "declaringAssemblyName": "express",
+          "isExtensionMethod": false
+        },
+        {
+          "stableId": "express:express.RoutingHost\u00601::useError(express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
+          "clrName": "useError",
+          "metadataToken": 100663959,
+          "canonicalSignature": "(express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
+          "normalizedSignature": "useError|(express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf|static=false",
+          "emitScope": "ClassSurface",
+          "provenance": "Original",
+          "arity": 0,
+          "parameterCount": 2,
+          "isStatic": false,
+          "isAbstract": false,
+          "isVirtual": false,
+          "isOverride": false,
+          "isSealed": false,
+          "visibility": "Public",
+          "declaringClrType": "express.RoutingHost\u00601",
+          "declaringAssemblyName": "express",
+          "isExtensionMethod": false
+        },
+        {
+          "stableId": "express:express.RoutingHost\u00601::useError(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
+          "clrName": "useError",
+          "metadataToken": 100663960,
           "canonicalSignature": "(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf|static=false",
+          "normalizedSignature": "useError|(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -9961,31 +9801,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.ErrorRequestHandlerReturn,express.ErrorRequestHandlerReturn[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663964,
-          "canonicalSignature": "(System.String,express.ErrorRequestHandlerReturn,express.ErrorRequestHandlerReturn[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.ErrorRequestHandlerReturn,express.ErrorRequestHandlerReturn[]):TSelf|static=false",
-          "emitScope": "ClassSurface",
-          "provenance": "Original",
-          "arity": 0,
-          "parameterCount": 3,
-          "isStatic": false,
-          "isAbstract": false,
-          "isVirtual": false,
-          "isOverride": false,
-          "isSealed": false,
-          "visibility": "Public",
-          "declaringClrType": "express.RoutingHost\u00601",
-          "declaringAssemblyName": "express",
-          "isExtensionMethod": false
-        },
-        {
-          "stableId": "express:express.RoutingHost\u00601::use(System.String,express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
-          "clrName": "use",
-          "metadataToken": 100663965,
+          "stableId": "express:express.RoutingHost\u00601::useError(System.String,express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
+          "clrName": "useError",
+          "metadataToken": 100663961,
           "canonicalSignature": "(System.String,express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf",
-          "normalizedSignature": "use|(System.String,express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf|static=false",
+          "normalizedSignature": "useError|(System.String,express.ErrorRequestHandlerSync,express.ErrorRequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -10003,7 +9823,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::route(System.String):express.Route",
           "clrName": "route",
-          "metadataToken": 100663966,
+          "metadataToken": 100663962,
           "canonicalSignature": "(System.String):express.Route",
           "normalizedSignature": "route|(System.String):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -10023,7 +9843,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663967,
+          "metadataToken": 100663963,
           "canonicalSignature": "(System.String,System.String,express.RouteHandler,express.RouteHandler[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RouteHandler,express.RouteHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10043,7 +9863,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663968,
+          "metadataToken": 100663964,
           "canonicalSignature": "(System.String,System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RouteHandlerReturn,express.RouteHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10063,7 +9883,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663969,
+          "metadataToken": 100663965,
           "canonicalSignature": "(System.String,System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RouteHandlerSync,express.RouteHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10083,7 +9903,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663970,
+          "metadataToken": 100663966,
           "canonicalSignature": "(System.String,System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10103,7 +9923,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663971,
+          "metadataToken": 100663967,
           "canonicalSignature": "(System.String,System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RequestHandlerReturn,express.RequestHandlerReturn[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10123,7 +9943,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663972,
+          "metadataToken": 100663968,
           "canonicalSignature": "(System.String,System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RequestHandlerSync,express.RequestHandlerSync[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10143,7 +9963,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::param(System.String,express.ParamHandler):TSelf",
           "clrName": "param",
-          "metadataToken": 100663998,
+          "metadataToken": 100663994,
           "canonicalSignature": "(System.String,express.ParamHandler):TSelf",
           "normalizedSignature": "param|(System.String,express.ParamHandler):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -10165,7 +9985,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::self:TSelf",
           "clrName": "self",
-          "metadataToken": 385876081,
+          "metadataToken": 385876083,
           "canonicalSignature": ":TSelf",
           "normalizedSignature": "self|:TSelf|static=false|accessor=get",
           "emitScope": "ClassSurface",
@@ -10187,7 +10007,7 @@
       "constructors": [
         {
           "stableId": "express:express.RoutingHost\u00601::.ctor():void",
-          "metadataToken": 100664002,
+          "metadataToken": 100663998,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -10961,7 +10781,7 @@
         {
           "stableId": "express:express.express::create():express.Application",
           "clrName": "create",
-          "metadataToken": 100663560,
+          "metadataToken": 100663565,
           "canonicalSignature": "():express.Application",
           "normalizedSignature": "create|():express.Application|static=true",
           "emitScope": "ClassSurface",
@@ -10981,7 +10801,7 @@
         {
           "stableId": "express:express.express::application():express.Application",
           "clrName": "application",
-          "metadataToken": 100663561,
+          "metadataToken": 100663566,
           "canonicalSignature": "():express.Application",
           "normalizedSignature": "application|():express.Application|static=true",
           "emitScope": "ClassSurface",
@@ -11001,7 +10821,7 @@
         {
           "stableId": "express:express.express::app():express.Application",
           "clrName": "app",
-          "metadataToken": 100663562,
+          "metadataToken": 100663567,
           "canonicalSignature": "():express.Application",
           "normalizedSignature": "app|():express.Application|static=true",
           "emitScope": "ClassSurface",
@@ -11021,7 +10841,7 @@
         {
           "stableId": "express:express.express::json(express.JsonOptions):express.RequestHandler",
           "clrName": "json",
-          "metadataToken": 100663563,
+          "metadataToken": 100663568,
           "canonicalSignature": "(express.JsonOptions):express.RequestHandler",
           "normalizedSignature": "json|(express.JsonOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -11041,7 +10861,7 @@
         {
           "stableId": "express:express.express::raw(express.RawOptions):express.RequestHandler",
           "clrName": "raw",
-          "metadataToken": 100663564,
+          "metadataToken": 100663569,
           "canonicalSignature": "(express.RawOptions):express.RequestHandler",
           "normalizedSignature": "raw|(express.RawOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -11061,7 +10881,7 @@
         {
           "stableId": "express:express.express::Router(express.RouterOptions):express.Router",
           "clrName": "Router",
-          "metadataToken": 100663565,
+          "metadataToken": 100663570,
           "canonicalSignature": "(express.RouterOptions):express.Router",
           "normalizedSignature": "Router|(express.RouterOptions):express.Router|static=true",
           "emitScope": "ClassSurface",
@@ -11081,7 +10901,7 @@
         {
           "stableId": "express:express.express::static(System.String,express.StaticOptions):express.RequestHandler",
           "clrName": "static",
-          "metadataToken": 100663566,
+          "metadataToken": 100663571,
           "canonicalSignature": "(System.String,express.StaticOptions):express.RequestHandler",
           "normalizedSignature": "static|(System.String,express.StaticOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -11101,7 +10921,7 @@
         {
           "stableId": "express:express.express::text(express.TextOptions):express.RequestHandler",
           "clrName": "text",
-          "metadataToken": 100663567,
+          "metadataToken": 100663572,
           "canonicalSignature": "(express.TextOptions):express.RequestHandler",
           "normalizedSignature": "text|(express.TextOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -11121,7 +10941,7 @@
         {
           "stableId": "express:express.express::urlencoded(express.UrlEncodedOptions):express.RequestHandler",
           "clrName": "urlencoded",
-          "metadataToken": 100663568,
+          "metadataToken": 100663573,
           "canonicalSignature": "(express.UrlEncodedOptions):express.RequestHandler",
           "normalizedSignature": "urlencoded|(express.UrlEncodedOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",

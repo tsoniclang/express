@@ -22,18 +22,7 @@ npx --yes tsonic@latest add npm @tsonic/express
 
 # Replace the default App.ts with a minimal API
 cat > packages/my-api/src/App.ts <<'EOF'
-import { express } from "@tsonic/express/index.js";
-
-export function main(): void {
-  const app = express.create();
-
-  app.get("/", (_req, res) => {
-    res.json({ ok: true });
-  });
-
-  app.listen(3000);
-}
-
+<!-- include: docs/snippets/10/quick-start-app.ts -->
 EOF
 
 npm run dev
@@ -45,18 +34,7 @@ Then open `http://localhost:3000/`.
 
 ```ts
 // packages/my-api/src/App.ts
-import { express } from "@tsonic/express/index.js";
-
-export function main(): void {
-  const app = express.create();
-
-  app.get("/", (_req, res) => {
-    res.send("hello");
-  });
-
-  app.listen(3000);
-}
-
+<!-- include: docs/snippets/10/hello-world-app.ts -->
 ```
 
 ## Basic API Surface
@@ -66,9 +44,7 @@ export function main(): void {
 ```ts
 import { express } from "@tsonic/express/index.js";
 
-const app = express.create();
-const router = express.Router();
-
+<!-- include: docs/snippets/10/create-app-router.ts -->
 ```
 
 ### Routing
@@ -76,31 +52,19 @@ const router = express.Router();
 Common verbs:
 
 ```ts
-app.get("/health", (_req, res) => res.send("ok"));
-app.post("/items", (req, res) => res.json(req.body));
-app.put("/items/:id", (req, res) => res.send(req.param("id")));
-app.delete("/items/:id", (_req, res) => res.sendStatus(204));
-app.patch("/items/:id", (_req, res) => res.sendStatus(204));
-app.all("/anything", (_req, res) => res.send("matched"));
-
+<!-- include: docs/snippets/10/routing.ts -->
 ```
 
 ### Middleware
 
 ```ts
-app.use((req, _res, next) => {
-  // Do something with req
-  next();
-});
-
+<!-- include: docs/snippets/10/middleware.ts -->
 ```
 
 Error middleware:
 
 ```ts
-app.useError((err, _req, res, _next) => {
-  res.status(500).json({ error: `${err}` });
-});
+<!-- include: docs/snippets/10/error-middleware.ts -->
 ```
 
 ### Request / Response
@@ -123,26 +87,19 @@ app.useError((err, _req, res, _next) => {
 ### Body parsing
 
 ```ts
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.text());
-app.use(express.raw());
-
+<!-- include: docs/snippets/10/body-parsing.ts -->
 ```
 
 ### Static files
 
 ```ts
-app.use(express.static("./public"));
-
+<!-- include: docs/snippets/10/static-files.ts -->
 ```
 
 ### Listen / close
 
 ```ts
-const server = app.listen(3000);
-server.close();
-
+<!-- include: docs/snippets/10/listen-close.ts -->
 ```
 
 ## Advanced docs
@@ -160,5 +117,4 @@ This repo is versioned by runtime major:
 ## License
 
 MIT
-
 

@@ -4,7 +4,10 @@
   "description": "Repo for @tsonic/express (versioned by .NET major in versions/<major>/)",
   "type": "module",
   "scripts": {
+    "docs:render:10": "node ./__build/scripts/render-readme.mjs 10",
+    "docs:check:10": "node ./__build/scripts/render-readme.mjs 10 --check",
     "generate:10": "./__build/scripts/generate.sh 10",
+    "test:readme:10": "node --test ./__build/tests/readme-contract-10.test.mjs",
     "publish:10": "npm publish ./versions/10 --access public"
   }
 }
