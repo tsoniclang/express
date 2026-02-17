@@ -39,6 +39,14 @@ Then open `http://localhost:3000/`.
 
 ## Basic API Surface
 
+## Handler model (important)
+
+This package is **Task-first** (like ASP.NET): route handlers and middleware should be written as **`async`** functions (even if you don't `await` anything).
+
+This avoids “async-void” behavior and keeps execution/exception semantics deterministic.
+
+Also, handlers use the **3-argument** signature: `(req, res, next)` (even for routes). If you don't need `next`, name it `_next`.
+
 ### Create an app / router
 
 ```ts
@@ -61,6 +69,18 @@ Common verbs:
 <!-- include: docs/snippets/10/middleware.ts -->
 ```
 
+### CORS
+
+```ts
+<!-- include: docs/snippets/10/cors.ts -->
+```
+
+### Cookies
+
+```ts
+<!-- include: docs/snippets/10/cookies.ts -->
+```
+
 Error middleware:
 
 ```ts
@@ -72,7 +92,7 @@ Error middleware:
 `Request` highlights:
 
 - `req.method`, `req.path`, `req.originalUrl`
-- `req.query`, `req.params`
+- `req.query`, `req.params`, `req.cookies`, `req.signedCookies`
 - `req.body` (when using body parsers)
 - `req.get(name)` / `req.header(name)`
 
@@ -88,6 +108,12 @@ Error middleware:
 
 ```ts
 <!-- include: docs/snippets/10/body-parsing.ts -->
+```
+
+### Multipart / file uploads
+
+```ts
+<!-- include: docs/snippets/10/multipart.ts -->
 ```
 
 ### Static files
@@ -117,4 +143,3 @@ This repo is versioned by runtime major:
 ## License
 
 MIT
-

@@ -1,5 +1,4 @@
-app.use((req, _res, next) => {
+app.use(async (req, _res, next) => {
   // Do something with req
-  next();
+  await next();
 });
-

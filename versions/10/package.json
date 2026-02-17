@@ -1,6 +1,6 @@
 {
   "name": "@tsonic/express",
-  "version": "10.0.26",
+  "version": "10.0.27",
   "description": "TypeScript type definitions for Express.js style API on ASP.NET Core",
   "type": "module",
   "keywords": [

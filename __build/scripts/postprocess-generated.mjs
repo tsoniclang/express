@@ -84,6 +84,64 @@ const reorderUseOverloads = (text, filePath) => {
   return lines.join("\n");
 };
 
+const rewriteTaskBackedCallbackReturnsAsPromise = (text, filePath) => {
+  const callbackTypes = new Set([
+    "NextFunction",
+    "RequestHandler",
+    "ErrorRequestHandler",
+    "ParamHandler",
+  ]);
+
+  const lines = text.split("\n");
+  let changed = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const match = line.match(/^export type ([A-Za-z0-9_]+) = .*=> Task;$/);
+    if (!match) continue;
+    const name = match[1];
+    if (!callbackTypes.has(name)) continue;
+
+    lines[i] = line.replace(/=> Task;$/, "=> Promise<void>;");
+    changed = true;
+  }
+
+  if (!changed) return text;
+
+  // Sanity check: if we failed to rewrite any known callback type, that's a bug.
+  for (const name of callbackTypes) {
+    if (!lines.some((l) => l.startsWith(`export type ${name} = `) && l.endsWith("=> Promise<void>;"))) {
+      throw new Error(`Expected ${name} to be rewritten to Promise<void> in: ${filePath}`);
+    }
+  }
+
+  return lines.join("\n");
+};
+
+const syncNugetBindingsVersion = ({ major, repoRoot }) => {
+  const bindingsPath = join(repoRoot, "versions", major, "tsonic.bindings.json");
+  const csprojPath = join(repoRoot, "..", "express-clr", "src", "express", "express.csproj");
+
+  const csproj = readFileSync(csprojPath, "utf-8");
+  const match = csproj.match(/<Version>([^<]+)<\/Version>/);
+  if (!match) throw new Error(`Could not find <Version> in: ${csprojPath}`);
+  const nugetVersion = match[1];
+
+  const bindings = JSON.parse(readFileSync(bindingsPath, "utf-8"));
+  const refs = bindings?.dotnet?.packageReferences;
+  if (!Array.isArray(refs)) {
+    throw new Error(`Expected dotnet.packageReferences[] in: ${bindingsPath}`);
+  }
+
+  const expressRef = refs.find((r) => r?.id === "Tsonic.Express");
+  if (!expressRef) {
+    throw new Error(`Missing Tsonic.Express reference in: ${bindingsPath}`);
+  }
+
+  expressRef.version = nugetVersion;
+  writeFileSync(bindingsPath, `${JSON.stringify(bindings, null, 2)}\n`, "utf-8");
+};
+
 const main = () => {
   const major = process.argv.slice(2).find((a) => /^\d+$/.test(a)) ?? "10";
   const here = dirname(fileURLToPath(import.meta.url));
@@ -98,8 +156,11 @@ const main = () => {
   );
 
   const original = readFileSync(internalIndex, "utf-8");
-  const updated = reorderUseOverloads(original, internalIndex);
+  const withUseOrdering = reorderUseOverloads(original, internalIndex);
+  const updated = rewriteTaskBackedCallbackReturnsAsPromise(withUseOrdering, internalIndex);
   if (updated !== original) writeFileSync(internalIndex, updated, "utf-8");
+
+  syncNugetBindingsVersion({ major, repoRoot });
 };
 
 main();

@@ -1,0 +1,2 @@
+app.use(express.cors());
+

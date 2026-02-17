@@ -1,6 +1,18 @@
-app.get("/health", (_req, res) => res.send("ok"));
-app.post("/items", (req, res) => res.json(req.body));
-app.put("/items/:id", (req, res) => res.send(req.params["id"] ?? ""));
-app.delete("/items/:id", (_req, res) => res.sendStatus(204));
-app.patch("/items/:id", (_req, res) => res.sendStatus(204));
-app.all("/anything", (_req, res) => res.send("matched"));
+app.get("/health", async (_req, res, _next) => {
+  res.send("ok");
+});
+app.post("/items", async (req, res, _next) => {
+  res.json(req.body);
+});
+app.put("/items/:id", async (req, res, _next) => {
+  res.send(req.params["id"] ?? "");
+});
+app.delete("/items/:id", async (_req, res, _next) => {
+  res.sendStatus(204);
+});
+app.patch("/items/:id", async (_req, res, _next) => {
+  res.sendStatus(204);
+});
+app.all("/anything", async (_req, res, _next) => {
+  res.send("matched");
+});

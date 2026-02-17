@@ -27,13 +27,12 @@ import { express } from "@tsonic/express/index.js";
 export function main(): void {
   const app = express.create();
 
-  app.get("/", (_req, res) => {
+  app.get("/", async (_req, res, _next) => {
     res.json({ ok: true });
   });
 
   app.listen(3000);
 }
-
 EOF
 
 npm run dev
@@ -50,16 +49,23 @@ import { express } from "@tsonic/express/index.js";
 export function main(): void {
   const app = express.create();
 
-  app.get("/", (_req, res) => {
+  app.get("/", async (_req, res, _next) => {
     res.send("hello");
   });
 
   app.listen(3000);
 }
-
 ```
 
 ## Basic API Surface
+
+## Handler model (important)
+
+This package is **Task-first** (like ASP.NET): route handlers and middleware should be written as **`async`** functions (even if you don't `await` anything).
+
+This avoids “async-void” behavior and keeps execution/exception semantics deterministic.
+
+Also, handlers use the **3-argument** signature: `(req, res, next)` (even for routes). If you don't need `next`, name it `_next`.
 
 ### Create an app / router
 
@@ -69,7 +75,7 @@ import { express } from "@tsonic/express/index.js";
 const app = express.create();
 const router = express.Router();
 
-router.get("/ping", (_req, res) => {
+router.get("/ping", async (_req, res, _next) => {
   res.send("pong");
 });
 
@@ -81,28 +87,59 @@ app.use("/api", router);
 Common verbs:
 
 ```ts
-app.get("/health", (_req, res) => res.send("ok"));
-app.post("/items", (req, res) => res.json(req.body));
-app.put("/items/:id", (req, res) => res.send(req.params["id"] ?? ""));
-app.delete("/items/:id", (_req, res) => res.sendStatus(204));
-app.patch("/items/:id", (_req, res) => res.sendStatus(204));
-app.all("/anything", (_req, res) => res.send("matched"));
+app.get("/health", async (_req, res, _next) => {
+  res.send("ok");
+});
+app.post("/items", async (req, res, _next) => {
+  res.json(req.body);
+});
+app.put("/items/:id", async (req, res, _next) => {
+  res.send(req.params["id"] ?? "");
+});
+app.delete("/items/:id", async (_req, res, _next) => {
+  res.sendStatus(204);
+});
+app.patch("/items/:id", async (_req, res, _next) => {
+  res.sendStatus(204);
+});
+app.all("/anything", async (_req, res, _next) => {
+  res.send("matched");
+});
 ```
 
 ### Middleware
 
 ```ts
-app.use((req, _res, next) => {
+app.use(async (req, _res, next) => {
   // Do something with req
-  next();
+  await next();
+});
+```
+
+### CORS
+
+```ts
+app.use(express.cors());
+
+```
+
+### Cookies
+
+```ts
+app.get("/set-cookie", async (_req, res, _next) => {
+  res.cookie("sid", "abc");
+  res.send("ok");
 });
 
+app.get("/read-cookie", async (req, res, _next) => {
+  res.json({ sid: req.cookies["sid"] });
+});
 ```
 
 Error middleware:
 
 ```ts
-app.useError((err, _req, res, _next) => {
+app.useError(async (err, _req, res, _next) => {
   res.status(500).json({ error: `${err}` });
 });
 ```
@@ -112,7 +149,7 @@ app.useError((err, _req, res, _next) => {
 `Request` highlights:
 
 - `req.method`, `req.path`, `req.originalUrl`
-- `req.query`, `req.params`
+- `req.query`, `req.params`, `req.cookies`, `req.signedCookies`
 - `req.body` (when using body parsers)
 - `req.get(name)` / `req.header(name)`
 
@@ -132,6 +169,19 @@ app.use(express.urlencoded());
 app.use(express.text());
 app.use(express.raw());
 
+```
+
+### Multipart / file uploads
+
+```ts
+const upload = express.multipart();
+
+app.post("/upload", upload.single("avatar"), async (req, res, _next) => {
+  res.json({
+    filename: req.file?.originalname,
+    fields: req.body,
+  });
+});
 ```
 
 ### Static files
@@ -164,5 +214,4 @@ This repo is versioned by runtime major:
 ## License
 
 MIT
-
 

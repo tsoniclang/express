@@ -24,11 +24,11 @@ const run = (cwd, cmd, args) => {
   assert.equal(r.status, 0, `${cmd} ${args.join(" ")} failed`);
 };
 
-const httpRequest = (method, url, body, headers = {}) =>
-  new Promise((resolvePromise, rejectPromise) => {
-    const u = new URL(url);
-    const req = http.request(
-      {
+  const httpRequest = (method, url, body, headers = {}) =>
+    new Promise((resolvePromise, rejectPromise) => {
+      const u = new URL(url);
+      const req = http.request(
+        {
         method,
         hostname: u.hostname,
         port: u.port,
@@ -42,6 +42,7 @@ const httpRequest = (method, url, body, headers = {}) =>
           resolvePromise({
             status: res.statusCode ?? 0,
             body: Buffer.concat(chunks).toString("utf-8"),
+            headers: res.headers,
           });
         });
       }
@@ -110,6 +111,12 @@ export function main(): void {
 
   ${readSnippet("docs/snippets/10/body-parsing.ts")}
 
+  ${readSnippet("docs/snippets/10/cors.ts")}
+
+  ${readSnippet("docs/snippets/10/cookies.ts")}
+
+  ${readSnippet("docs/snippets/10/multipart.ts")}
+
   ${readSnippet("docs/snippets/10/static-files.ts")}
 
   ${readSnippet("docs/snippets/10/middleware.ts")}
@@ -117,7 +124,9 @@ export function main(): void {
   ${readSnippet("docs/snippets/10/routing.ts")}
 
   // Extra endpoints for the contract test harness.
-  app.get("/", (_req, res) => res.json({ ok: true }));
+  app.get("/", async (_req, res, _next) => {
+    res.json({ ok: true });
+  });
 
   ${readSnippet("docs/snippets/10/error-middleware.ts")}
 
@@ -181,6 +190,49 @@ export function _readme_snippets_compile_only(): void {
         const r = await httpRequest("GET", `http://127.0.0.1:${port}/api/ping`);
         assert.equal(r.status, 200);
         assert.equal(r.body, "pong");
+      }
+
+      {
+        const r = await httpRequest("OPTIONS", `http://127.0.0.1:${port}/items`, undefined, {
+          Origin: "https://example.com",
+          "Access-Control-Request-Method": "POST",
+        });
+        assert.equal(r.status, 204);
+        assert.equal(r.headers["access-control-allow-origin"], "*");
+      }
+
+      {
+        const r = await httpRequest("GET", `http://127.0.0.1:${port}/set-cookie`);
+        assert.equal(r.status, 200);
+        const setCookie = r.headers["set-cookie"];
+        assert.ok(setCookie);
+        const cookieHeader = (Array.isArray(setCookie) ? setCookie[0] : setCookie).split(";")[0];
+        const read = await httpRequest("GET", `http://127.0.0.1:${port}/read-cookie`, undefined, {
+          Cookie: cookieHeader,
+        });
+        assert.equal(read.status, 200);
+        assert.equal(JSON.parse(read.body).sid, "abc");
+      }
+
+      {
+        const boundary = "----tsonic-contract";
+        const body =
+          `--${boundary}\r\n` +
+          `Content-Disposition: form-data; name="title"\r\n\r\n` +
+          `hello\r\n` +
+          `--${boundary}\r\n` +
+          `Content-Disposition: form-data; name="avatar"; filename="a.txt"\r\n` +
+          `Content-Type: text/plain\r\n\r\n` +
+          `file\r\n` +
+          `--${boundary}--\r\n`;
+        const r = await httpRequest("POST", `http://127.0.0.1:${port}/upload`, body, {
+          "Content-Type": `multipart/form-data; boundary=${boundary}`,
+          "Content-Length": String(Buffer.byteLength(body)),
+        });
+        assert.equal(r.status, 200);
+        const json = JSON.parse(r.body);
+        assert.equal(json.filename, "a.txt");
+        assert.equal(json.fields.title, "hello");
       }
     } finally {
       const waitForExit = async (timeoutMs) => {
