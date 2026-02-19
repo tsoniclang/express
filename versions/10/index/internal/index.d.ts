@@ -120,9 +120,11 @@ export interface CookieOptions$instance {
     set domain(value: string | undefined);
     get encode(): CookieEncoder | undefined;
     set encode(value: CookieEncoder | undefined);
-    expires: Nullable_1<DateTime>;
+    get expires(): Nullable_1<DateTime>;
+    set expires(value: Nullable_1<DateTime> | DateTime);
     httpOnly: boolean;
-    maxAge: Nullable_1<System_Internal.Int64>;
+    get maxAge(): Nullable_1<System_Internal.Int64>;
+    set maxAge(value: Nullable_1<System_Internal.Int64> | long);
     partitioned: boolean;
     path: string;
     get priority(): string | undefined;
@@ -162,7 +164,8 @@ export interface CorsOptions$instance {
     credentials: boolean;
     get exposedHeaders(): string[] | undefined;
     set exposedHeaders(value: string[] | undefined);
-    maxAgeSeconds: Nullable_1<System_Internal.Int32>;
+    get maxAgeSeconds(): Nullable_1<System_Internal.Int32>;
+    set maxAgeSeconds(value: Nullable_1<System_Internal.Int32> | int);
     get methods(): string[] | undefined;
     set methods(value: string[] | undefined);
     optionsSuccessStatus: int;
@@ -273,7 +276,8 @@ export type Multipart = Multipart$instance;
 export interface MultipartField$instance {
     readonly __tsonic_type_express_MultipartField: never;
 
-    maxCount: Nullable_1<System_Internal.Int32>;
+    get maxCount(): Nullable_1<System_Internal.Int32>;
+    set maxCount(value: Nullable_1<System_Internal.Int32> | int);
     name: string;
 }
 
@@ -288,8 +292,10 @@ export type MultipartField = MultipartField$instance;
 export interface MultipartOptions$instance {
     readonly __tsonic_type_express_MultipartOptions: never;
 
-    maxFileCount: Nullable_1<System_Internal.Int32>;
-    maxFileSizeBytes: Nullable_1<System_Internal.Int64>;
+    get maxFileCount(): Nullable_1<System_Internal.Int32>;
+    set maxFileCount(value: Nullable_1<System_Internal.Int32> | int);
+    get maxFileSizeBytes(): Nullable_1<System_Internal.Int64>;
+    set maxFileSizeBytes(value: Nullable_1<System_Internal.Int64> | long);
     type: string;
 }
 
