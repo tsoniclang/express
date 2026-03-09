@@ -5,13 +5,6 @@
 // Import internal declarations
 import * as Internal from './index/internal/index.js';
 
-// Cross-namespace type imports for constraints
-import type { Dictionary, IEnumerable, List } from '@tsonic/dotnet/System.Collections.Generic.js';
-import type { Stream } from '@tsonic/dotnet/System.IO.js';
-import type { Action, AsyncCallback, Boolean as ClrBoolean, Byte, DateTime, Exception, IAsyncResult, ICloneable, Int32, Int64, IntPtr, MulticastDelegate, Nullable, Object as ClrObject, String as ClrString, Void } from '@tsonic/dotnet/System.js';
-import type { ISerializable } from '@tsonic/dotnet/System.Runtime.Serialization.js';
-import type { Task } from '@tsonic/dotnet/System.Threading.Tasks.js';
-
 // Public API exports (curated - no internal $instance/$views leakage)
 export { Application as Application } from './index/internal/index.js';
 export { AppServer as AppServer } from './index/internal/index.js';

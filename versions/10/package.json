@@ -18,8 +18,19 @@
     "type": "git",
     "url": "https://github.com/tsoniclang/express.git"
   },
-  "peerDependencies": {
-    "@tsonic/dotnet": "10.0.35",
-    "@tsonic/core": "10.0.35"
+  "main": "index.d.ts",
+  "types": "index.d.ts",
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/bindings.json",
+    "families.json",
+    "tsonic.bindings.json",
+    "docs/**/*.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "dependencies": {
+    "@tsonic/js": "10.0.42"
   }
 }

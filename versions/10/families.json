@@ -47,5 +47,12 @@
     "minArity": 1,
     "maxArity": 6,
     "isDelegate": false
+  },
+  "Tsonic.Runtime.Union": {
+    "stem": "Union",
+    "namespace": "Tsonic.Runtime",
+    "minArity": 2,
+    "maxArity": 8,
+    "isDelegate": false
   }
 }

@@ -7,22 +7,18 @@ import {
   rmSync,
   writeFileSync,
 } from "node:fs";
-import { join, resolve } from "node:path";
+import { join } from "node:path";
 import { tmpdir } from "node:os";
-import { spawn, spawnSync } from "node:child_process";
+import { spawn } from "node:child_process";
 import http from "node:http";
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { existsSync, readdirSync } from "node:fs";
-
-const here = dirname(fileURLToPath(import.meta.url));
-const repoRoot = resolve(join(here, "../.."));
-const expressLocalSpec = `file:${join(repoRoot, "versions", "10")}`;
-
-const run = (cwd, cmd, args) => {
-  const r = spawnSync(cmd, args, { cwd, stdio: "inherit", encoding: "utf-8" });
-  assert.equal(r.status, 0, `${cmd} ${args.join(" ")} failed`);
-};
+import {
+  ensureLocalRuntimeNugetConfig,
+  expressLocalSpec,
+  jsLocalSpec,
+  repoRoot,
+  run,
+  runTsonic,
+} from "./test-helpers.mjs";
 
   const httpRequest = (method, url, body, headers = {}) =>
     new Promise((resolvePromise, rejectPromise) => {
@@ -73,29 +69,19 @@ const readSnippet = (rel) =>
   readFileSync(join(repoRoot, rel), "utf-8").replace(/\r\n/g, "\n").trimEnd();
 
 test("express README contract (net10)", async () => {
-  const tsonicSpec = process.env.TSONIC_SPEC ?? "tsonic@latest";
   const expressSpec = process.env.PUBLISHED ? "@tsonic/express" : expressLocalSpec;
 
   const dir = mkdtempSync(join(tmpdir(), "tsonic-express-readme-"));
   try {
-    run(dir, "npx", ["--yes", tsonicSpec, "init"]);
-    run(dir, "npx", ["--yes", tsonicSpec, "add", "npm", expressSpec]);
+    runTsonic(dir, ["init", "--surface", "@tsonic/js"]);
+    if (!process.env.PUBLISHED) {
+      run(dir, "npm", ["install", jsLocalSpec]);
+    }
+    runTsonic(dir, ["add", "npm", expressSpec]);
 
     // Local development mode: allow restoring against a sibling express-clr pack output
     // before it's published to nuget.org.
-    if (!process.env.PUBLISHED) {
-      const localFeed =
-        process.env.EXPRESS_CLR_NUGET_SOURCE ??
-        join(repoRoot, "..", "express-clr", "artifacts", "bin", "express", "Release");
-
-      if (existsSync(localFeed)) {
-        const hasNupkg = readdirSync(localFeed).some((f) => f.endsWith(".nupkg"));
-        if (hasNupkg) {
-          const nugetConfig = `<?xml version="1.0" encoding="utf-8"?>\n<configuration>\n  <packageSources>\n    <add key=\"local\" value=\"${localFeed}\" />\n    <add key=\"nuget.org\" value=\"https://api.nuget.org/v3/index.json\" protocolVersion=\"3\" />\n  </packageSources>\n</configuration>\n`;
-          writeFileSync(join(dir, "NuGet.Config"), nugetConfig, "utf-8");
-        }
-      }
-    }
+    if (!process.env.PUBLISHED) ensureLocalRuntimeNugetConfig(dir);
 
     const projectName = dir.split("/").filter(Boolean).at(-1);
     assert.ok(projectName);
@@ -151,7 +137,12 @@ export function _readme_snippets_compile_only(): void {
     mkdirSync(join(dir, "public"), { recursive: true });
     writeFileSync(join(dir, "public", "hello.txt"), "hello", "utf-8");
 
-    run(dir, "npx", ["--yes", tsonicSpec, "build"]);
+    runTsonic(dir, ["build"], {
+      env: {
+        ...process.env,
+        NUGET_PACKAGES: join(dir, ".nuget", "packages"),
+      },
+    });
 
     const binPath = join(projectRoot, "out", projectName);
     const proc = spawn(binPath, { cwd: dir, stdio: "inherit" });

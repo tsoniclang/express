@@ -6,6 +6,12 @@ This package is part of Tsonic: https://tsonic.org.
 
 Use this package to write Express-like apps in TypeScript and compile them to native binaries with `tsonic`.
 
+The project surface should be `@tsonic/js`. `@tsonic/express` remains a normal imported package, but its public API is JS-facing:
+
+- `Date`, `Uint8Array`, `number`
+- `Record<string, ...>` and arrays
+- no CLR collection/runtime types in the TS-facing contract
+
 ## Prerequisites
 
 - Install the .NET 10 SDK (required by Tsonic): https://dotnet.microsoft.com/download
@@ -15,7 +21,7 @@ Use this package to write Express-like apps in TypeScript and compile them to na
 
 ```bash
 mkdir my-api && cd my-api
-npx --yes tsonic@latest init
+npx --yes tsonic@latest init --surface @tsonic/js
 
 # Install Express runtime + bindings (installs required ASP.NET Core deps too)
 npx --yes tsonic@latest add npm @tsonic/express
