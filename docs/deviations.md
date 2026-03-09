@@ -2,6 +2,8 @@
 
 This package reflects the `express-clr` runtime behavior.
 
+The TS-facing contract is JS-native even though the runtime implementation is CLR-backed. That means some deviations are about runtime semantics, not about leaking CLR types into authored TypeScript.
+
 Authoritative deviations live in:
 
 - `../express-clr/docs/deviations.md`
@@ -16,5 +18,6 @@ Key current items:
 6. Cookie signing/signed-cookie behavior is best-effort, not a full `cookie-parser` edge-case clone.
 7. Handler dispatch in runtime is reflection-free; unsupported delegate signatures are ignored instead of reflection invocation.
 8. Runtime JSON support is reflection-free and guarantees primitives, dictionaries, arrays/lists, and `JsonElement`/`JsonDocument` shapes. Arbitrary CLR object/anonymous-object reflection serialization is intentionally not provided.
+9. Public package types intentionally use JS-native shapes (`Date`, `Uint8Array`, `Record<string, ...>`, `number`, `Promise<...>`) even when the runtime uses validated CLR backing types internally.
 
 Deviations should shrink over time and are validated through the runtime test matrix in `express-clr`.

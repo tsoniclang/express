@@ -2,22 +2,12 @@
 // Namespace: express
 // Assembly: express
 
-// Primitive type aliases from @tsonic/core
-import type { sbyte, byte, short, ushort, int, uint, long, ulong, int128, uint128, half, float, double, decimal, nint, nuint, char } from '@tsonic/core/types.js';
-
 // Import types from other namespaces
-import type { Dictionary_2, IEnumerable_1, List_1 } from "@tsonic/dotnet/System.Collections.Generic/internal/index.js";
-import type { Stream } from "@tsonic/dotnet/System.IO/internal/index.js";
-import * as System_Runtime_Serialization_Internal from "@tsonic/dotnet/System.Runtime.Serialization/internal/index.js";
-import type { ISerializable } from "@tsonic/dotnet/System.Runtime.Serialization/internal/index.js";
-import type { Task } from "@tsonic/dotnet/System.Threading.Tasks/internal/index.js";
-import * as System_Internal from "@tsonic/dotnet/System/internal/index.js";
-import type { Action, Action_1, Action_2, AsyncCallback, Boolean as ClrBoolean, Byte, DateTime, Exception, IAsyncResult, ICloneable, Int32, Int64, IntPtr, MulticastDelegate, Nullable_1, Object as ClrObject, String as ClrString, Void } from "@tsonic/dotnet/System/internal/index.js";
 
 export type CookieEncoder = (value: string) => string;
 
 
-export type ErrorRequestHandler = (err: Exception, req: Request, res: Response, next: NextFunction) => Promise<void>;
+export type ErrorRequestHandler = (err: Error, req: Request, res: Response, next: NextFunction) => Promise<void>;
 
 
 export type MediaTypeMatcher = (req: Request) => boolean;
@@ -38,20 +28,20 @@ export type RequestHandler = (req: Request, res: Response, next: NextFunction) =
 export type SetHeadersHandler = (res: Response, path: string, stat: FileStat) => void;
 
 
-export type TemplateEngine = (path: string, options: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>) => void;
+export type TemplateEngine = (path: string, options: Record<string, unknown>, callback: (err: Error | undefined, html: string | undefined) => void) => void;
 
 
 export type TrustProxyEvaluator = (ip: string) => boolean;
 
 
-export type VerifyBodyHandler = (req: Request, res: Response, buffer: byte[], encoding: string) => void;
+export type VerifyBodyHandler = (req: Request, res: Response, buffer: Uint8Array, encoding: string) => void;
 
 
 export interface Application$instance extends Router {
     readonly __tsonic_type_express_Application: never;
 
-    readonly locals: Dictionary_2<System_Internal.String, unknown | undefined>;
-    mountpath: unknown;
+    readonly locals: Record<string, unknown | undefined>;
+    mountpath: string | string[];
     readonly router: Router;
     disable(name: string): Application;
     disabled(name: string): boolean;
@@ -60,15 +50,15 @@ export interface Application$instance extends Router {
     engine(ext: string, callback: TemplateEngine): Application;
     get(name: string): unknown | undefined;
     get(path: string, callback: RequestHandler, ...callbacks: RequestHandler[]): Router;
-    listen(path: string, callback?: Action): AppServer;
-    listen(port: int, callback?: Action): AppServer;
-    listen(port: int, host: string, callback?: Action): AppServer;
-    listen(port: int, host: string, backlog: int, callback?: Action): AppServer;
+    listen(path: string, callback?: () => void): AppServer;
+    listen(port: number, callback?: () => void): AppServer;
+    listen(port: number, host: string, callback?: () => void): AppServer;
+    listen(port: number, host: string, backlog: number, callback?: () => void): AppServer;
     param(names: string[], callback: ParamHandler): Application;
     param(name: string, callback: ParamHandler): Router;
     path(): string;
-    render(view: string, callback: Action_2<Exception, System_Internal.String>): void;
-    render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): void;
+    render(view: string, callback: (err: Error | undefined, html: string | undefined) => void): void;
+    render(view: string, viewLocals: Record<string, unknown>, callback: (err: Error | undefined, html: string | undefined) => void): void;
     set(name: string, value: unknown): Application;
 }
 
@@ -86,13 +76,12 @@ export interface AppServer$instance {
     readonly host: string | undefined;
     listening: boolean;
     readonly path: string | undefined;
-    readonly port: Nullable_1<System_Internal.Int32>;
-    close(callback?: Action_1<Exception>): void;
+    readonly port: number | undefined;
+    close(callback?: (err: Error | undefined) => void): void;
 }
 
 
 export const AppServer: {
-    new(port: Nullable_1<System_Internal.Int32>, host: string, path: string, closeAction: Action): AppServer;
 };
 
 
@@ -101,8 +90,8 @@ export type AppServer = AppServer$instance;
 export interface ByteRange$instance {
     readonly __tsonic_type_express_ByteRange: never;
 
-    end: long;
-    start: long;
+    end: number;
+    start: number;
 }
 
 
@@ -113,35 +102,24 @@ export const ByteRange: {
 
 export type ByteRange = ByteRange$instance;
 
-export interface CookieOptions$instance {
-    readonly __tsonic_type_express_CookieOptions: never;
-
-    get domain(): string | undefined;
-    set domain(value: string | undefined);
-    get encode(): CookieEncoder | undefined;
-    set encode(value: CookieEncoder | undefined);
-    get expires(): Nullable_1<DateTime>;
-    set expires(value: Nullable_1<DateTime> | DateTime);
-    httpOnly: boolean;
-    get maxAge(): Nullable_1<System_Internal.Int64>;
-    set maxAge(value: Nullable_1<System_Internal.Int64> | long);
-    partitioned: boolean;
-    path: string;
-    get priority(): string | undefined;
-    set priority(value: string | undefined);
-    get sameSite(): unknown | undefined;
-    set sameSite(value: unknown | undefined);
-    secure: boolean;
-    signed: boolean;
+export interface CookieOptions {
+    domain?: string;
+    encode?: CookieEncoder;
+    expires?: Date;
+    httpOnly?: boolean;
+    maxAge?: number;
+    partitioned?: boolean;
+    path?: string;
+    priority?: string;
+    sameSite?: string | boolean;
+    secure?: boolean;
+    signed?: boolean;
 }
 
 
 export const CookieOptions: {
     new(): CookieOptions;
 };
-
-
-export type CookieOptions = CookieOptions$instance;
 
 export interface Cookies$instance {
     readonly __tsonic_type_express_Cookies: never;
@@ -156,22 +134,15 @@ export const Cookies: {
 
 export type Cookies = Cookies$instance & { readonly [key: string]: string | undefined; };
 
-export interface CorsOptions$instance {
-    readonly __tsonic_type_express_CorsOptions: never;
-
-    get allowedHeaders(): string[] | undefined;
-    set allowedHeaders(value: string[] | undefined);
-    credentials: boolean;
-    get exposedHeaders(): string[] | undefined;
-    set exposedHeaders(value: string[] | undefined);
-    get maxAgeSeconds(): Nullable_1<System_Internal.Int32>;
-    set maxAgeSeconds(value: Nullable_1<System_Internal.Int32> | int);
-    get methods(): string[] | undefined;
-    set methods(value: string[] | undefined);
-    optionsSuccessStatus: int;
-    get origins(): string[] | undefined;
-    set origins(value: string[] | undefined);
-    preflightContinue: boolean;
+export interface CorsOptions {
+    allowedHeaders?: string[];
+    credentials?: boolean;
+    exposedHeaders?: string[];
+    maxAgeSeconds?: number;
+    methods?: string[];
+    optionsSuccessStatus?: number;
+    origins?: string[];
+    preflightContinue?: boolean;
 }
 
 
@@ -179,30 +150,21 @@ export const CorsOptions: {
     new(): CorsOptions;
 };
 
-
-export type CorsOptions = CorsOptions$instance;
-
-export interface DownloadOptions$instance {
-    readonly __tsonic_type_express_DownloadOptions: never;
-
-    acceptRanges: boolean;
-    cacheControl: boolean;
-    dotfiles: string;
-    headers: Dictionary_2<System_Internal.String, System_Internal.String>;
-    immutable: boolean;
-    lastModified: boolean;
-    maxAge: unknown;
-    get root(): string | undefined;
-    set root(value: string | undefined);
+export interface DownloadOptions {
+    acceptRanges?: boolean;
+    cacheControl?: boolean;
+    dotfiles?: string;
+    headers?: Record<string, string>;
+    immutable?: boolean;
+    lastModified?: boolean;
+    maxAge?: string | number;
+    root?: string;
 }
 
 
 export const DownloadOptions: {
     new(): DownloadOptions;
 };
-
-
-export type DownloadOptions = DownloadOptions$instance;
 
 export interface Files$instance {
     readonly __tsonic_type_express_Files: never;
@@ -220,8 +182,8 @@ export type Files = Files$instance & { readonly [field: string]: UploadedFile[] 
 export interface FileStat$instance {
     readonly __tsonic_type_express_FileStat: never;
 
-    modifiedAt: DateTime;
-    size: long;
+    modifiedAt: Date;
+    size: number;
 }
 
 
@@ -232,19 +194,13 @@ export const FileStat: {
 
 export type FileStat = FileStat$instance;
 
-export interface JsonOptions$instance {
-    readonly __tsonic_type_express_JsonOptions: never;
-
-    inflate: boolean;
-    get limit(): unknown | undefined;
-    set limit(value: unknown | undefined);
-    get reviver(): unknown | undefined;
-    set reviver(value: unknown | undefined);
-    strict: boolean;
-    get type(): unknown | undefined;
-    set type(value: unknown | undefined);
-    get verify(): VerifyBodyHandler | undefined;
-    set verify(value: VerifyBodyHandler | undefined);
+export interface JsonOptions {
+    inflate?: boolean;
+    limit?: string | number;
+    reviver?: unknown;
+    strict?: boolean;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
 }
 
 
@@ -252,14 +208,11 @@ export const JsonOptions: {
     new(): JsonOptions;
 };
 
-
-export type JsonOptions = JsonOptions$instance;
-
 export interface Multipart$instance {
     readonly __tsonic_type_express_Multipart: never;
 
     any(): RequestHandler;
-    array(name: string, maxCount?: Nullable_1<System_Internal.Int32>): RequestHandler;
+    array(name: string, maxCount?: number | undefined): RequestHandler;
     fields(fields: MultipartField[]): RequestHandler;
     none(): RequestHandler;
     single(name: string): RequestHandler;
@@ -273,11 +226,8 @@ export const Multipart: {
 
 export type Multipart = Multipart$instance;
 
-export interface MultipartField$instance {
-    readonly __tsonic_type_express_MultipartField: never;
-
-    get maxCount(): Nullable_1<System_Internal.Int32>;
-    set maxCount(value: Nullable_1<System_Internal.Int32> | int);
+export interface MultipartField {
+    maxCount?: number;
     name: string;
 }
 
@@ -286,26 +236,16 @@ export const MultipartField: {
     new(): MultipartField;
 };
 
-
-export type MultipartField = MultipartField$instance;
-
-export interface MultipartOptions$instance {
-    readonly __tsonic_type_express_MultipartOptions: never;
-
-    get maxFileCount(): Nullable_1<System_Internal.Int32>;
-    set maxFileCount(value: Nullable_1<System_Internal.Int32> | int);
-    get maxFileSizeBytes(): Nullable_1<System_Internal.Int64>;
-    set maxFileSizeBytes(value: Nullable_1<System_Internal.Int64> | long);
-    type: string;
+export interface MultipartOptions {
+    maxFileCount?: number;
+    maxFileSizeBytes?: number;
+    type?: string;
 }
 
 
 export const MultipartOptions: {
     new(): MultipartOptions;
 };
-
-
-export type MultipartOptions = MultipartOptions$instance;
 
 export interface Params$instance {
     readonly __tsonic_type_express_Params: never;
@@ -320,10 +260,8 @@ export const Params: {
 
 export type Params = Params$instance & { readonly [key: string]: string | undefined; };
 
-export interface RangeOptions$instance {
-    readonly __tsonic_type_express_RangeOptions: never;
-
-    combine: boolean;
+export interface RangeOptions {
+    combine?: boolean;
 }
 
 
@@ -331,13 +269,10 @@ export const RangeOptions: {
     new(): RangeOptions;
 };
 
-
-export type RangeOptions = RangeOptions$instance;
-
 export interface RangeResult$instance {
     readonly __tsonic_type_express_RangeResult: never;
 
-    readonly ranges: List_1<ByteRange>;
+    ranges: ByteRange[];
     type: string;
 }
 
@@ -349,25 +284,17 @@ export const RangeResult: {
 
 export type RangeResult = RangeResult$instance;
 
-export interface RawOptions$instance {
-    readonly __tsonic_type_express_RawOptions: never;
-
-    inflate: boolean;
-    get limit(): unknown | undefined;
-    set limit(value: unknown | undefined);
-    get type(): unknown | undefined;
-    set type(value: unknown | undefined);
-    get verify(): VerifyBodyHandler | undefined;
-    set verify(value: VerifyBodyHandler | undefined);
+export interface RawOptions {
+    inflate?: boolean;
+    limit?: string | number;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
 }
 
 
 export const RawOptions: {
     new(): RawOptions;
 };
-
-
-export type RawOptions = RawOptions$instance;
 
 export interface Request$instance {
     readonly __tsonic_type_express_Request: never;
@@ -385,13 +312,13 @@ export interface Request$instance {
     host: string;
     hostname: string;
     ip: string;
-    ips: List_1<System_Internal.String>;
+    ips: string[];
     method: string;
     originalUrl: string;
     readonly params: Params;
     path: string;
     protocol: string;
-    query: Dictionary_2<System_Internal.String, unknown | undefined>;
+    query: Record<string, unknown | undefined>;
     get res(): Response | undefined;
     set res(value: Response | undefined);
     get route(): Route | undefined;
@@ -400,17 +327,17 @@ export interface Request$instance {
     signed: boolean;
     readonly signedCookies: Cookies;
     readonly stale: boolean;
-    subdomains: List_1<System_Internal.String>;
+    subdomains: string[];
     xhr: boolean;
-    accepts(...types: string[]): unknown | undefined;
-    acceptsCharsets(...charsets: string[]): unknown | undefined;
-    acceptsEncodings(...encodings: string[]): unknown | undefined;
-    acceptsLanguages(...languages: string[]): unknown;
+    accepts(...types: string[]): string | false;
+    acceptsCharsets(...charsets: string[]): string | false;
+    acceptsEncodings(...encodings: string[]): string | false;
+    acceptsLanguages(...languages: string[]): string | string[] | false;
     get(field: string): string | undefined;
     header(field: string): string | undefined;
-    is(...types: string[]): unknown | undefined;
+    is(...types: string[]): string | false | undefined;
     param(name: string): string | undefined;
-    range(size: long, options?: RangeOptions): unknown;
+    range(size: number, options?: RangeOptions): RangeResult | -1;
     setHeader(name: string, value: string): void;
 }
 
@@ -427,37 +354,37 @@ export interface Response$instance {
 
     readonly app: Application | undefined;
     headersSent: boolean;
-    readonly locals: Dictionary_2<System_Internal.String, unknown | undefined>;
+    readonly locals: Record<string, unknown | undefined>;
     get req(): Request | undefined;
     set req(value: Request | undefined);
-    statusCode: int;
+    statusCode: number;
     append(field: string, value: string): Response;
-    append(field: string, values: IEnumerable_1<System_Internal.String>): Response;
+    append(field: string, values: readonly string[]): Response;
     attachment(filename?: string): Response;
     clearCookie(name: string, options?: CookieOptions): Response;
     contentType(type: string): Response;
     cookie(name: string, value: unknown, options?: CookieOptions): Response;
-    download(path: string, filename?: string, options?: DownloadOptions, fn?: Action_1<Exception>): Response;
-    end(data?: unknown, encoding?: string, callback?: Action): Response;
-    format(handlers: Dictionary_2<System_Internal.String, Action>): Response;
+    download(path: string, filename?: string, options?: DownloadOptions, fn?: (err: Error | undefined) => void): Response;
+    end(data?: unknown, encoding?: string, callback?: () => void): Response;
+    format(handlers: Record<string, () => void>): Response;
     get(field: string): string | undefined;
     header(field: string, value: unknown): Response;
     json(body?: unknown): Response;
     jsonp(body?: unknown): Response;
-    links(links: Dictionary_2<System_Internal.String, System_Internal.String>): Response;
+    links(links: Record<string, string>): Response;
     location(path: string): Response;
     redirect(path: string): Response;
-    redirect(status: int, path: string): Response;
+    redirect(status: number, path: string): Response;
     render(view: string): Response;
-    render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>): Response;
-    render(view: string, callback: Action_2<Exception, System_Internal.String>): Response;
-    render(view: string, viewLocals: Dictionary_2<System_Internal.String, unknown>, callback: Action_2<Exception, System_Internal.String>): Response;
+    render(view: string, viewLocals: Record<string, unknown>): Response;
+    render(view: string, callback: (err: Error | undefined, html: string | undefined) => void): Response;
+    render(view: string, viewLocals: Record<string, unknown>, callback: (err: Error | undefined, html: string | undefined) => void): Response;
     send(body?: unknown): Response;
-    sendFile(path: string, options?: SendFileOptions, fn?: Action_1<Exception>): Response;
-    sendStatus(code: int): Response;
+    sendFile(path: string, options?: SendFileOptions, fn?: (err: Error | undefined) => void): Response;
+    sendStatus(code: number): Response;
     set(field: string, value: unknown): Response;
-    set(fields: Dictionary_2<System_Internal.String, System_Internal.String>): Response;
-    status(code: int): Response;
+    set(fields: Record<string, string>): Response;
+    status(code: number): Response;
     type(type: string): Response;
     vary(field: string): Response;
 }
@@ -515,21 +442,16 @@ export const Router: {
 
 export type Router = Router$instance;
 
-export interface RouterOptions$instance {
-    readonly __tsonic_type_express_RouterOptions: never;
-
-    caseSensitive: boolean;
-    mergeParams: boolean;
-    strict: boolean;
+export interface RouterOptions {
+    caseSensitive?: boolean;
+    mergeParams?: boolean;
+    strict?: boolean;
 }
 
 
 export const RouterOptions: {
     new(): RouterOptions;
 };
-
-
-export type RouterOptions = RouterOptions$instance;
 
 export interface RoutingHost_1$instance<TSelf extends RoutingHost_1<TSelf>> {
     readonly __tsonic_type_express_RoutingHost_1: never;
@@ -574,18 +496,15 @@ export const RoutingHost_1: (abstract new<TSelf extends RoutingHost_1<TSelf>>() 
 
 export type RoutingHost_1<TSelf extends RoutingHost_1<TSelf>> = RoutingHost_1$instance<TSelf>;
 
-export interface SendFileOptions$instance {
-    readonly __tsonic_type_express_SendFileOptions: never;
-
-    acceptRanges: boolean;
-    cacheControl: boolean;
-    dotfiles: string;
-    headers: Dictionary_2<System_Internal.String, System_Internal.String>;
-    immutable: boolean;
-    lastModified: boolean;
-    maxAge: unknown;
-    get root(): string | undefined;
-    set root(value: string | undefined);
+export interface SendFileOptions {
+    acceptRanges?: boolean;
+    cacheControl?: boolean;
+    dotfiles?: string;
+    headers?: Record<string, string>;
+    immutable?: boolean;
+    lastModified?: boolean;
+    maxAge?: string | number;
+    root?: string;
 }
 
 
@@ -593,27 +512,19 @@ export const SendFileOptions: {
     new(): SendFileOptions;
 };
 
-
-export type SendFileOptions = SendFileOptions$instance;
-
-export interface StaticOptions$instance {
-    readonly __tsonic_type_express_StaticOptions: never;
-
-    acceptRanges: boolean;
-    cacheControl: boolean;
-    dotfiles: string;
-    etag: boolean;
-    get extensions(): unknown | undefined;
-    set extensions(value: unknown | undefined);
-    fallthrough: boolean;
-    immutable: boolean;
-    get index(): unknown | undefined;
-    set index(value: unknown | undefined);
-    lastModified: boolean;
-    maxAge: unknown;
-    redirect: boolean;
-    get setHeaders(): SetHeadersHandler | undefined;
-    set setHeaders(value: SetHeadersHandler | undefined);
+export interface StaticOptions {
+    acceptRanges?: boolean;
+    cacheControl?: boolean;
+    dotfiles?: string;
+    etag?: boolean;
+    extensions?: string[] | false;
+    fallthrough?: boolean;
+    immutable?: boolean;
+    index?: string | string[] | false;
+    lastModified?: boolean;
+    maxAge?: string | number;
+    redirect?: boolean;
+    setHeaders?: SetHeadersHandler;
 }
 
 
@@ -621,20 +532,12 @@ export const StaticOptions: {
     new(): StaticOptions;
 };
 
-
-export type StaticOptions = StaticOptions$instance;
-
-export interface TextOptions$instance {
-    readonly __tsonic_type_express_TextOptions: never;
-
-    defaultCharset: string;
-    inflate: boolean;
-    get limit(): unknown | undefined;
-    set limit(value: unknown | undefined);
-    get type(): unknown | undefined;
-    set type(value: unknown | undefined);
-    get verify(): VerifyBodyHandler | undefined;
-    set verify(value: VerifyBodyHandler | undefined);
+export interface TextOptions {
+    defaultCharset?: string;
+    inflate?: boolean;
+    limit?: string | number;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
 }
 
 
@@ -642,19 +545,16 @@ export const TextOptions: {
     new(): TextOptions;
 };
 
-
-export type TextOptions = TextOptions$instance;
-
 export interface UploadedFile$instance {
     readonly __tsonic_type_express_UploadedFile: never;
 
     readonly fieldname: string;
     readonly mimetype: string;
     readonly originalname: string;
-    readonly size: long;
-    copyToAsync(target: Stream): Task;
-    openReadStream(): Stream;
-    save(path: string): Task;
+    readonly size: number;
+    bytes(): Promise<Uint8Array>;
+    save(path: string): Promise<void>;
+    text(): Promise<string>;
 }
 
 
@@ -664,28 +564,20 @@ export const UploadedFile: {
 
 export type UploadedFile = UploadedFile$instance;
 
-export interface UrlEncodedOptions$instance {
-    readonly __tsonic_type_express_UrlEncodedOptions: never;
-
-    depth: int;
-    extended: boolean;
-    inflate: boolean;
-    get limit(): unknown | undefined;
-    set limit(value: unknown | undefined);
-    parameterLimit: int;
-    get type(): unknown | undefined;
-    set type(value: unknown | undefined);
-    get verify(): VerifyBodyHandler | undefined;
-    set verify(value: VerifyBodyHandler | undefined);
+export interface UrlEncodedOptions {
+    depth?: number;
+    extended?: boolean;
+    inflate?: boolean;
+    limit?: string | number;
+    parameterLimit?: number;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
 }
 
 
 export const UrlEncodedOptions: {
     new(): UrlEncodedOptions;
 };
-
-
-export type UrlEncodedOptions = UrlEncodedOptions$instance;
 
 export abstract class express$instance {
     static app(): Application;

@@ -118,6 +118,328 @@ const rewriteTaskBackedCallbackReturnsAsPromise = (text, filePath) => {
   return lines.join("\n");
 };
 
+const stripFacadeConstraintImports = (text) => {
+  return text
+    .replace(/^\/\/ Cross-namespace type imports for constraints\n(?:import .*?\n)+\n/m, "")
+    .replace(/^import type \{ Date, Uint8Array \} from '\.\/Tsonic\.JSRuntime\/internal\/index\.js';\n/m, "")
+    .replace(/^import type \{ Union_2 \} from '\.\/Tsonic\.Runtime\/internal\/index\.js';\n/m, "");
+};
+
+const stripInternalClrImports = (text) => {
+  return text
+    .replace(
+      /^\/\/ Primitive type aliases from @tsonic\/core\nimport type \{.*\} from '@tsonic\/core\/types\.js';\n\n/m,
+      ""
+    )
+    .replace(/^import .*@tsonic\/dotnet.*\n/gm, "")
+    .replace(/^import .*Tsonic\.JSRuntime\/internal.*\n/gm, "")
+    .replace(/^import .*Tsonic\.Runtime\/internal.*\n/gm, "")
+    .replace(/^import \* as System_Runtime_Serialization_Internal from .*?\n/gm, "")
+    .replace(/^import \* as System_Internal from .*?\n/gm, "");
+};
+
+const replaceAll = (text, replacements) => {
+  let updated = text;
+  for (const [pattern, replacement] of replacements) {
+    updated = typeof pattern === "string"
+      ? updated.replaceAll(pattern, replacement)
+      : updated.replace(pattern, replacement);
+  }
+  return updated;
+};
+
+const replaceGeneratedBlock = (text, name, replacement) => {
+  const pattern = new RegExp(
+    `export interface ${name}\\$instance \\{[\\s\\S]*?export type ${name} = ${name}\\$instance;`,
+    "m"
+  );
+  if (!pattern.test(text)) {
+    throw new Error(`Could not find generated block for ${name}`);
+  }
+  return text.replace(pattern, replacement.trim());
+};
+
+const STRUCTURAL_TYPE_BLOCKS = {
+  RouterOptions: `
+export interface RouterOptions {
+    caseSensitive?: boolean;
+    mergeParams?: boolean;
+    strict?: boolean;
+}
+
+
+export const RouterOptions: {
+    new(): RouterOptions;
+};`,
+  JsonOptions: `
+export interface JsonOptions {
+    inflate?: boolean;
+    limit?: string | number;
+    reviver?: unknown;
+    strict?: boolean;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
+}
+
+
+export const JsonOptions: {
+    new(): JsonOptions;
+};`,
+  RawOptions: `
+export interface RawOptions {
+    inflate?: boolean;
+    limit?: string | number;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
+}
+
+
+export const RawOptions: {
+    new(): RawOptions;
+};`,
+  TextOptions: `
+export interface TextOptions {
+    defaultCharset?: string;
+    inflate?: boolean;
+    limit?: string | number;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
+}
+
+
+export const TextOptions: {
+    new(): TextOptions;
+};`,
+  UrlEncodedOptions: `
+export interface UrlEncodedOptions {
+    depth?: number;
+    extended?: boolean;
+    inflate?: boolean;
+    limit?: string | number;
+    parameterLimit?: number;
+    type?: string | string[] | MediaTypeMatcher;
+    verify?: VerifyBodyHandler;
+}
+
+
+export const UrlEncodedOptions: {
+    new(): UrlEncodedOptions;
+};`,
+  MultipartField: `
+export interface MultipartField {
+    maxCount?: number;
+    name: string;
+}
+
+
+export const MultipartField: {
+    new(): MultipartField;
+};`,
+  MultipartOptions: `
+export interface MultipartOptions {
+    maxFileCount?: number;
+    maxFileSizeBytes?: number;
+    type?: string;
+}
+
+
+export const MultipartOptions: {
+    new(): MultipartOptions;
+};`,
+  CorsOptions: `
+export interface CorsOptions {
+    allowedHeaders?: string[];
+    credentials?: boolean;
+    exposedHeaders?: string[];
+    maxAgeSeconds?: number;
+    methods?: string[];
+    optionsSuccessStatus?: number;
+    origins?: string[];
+    preflightContinue?: boolean;
+}
+
+
+export const CorsOptions: {
+    new(): CorsOptions;
+};`,
+  DownloadOptions: `
+export interface DownloadOptions {
+    acceptRanges?: boolean;
+    cacheControl?: boolean;
+    dotfiles?: string;
+    headers?: Record<string, string>;
+    immutable?: boolean;
+    lastModified?: boolean;
+    maxAge?: string | number;
+    root?: string;
+}
+
+
+export const DownloadOptions: {
+    new(): DownloadOptions;
+};`,
+  SendFileOptions: `
+export interface SendFileOptions {
+    acceptRanges?: boolean;
+    cacheControl?: boolean;
+    dotfiles?: string;
+    headers?: Record<string, string>;
+    immutable?: boolean;
+    lastModified?: boolean;
+    maxAge?: string | number;
+    root?: string;
+}
+
+
+export const SendFileOptions: {
+    new(): SendFileOptions;
+};`,
+  StaticOptions: `
+export interface StaticOptions {
+    acceptRanges?: boolean;
+    cacheControl?: boolean;
+    dotfiles?: string;
+    etag?: boolean;
+    extensions?: string[] | false;
+    fallthrough?: boolean;
+    immutable?: boolean;
+    index?: string | string[] | false;
+    lastModified?: boolean;
+    maxAge?: string | number;
+    redirect?: boolean;
+    setHeaders?: SetHeadersHandler;
+}
+
+
+export const StaticOptions: {
+    new(): StaticOptions;
+};`,
+  CookieOptions: `
+export interface CookieOptions {
+    domain?: string;
+    encode?: CookieEncoder;
+    expires?: Date;
+    httpOnly?: boolean;
+    maxAge?: number;
+    partitioned?: boolean;
+    path?: string;
+    priority?: string;
+    sameSite?: string | boolean;
+    secure?: boolean;
+    signed?: boolean;
+}
+
+
+export const CookieOptions: {
+    new(): CookieOptions;
+};`,
+  RangeOptions: `
+export interface RangeOptions {
+    combine?: boolean;
+}
+
+
+export const RangeOptions: {
+    new(): RangeOptions;
+};`,
+};
+
+const rewriteGeneratedExpressSurfaceForJs = (text, filePath) => {
+  let updated = stripInternalClrImports(text);
+
+  updated = replaceAll(updated, [
+    ["Task_1<Uint8Array>", "Promise<Uint8Array>"],
+    ["Task_1<System_Internal.String>", "Promise<string>"],
+    [": Task;", ": Promise<void>;"],
+    ["Action_2<Error, System_Internal.String>", "(err: Error | undefined, html: string | undefined) => void"],
+    ["Action_1<Error>", "(err: Error | undefined) => void"],
+    ["Action_2<Exception, System_Internal.String>", "(err: Error | undefined, html: string | undefined) => void"],
+    ["Action_1<Exception>", "(err: Error | undefined) => void"],
+    ["Union_2<RangeResult, System_Internal.Int32>", "RangeResult | -1"],
+    ["Dictionary_2<System_Internal.String, Action>", "Record<string, () => void>"],
+    [/Dictionary_2<System_Internal\.String, ([^>]+)>/g, "Record<string, $1>"],
+    ["IEnumerable_1<System_Internal.String>", "readonly string[]"],
+    ["Nullable_1<System_Internal.Double>", "number | undefined"],
+    ["Nullable_1<System_Internal.Int32>", "number | undefined"],
+    ["Nullable_1<System_Internal.Int64>", "number | undefined"],
+    ["Exception", "Error"],
+    ["Action", "() => void"],
+    ["double", "number"],
+    ["System_Internal.String", "string"],
+    ["mountpath: unknown;", "mountpath: string | string[];"],
+    ["get sameSite(): unknown | undefined;", "get sameSite(): string | boolean | undefined;"],
+    ["set sameSite(value: unknown | undefined);", "set sameSite(value: string | boolean | undefined);"],
+    ["maxAge: unknown;", "maxAge: string | number;"],
+    ["get limit(): unknown | undefined;", "get limit(): string | number | undefined;"],
+    ["set limit(value: unknown | undefined);", "set limit(value: string | number | undefined);"],
+    ["get type(): unknown | undefined;", "get type(): string | string[] | MediaTypeMatcher | undefined;"],
+    ["set type(value: unknown | undefined);", "set type(value: string | string[] | MediaTypeMatcher | undefined);"],
+    ["get extensions(): unknown | undefined;", "get extensions(): string[] | false | undefined;"],
+    ["set extensions(value: unknown | undefined);", "set extensions(value: string[] | false | undefined);"],
+    ["get index(): unknown | undefined;", "get index(): string | string[] | false | undefined;"],
+    ["set index(value: unknown | undefined);", "set index(value: string | string[] | false | undefined);"],
+    ["accepts(...types: string[]): unknown | undefined;", "accepts(...types: string[]): string | false;"],
+    ["acceptsCharsets(...charsets: string[]): unknown | undefined;", "acceptsCharsets(...charsets: string[]): string | false;"],
+    ["acceptsEncodings(...encodings: string[]): unknown | undefined;", "acceptsEncodings(...encodings: string[]): string | false;"],
+    ["acceptsLanguages(...languages: string[]): unknown;", "acceptsLanguages(...languages: string[]): string | string[] | false;"],
+    ["is(...types: string[]): unknown | undefined;", "is(...types: string[]): string | false | undefined;"],
+    ["range(size: number, options?: RangeOptions): unknown;", "range(size: number, options?: RangeOptions): RangeResult | -1;"],
+    [/\bnumber \| undefined \| number\b/g, "number | undefined"],
+  ]);
+
+  updated = updated.replace(
+    /export const AppServer: \{\n[\s\S]*?\n\};\n+export type AppServer = AppServer\$instance;/m,
+    "export const AppServer: {\n};\n\nexport type AppServer = AppServer$instance;"
+  );
+
+  for (const [name, block] of Object.entries(STRUCTURAL_TYPE_BLOCKS)) {
+    updated = replaceGeneratedBlock(updated, name, block);
+  }
+
+  const forbiddenTokens = [
+    "@tsonic/dotnet",
+    "Dictionary_2",
+    "IEnumerable_1",
+    "Task_1",
+    "Task;",
+    "Action_1",
+    "Action_2",
+    "Nullable_1<System_Internal.Int32>",
+    "Nullable_1<System_Internal.Int64>",
+    "Nullable_1<System_Internal.Double>",
+    "System_Internal.Double",
+    "System_Internal.String",
+    "../../Tsonic.JSRuntime/internal/index.js",
+    "Tsonic.JSRuntime/internal/index.js",
+  ];
+
+  for (const token of forbiddenTokens) {
+    if (updated.includes(token)) {
+      throw new Error(`Forbidden CLR surface token '${token}' remained in: ${filePath}`);
+    }
+  }
+
+  const requiredSnippets = [
+    "VerifyBodyHandler = (req: Request, res: Response, buffer: Uint8Array, encoding: string) => void;",
+    "listen(port: number, callback?: () => void): AppServer;",
+    "statusCode: number;",
+    "range(size: number, options?: RangeOptions): RangeResult | -1;",
+    "bytes(): Promise<Uint8Array>;",
+    "text(): Promise<string>;",
+    "save(path: string): Promise<void>;",
+    "readonly locals: Record<string, unknown | undefined>;",
+    "query: Record<string, unknown | undefined>;",
+  ];
+
+  for (const snippet of requiredSnippets) {
+    if (!updated.includes(snippet)) {
+      throw new Error(`Expected JS-surface snippet missing from ${filePath}:\n${snippet}`);
+    }
+  }
+
+  return updated;
+};
+
 const syncNugetBindingsVersion = ({ major, repoRoot }) => {
   const bindingsPath = join(repoRoot, "versions", major, "tsonic.bindings.json");
   const csprojPath = join(repoRoot, "..", "express-clr", "src", "express", "express.csproj");
@@ -142,6 +464,33 @@ const syncNugetBindingsVersion = ({ major, repoRoot }) => {
   writeFileSync(bindingsPath, `${JSON.stringify(bindings, null, 2)}\n`, "utf-8");
 };
 
+const syncPackageMetadata = ({ major, repoRoot }) => {
+  const packageJsonPath = join(repoRoot, "versions", major, "package.json");
+  const jsPackageJsonPath = join(repoRoot, "..", "js", "versions", major, "package.json");
+
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, "utf-8"));
+  const jsPackageJson = JSON.parse(readFileSync(jsPackageJsonPath, "utf-8"));
+
+  packageJson.main = "index.d.ts";
+  packageJson.types = "index.d.ts";
+  packageJson.files = [
+    "**/*.d.ts",
+    "**/*.js",
+    "**/bindings.json",
+    "families.json",
+    "tsonic.bindings.json",
+    "docs/**/*.md",
+    "README.md",
+    "LICENSE",
+  ];
+  packageJson.dependencies = {
+    "@tsonic/js": jsPackageJson.version,
+  };
+  delete packageJson.peerDependencies;
+
+  writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`, "utf-8");
+};
+
 const main = () => {
   const major = process.argv.slice(2).find((a) => /^\d+$/.test(a)) ?? "10";
   const here = dirname(fileURLToPath(import.meta.url));
@@ -154,13 +503,27 @@ const main = () => {
     "internal",
     "index.d.ts"
   );
+  const publicIndex = join(repoRoot, "versions", major, "index.d.ts");
 
-  const original = readFileSync(internalIndex, "utf-8");
-  const withUseOrdering = reorderUseOverloads(original, internalIndex);
-  const updated = rewriteTaskBackedCallbackReturnsAsPromise(withUseOrdering, internalIndex);
-  if (updated !== original) writeFileSync(internalIndex, updated, "utf-8");
+  const originalInternal = readFileSync(internalIndex, "utf-8");
+  const withUseOrdering = reorderUseOverloads(originalInternal, internalIndex);
+  const withPromiseCallbacks = rewriteTaskBackedCallbackReturnsAsPromise(withUseOrdering, internalIndex);
+  const rewrittenInternal = rewriteGeneratedExpressSurfaceForJs(withPromiseCallbacks, internalIndex);
+  if (rewrittenInternal !== originalInternal) {
+    writeFileSync(internalIndex, rewrittenInternal, "utf-8");
+  }
+
+  const originalPublic = readFileSync(publicIndex, "utf-8");
+  const rewrittenPublic = stripFacadeConstraintImports(originalPublic);
+  if (/@tsonic\/dotnet|Tsonic\.JSRuntime\/internal/.test(rewrittenPublic)) {
+    throw new Error(`Public facade still leaks CLR/runtime-internal imports: ${publicIndex}`);
+  }
+  if (rewrittenPublic !== originalPublic) {
+    writeFileSync(publicIndex, rewrittenPublic, "utf-8");
+  }
 
   syncNugetBindingsVersion({ major, repoRoot });
+  syncPackageMetadata({ major, repoRoot });
 };
 
 main();

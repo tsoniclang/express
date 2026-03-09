@@ -135,11 +135,11 @@
       ],
       "methods": [
         {
-          "stableId": "express:express.ErrorRequestHandler::Invoke(System.Exception,express.Request,express.Response,express.NextFunction):System.Threading.Tasks.Task",
+          "stableId": "express:express.ErrorRequestHandler::Invoke(Tsonic.JSRuntime.Error,express.Request,express.Response,express.NextFunction):System.Threading.Tasks.Task",
           "clrName": "Invoke",
           "metadataToken": 100663347,
-          "canonicalSignature": "(System.Exception,express.Request,express.Response,express.NextFunction):System.Threading.Tasks.Task",
-          "normalizedSignature": "Invoke|(System.Exception,express.Request,express.Response,express.NextFunction):System.Threading.Tasks.Task|static=false",
+          "canonicalSignature": "(Tsonic.JSRuntime.Error,express.Request,express.Response,express.NextFunction):System.Threading.Tasks.Task",
+          "normalizedSignature": "Invoke|(Tsonic.JSRuntime.Error,express.Request,express.Response,express.NextFunction):System.Threading.Tasks.Task|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -155,11 +155,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.ErrorRequestHandler::BeginInvoke(System.Exception,express.Request,express.Response,express.NextFunction,System.AsyncCallback,System.Object):System.IAsyncResult",
+          "stableId": "express:express.ErrorRequestHandler::BeginInvoke(Tsonic.JSRuntime.Error,express.Request,express.Response,express.NextFunction,System.AsyncCallback,System.Object):System.IAsyncResult",
           "clrName": "BeginInvoke",
           "metadataToken": 100663348,
-          "canonicalSignature": "(System.Exception,express.Request,express.Response,express.NextFunction,System.AsyncCallback,System.Object):System.IAsyncResult",
-          "normalizedSignature": "BeginInvoke|(System.Exception,express.Request,express.Response,express.NextFunction,System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
+          "canonicalSignature": "(Tsonic.JSRuntime.Error,express.Request,express.Response,express.NextFunction,System.AsyncCallback,System.Object):System.IAsyncResult",
+          "normalizedSignature": "BeginInvoke|(Tsonic.JSRuntime.Error,express.Request,express.Response,express.NextFunction,System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -863,11 +863,11 @@
       ],
       "methods": [
         {
-          "stableId": "express:express.TemplateEngine::Invoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.TemplateEngine::Invoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
           "clrName": "Invoke",
           "metadataToken": 100663375,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "Invoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "normalizedSignature": "Invoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -883,11 +883,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.TemplateEngine::BeginInvoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
+          "stableId": "express:express.TemplateEngine::BeginInvoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
           "clrName": "BeginInvoke",
           "metadataToken": 100663376,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
-          "normalizedSignature": "BeginInvoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
+          "normalizedSignature": "BeginInvoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1071,11 +1071,11 @@
       ],
       "methods": [
         {
-          "stableId": "express:express.VerifyBodyHandler::Invoke(express.Request,express.Response,System.Byte[],System.String):System.Void",
+          "stableId": "express:express.VerifyBodyHandler::Invoke(express.Request,express.Response,Tsonic.JSRuntime.Uint8Array,System.String):System.Void",
           "clrName": "Invoke",
           "metadataToken": 100663355,
-          "canonicalSignature": "(express.Request,express.Response,System.Byte[],System.String):System.Void",
-          "normalizedSignature": "Invoke|(express.Request,express.Response,System.Byte[],System.String):System.Void|static=false",
+          "canonicalSignature": "(express.Request,express.Response,Tsonic.JSRuntime.Uint8Array,System.String):System.Void",
+          "normalizedSignature": "Invoke|(express.Request,express.Response,Tsonic.JSRuntime.Uint8Array,System.String):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1091,11 +1091,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.VerifyBodyHandler::BeginInvoke(express.Request,express.Response,System.Byte[],System.String,System.AsyncCallback,System.Object):System.IAsyncResult",
+          "stableId": "express:express.VerifyBodyHandler::BeginInvoke(express.Request,express.Response,Tsonic.JSRuntime.Uint8Array,System.String,System.AsyncCallback,System.Object):System.IAsyncResult",
           "clrName": "BeginInvoke",
           "metadataToken": 100663356,
-          "canonicalSignature": "(express.Request,express.Response,System.Byte[],System.String,System.AsyncCallback,System.Object):System.IAsyncResult",
-          "normalizedSignature": "BeginInvoke|(express.Request,express.Response,System.Byte[],System.String,System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
+          "canonicalSignature": "(express.Request,express.Response,Tsonic.JSRuntime.Uint8Array,System.String,System.AsyncCallback,System.Object):System.IAsyncResult",
+          "normalizedSignature": "BeginInvoke|(express.Request,express.Response,Tsonic.JSRuntime.Uint8Array,System.String,System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1325,11 +1325,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::listen(System.Int32,System.Action):express.AppServer",
+          "stableId": "express:express.Application::listen(System.Double,System.Action):express.AppServer",
           "clrName": "listen",
           "metadataToken": 100663311,
-          "canonicalSignature": "(System.Int32,System.Action):express.AppServer",
-          "normalizedSignature": "listen|(System.Int32,System.Action):express.AppServer|static=false",
+          "canonicalSignature": "(System.Double,System.Action):express.AppServer",
+          "normalizedSignature": "listen|(System.Double,System.Action):express.AppServer|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1345,11 +1345,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::listen(System.Int32,System.String,System.Action):express.AppServer",
+          "stableId": "express:express.Application::listen(System.Double,System.String,System.Action):express.AppServer",
           "clrName": "listen",
           "metadataToken": 100663312,
-          "canonicalSignature": "(System.Int32,System.String,System.Action):express.AppServer",
-          "normalizedSignature": "listen|(System.Int32,System.String,System.Action):express.AppServer|static=false",
+          "canonicalSignature": "(System.Double,System.String,System.Action):express.AppServer",
+          "normalizedSignature": "listen|(System.Double,System.String,System.Action):express.AppServer|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1365,11 +1365,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::listen(System.Int32,System.String,System.Int32,System.Action):express.AppServer",
+          "stableId": "express:express.Application::listen(System.Double,System.String,System.Double,System.Action):express.AppServer",
           "clrName": "listen",
           "metadataToken": 100663313,
-          "canonicalSignature": "(System.Int32,System.String,System.Int32,System.Action):express.AppServer",
-          "normalizedSignature": "listen|(System.Int32,System.String,System.Int32,System.Action):express.AppServer|static=false",
+          "canonicalSignature": "(System.Double,System.String,System.Double,System.Action):express.AppServer",
+          "normalizedSignature": "listen|(System.Double,System.String,System.Double,System.Action):express.AppServer|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1405,11 +1405,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::render(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.Application::render(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
           "clrName": "render",
           "metadataToken": 100663315,
-          "canonicalSignature": "(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "render|(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "normalizedSignature": "render|(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1425,11 +1425,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.Application::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
           "clrName": "render",
           "metadataToken": 100663316,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1608,11 +1608,11 @@
       },
       "methods": [
         {
-          "stableId": "express:express.AppServer::close(System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.AppServer::close(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):System.Void",
           "clrName": "close",
           "metadataToken": 100663333,
-          "canonicalSignature": "(System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "close|(System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):System.Void",
+          "normalizedSignature": "close|(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1630,11 +1630,11 @@
       ],
       "properties": [
         {
-          "stableId": "express:express.AppServer::port:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.AppServer::port:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "port",
           "metadataToken": 385875972,
-          "canonicalSignature": ":System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "port|:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=get",
+          "canonicalSignature": ":System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "port|:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=get",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -1708,19 +1708,7 @@
       ],
       "fields": [],
       "events": [],
-      "constructors": [
-        {
-          "stableId": "express:express.AppServer::.ctor(System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.String,System.String,System.Action):void",
-          "metadataToken": 100663332,
-          "canonicalSignature": "(System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.String,System.String,System.Action):void",
-          "normalizedSignature": "constructor|(System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.String,System.String,System.Action):void|static=false",
-          "isStatic": false,
-          "parameterCount": 4,
-          "visibility": "Public",
-          "declaringClrType": "express.AppServer",
-          "declaringAssemblyName": "express"
-        }
-      ]
+      "constructors": []
     },
     {
       "stableId": "express:express.ByteRange",
@@ -1740,11 +1728,11 @@
       "methods": [],
       "properties": [
         {
-          "stableId": "express:express.ByteRange::start:System.Int64",
+          "stableId": "express:express.ByteRange::start:System.Double",
           "clrName": "start",
           "metadataToken": 385876054,
-          "canonicalSignature": ":System.Int64",
-          "normalizedSignature": "start|:System.Int64|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "start|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -1759,11 +1747,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.ByteRange::end:System.Int64",
+          "stableId": "express:express.ByteRange::end:System.Double",
           "clrName": "end",
           "metadataToken": 385876055,
-          "canonicalSignature": ":System.Int64",
-          "normalizedSignature": "end|:System.Int64|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "end|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -1783,7 +1771,7 @@
       "constructors": [
         {
           "stableId": "express:express.ByteRange::.ctor():void",
-          "metadataToken": 100663555,
+          "metadataToken": 100663567,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -1850,11 +1838,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.CookieOptions::expires:System.Nullable_1[[System.DateTime,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.CookieOptions::expires:Tsonic.JSRuntime.Date",
           "clrName": "expires",
           "metadataToken": 385876044,
-          "canonicalSignature": ":System.Nullable_1[[System.DateTime,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "expires|:System.Nullable_1[[System.DateTime,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":Tsonic.JSRuntime.Date",
+          "normalizedSignature": "expires|:Tsonic.JSRuntime.Date|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -1888,11 +1876,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.CookieOptions::maxAge:System.Nullable_1[[System.Int64,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.CookieOptions::maxAge:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "maxAge",
           "metadataToken": 385876046,
-          "canonicalSignature": ":System.Nullable_1[[System.Int64,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "maxAge|:System.Nullable_1[[System.Int64,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "maxAge|:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2026,7 +2014,7 @@
       "constructors": [
         {
           "stableId": "express:express.CookieOptions::.ctor():void",
-          "metadataToken": 100663547,
+          "metadataToken": 100663559,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2079,7 +2067,7 @@
       "constructors": [
         {
           "stableId": "express:express.Cookies::.ctor():void",
-          "metadataToken": 100663601,
+          "metadataToken": 100663615,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2203,11 +2191,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.CorsOptions::maxAgeSeconds:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.CorsOptions::maxAgeSeconds:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "maxAgeSeconds",
           "metadataToken": 385876011,
-          "canonicalSignature": ":System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "maxAgeSeconds|:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "maxAgeSeconds|:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2241,11 +2229,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.CorsOptions::optionsSuccessStatus:System.Int32",
+          "stableId": "express:express.CorsOptions::optionsSuccessStatus:System.Double",
           "clrName": "optionsSuccessStatus",
           "metadataToken": 385876013,
-          "canonicalSignature": ":System.Int32",
-          "normalizedSignature": "optionsSuccessStatus|:System.Int32|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "optionsSuccessStatus|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2265,7 +2253,7 @@
       "constructors": [
         {
           "stableId": "express:express.CorsOptions::.ctor():void",
-          "metadataToken": 100663465,
+          "metadataToken": 100663477,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2451,7 +2439,7 @@
       "constructors": [
         {
           "stableId": "express:express.DownloadOptions::.ctor():void",
-          "metadataToken": 100663524,
+          "metadataToken": 100663536,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2504,7 +2492,7 @@
       "constructors": [
         {
           "stableId": "express:express.Files::.ctor():void",
-          "metadataToken": 100663607,
+          "metadataToken": 100663621,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2533,11 +2521,11 @@
       "methods": [],
       "properties": [
         {
-          "stableId": "express:express.FileStat::size:System.Int64",
+          "stableId": "express:express.FileStat::size:System.Double",
           "clrName": "size",
           "metadataToken": 385876058,
-          "canonicalSignature": ":System.Int64",
-          "normalizedSignature": "size|:System.Int64|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "size|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2552,11 +2540,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.FileStat::modifiedAt:System.DateTime",
+          "stableId": "express:express.FileStat::modifiedAt:Tsonic.JSRuntime.Date",
           "clrName": "modifiedAt",
           "metadataToken": 385876059,
-          "canonicalSignature": ":System.DateTime",
-          "normalizedSignature": "modifiedAt|:System.DateTime|static=false|accessor=getset",
+          "canonicalSignature": ":Tsonic.JSRuntime.Date",
+          "normalizedSignature": "modifiedAt|:Tsonic.JSRuntime.Date|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2576,7 +2564,7 @@
       "constructors": [
         {
           "stableId": "express:express.FileStat::.ctor():void",
-          "metadataToken": 100663564,
+          "metadataToken": 100663578,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2724,7 +2712,7 @@
       "constructors": [
         {
           "stableId": "express:express.JsonOptions::.ctor():void",
-          "metadataToken": 100663401,
+          "metadataToken": 100663413,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2754,7 +2742,7 @@
         {
           "stableId": "express:express.Multipart::any():express.RequestHandler",
           "clrName": "any",
-          "metadataToken": 100663588,
+          "metadataToken": 100663602,
           "canonicalSignature": "():express.RequestHandler",
           "normalizedSignature": "any|():express.RequestHandler|static=false",
           "emitScope": "ClassSurface",
@@ -2774,7 +2762,7 @@
         {
           "stableId": "express:express.Multipart::none():express.RequestHandler",
           "clrName": "none",
-          "metadataToken": 100663589,
+          "metadataToken": 100663603,
           "canonicalSignature": "():express.RequestHandler",
           "normalizedSignature": "none|():express.RequestHandler|static=false",
           "emitScope": "ClassSurface",
@@ -2794,7 +2782,7 @@
         {
           "stableId": "express:express.Multipart::single(System.String):express.RequestHandler",
           "clrName": "single",
-          "metadataToken": 100663590,
+          "metadataToken": 100663604,
           "canonicalSignature": "(System.String):express.RequestHandler",
           "normalizedSignature": "single|(System.String):express.RequestHandler|static=false",
           "emitScope": "ClassSurface",
@@ -2812,11 +2800,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Multipart::array(System.String,System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.RequestHandler",
+          "stableId": "express:express.Multipart::array(System.String,System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.RequestHandler",
           "clrName": "array",
-          "metadataToken": 100663591,
-          "canonicalSignature": "(System.String,System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.RequestHandler",
-          "normalizedSignature": "array|(System.String,System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.RequestHandler|static=false",
+          "metadataToken": 100663605,
+          "canonicalSignature": "(System.String,System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.RequestHandler",
+          "normalizedSignature": "array|(System.String,System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.RequestHandler|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -2834,7 +2822,7 @@
         {
           "stableId": "express:express.Multipart::fields(express.MultipartField[]):express.RequestHandler",
           "clrName": "fields",
-          "metadataToken": 100663592,
+          "metadataToken": 100663606,
           "canonicalSignature": "(express.MultipartField[]):express.RequestHandler",
           "normalizedSignature": "fields|(express.MultipartField[]):express.RequestHandler|static=false",
           "emitScope": "ClassSurface",
@@ -2858,7 +2846,7 @@
       "constructors": [
         {
           "stableId": "express:express.Multipart::.ctor(express.MultipartOptions):void",
-          "metadataToken": 100663587,
+          "metadataToken": 100663601,
           "canonicalSignature": "(express.MultipartOptions):void",
           "normalizedSignature": "constructor|(express.MultipartOptions):void|static=false",
           "isStatic": false,
@@ -2906,11 +2894,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.MultipartField::maxCount:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.MultipartField::maxCount:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "maxCount",
           "metadataToken": 385876002,
-          "canonicalSignature": ":System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "maxCount|:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "maxCount|:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2930,7 +2918,7 @@
       "constructors": [
         {
           "stableId": "express:express.MultipartField::.ctor():void",
-          "metadataToken": 100663441,
+          "metadataToken": 100663453,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -2978,11 +2966,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.MultipartOptions::maxFileCount:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.MultipartOptions::maxFileCount:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "maxFileCount",
           "metadataToken": 385876004,
-          "canonicalSignature": ":System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "maxFileCount|:System.Nullable_1[[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "maxFileCount|:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -2997,11 +2985,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.MultipartOptions::maxFileSizeBytes:System.Nullable_1[[System.Int64,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.MultipartOptions::maxFileSizeBytes:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "maxFileSizeBytes",
           "metadataToken": 385876005,
-          "canonicalSignature": ":System.Nullable_1[[System.Int64,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "maxFileSizeBytes|:System.Nullable_1[[System.Int64,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "maxFileSizeBytes|:System.Nullable_1[[System.Double,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -3021,7 +3009,7 @@
       "constructors": [
         {
           "stableId": "express:express.MultipartOptions::.ctor():void",
-          "metadataToken": 100663448,
+          "metadataToken": 100663460,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -3074,7 +3062,7 @@
       "constructors": [
         {
           "stableId": "express:express.Params::.ctor():void",
-          "metadataToken": 100663611,
+          "metadataToken": 100663625,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -3127,7 +3115,7 @@
       "constructors": [
         {
           "stableId": "express:express.RangeOptions::.ctor():void",
-          "metadataToken": 100663550,
+          "metadataToken": 100663562,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -3175,16 +3163,16 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.RangeResult::ranges:System.Collections.Generic.List_1[[express.ByteRange,express,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null]]",
+          "stableId": "express:express.RangeResult::ranges:express.ByteRange[]",
           "clrName": "ranges",
           "metadataToken": 385876057,
-          "canonicalSignature": ":System.Collections.Generic.List_1[[express.ByteRange,express,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null]]",
-          "normalizedSignature": "ranges|:System.Collections.Generic.List_1[[express.ByteRange,express,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null]]|static=false|accessor=get",
+          "canonicalSignature": ":express.ByteRange[]",
+          "normalizedSignature": "ranges|:express.ByteRange[]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
           "hasGetter": true,
-          "hasSetter": false,
+          "hasSetter": true,
           "isStatic": false,
           "isAbstract": false,
           "isVirtual": false,
@@ -3199,7 +3187,7 @@
       "constructors": [
         {
           "stableId": "express:express.RangeResult::.ctor():void",
-          "metadataToken": 100663559,
+          "metadataToken": 100663573,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -3309,7 +3297,7 @@
       "constructors": [
         {
           "stableId": "express:express.RawOptions::.ctor():void",
-          "metadataToken": 100663410,
+          "metadataToken": 100663422,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -3339,7 +3327,7 @@
         {
           "stableId": "express:express.Request::accepts(System.String[]):System.Object",
           "clrName": "accepts",
-          "metadataToken": 100663660,
+          "metadataToken": 100663674,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "accepts|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3359,7 +3347,7 @@
         {
           "stableId": "express:express.Request::acceptsCharsets(System.String[]):System.Object",
           "clrName": "acceptsCharsets",
-          "metadataToken": 100663661,
+          "metadataToken": 100663675,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "acceptsCharsets|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3379,7 +3367,7 @@
         {
           "stableId": "express:express.Request::acceptsEncodings(System.String[]):System.Object",
           "clrName": "acceptsEncodings",
-          "metadataToken": 100663662,
+          "metadataToken": 100663676,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "acceptsEncodings|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3399,7 +3387,7 @@
         {
           "stableId": "express:express.Request::acceptsLanguages(System.String[]):System.Object",
           "clrName": "acceptsLanguages",
-          "metadataToken": 100663663,
+          "metadataToken": 100663677,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "acceptsLanguages|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3419,7 +3407,7 @@
         {
           "stableId": "express:express.Request::get(System.String):System.String",
           "clrName": "get",
-          "metadataToken": 100663664,
+          "metadataToken": 100663678,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "get|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -3439,7 +3427,7 @@
         {
           "stableId": "express:express.Request::header(System.String):System.String",
           "clrName": "header",
-          "metadataToken": 100663665,
+          "metadataToken": 100663679,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "header|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -3459,7 +3447,7 @@
         {
           "stableId": "express:express.Request::param(System.String):System.String",
           "clrName": "param",
-          "metadataToken": 100663666,
+          "metadataToken": 100663680,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "param|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -3479,7 +3467,7 @@
         {
           "stableId": "express:express.Request::is(System.String[]):System.Object",
           "clrName": "is",
-          "metadataToken": 100663667,
+          "metadataToken": 100663681,
           "canonicalSignature": "(System.String[]):System.Object",
           "normalizedSignature": "is|(System.String[]):System.Object|static=false",
           "emitScope": "ClassSurface",
@@ -3497,11 +3485,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Request::range(System.Int64,express.RangeOptions):System.Object",
+          "stableId": "express:express.Request::range(System.Double,express.RangeOptions):Tsonic.Runtime.Union_2[[express.RangeResult,express,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null],[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
           "clrName": "range",
-          "metadataToken": 100663668,
-          "canonicalSignature": "(System.Int64,express.RangeOptions):System.Object",
-          "normalizedSignature": "range|(System.Int64,express.RangeOptions):System.Object|static=false",
+          "metadataToken": 100663682,
+          "canonicalSignature": "(System.Double,express.RangeOptions):Tsonic.Runtime.Union_2[[express.RangeResult,express,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null],[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "range|(System.Double,express.RangeOptions):Tsonic.Runtime.Union_2[[express.RangeResult,express,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null],[System.Int32,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -3519,7 +3507,7 @@
         {
           "stableId": "express:express.Request::setHeader(System.String,System.String):System.Void",
           "clrName": "setHeader",
-          "metadataToken": 100663669,
+          "metadataToken": 100663683,
           "canonicalSignature": "(System.String,System.String):System.Void",
           "normalizedSignature": "setHeader|(System.String,System.String):System.Void|static=false",
           "emitScope": "ClassSurface",
@@ -3729,11 +3717,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.Request::ips:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.Request::ips:System.String[]",
           "clrName": "ips",
           "metadataToken": 385876075,
-          "canonicalSignature": ":System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "ips|:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.String[]",
+          "normalizedSignature": "ips|:System.String[]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -3938,11 +3926,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.Request::subdomains:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "stableId": "express:express.Request::subdomains:System.String[]",
           "clrName": "subdomains",
           "metadataToken": 385876086,
-          "canonicalSignature": ":System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
-          "normalizedSignature": "subdomains|:System.Collections.Generic.List_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false|accessor=getset",
+          "canonicalSignature": ":System.String[]",
+          "normalizedSignature": "subdomains|:System.String[]|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -4019,7 +4007,7 @@
       "constructors": [
         {
           "stableId": "express:express.Request::.ctor():void",
-          "metadataToken": 100663656,
+          "metadataToken": 100663670,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -4049,7 +4037,7 @@
         {
           "stableId": "express:express.Response::append(System.String,System.String):express.Response",
           "clrName": "append",
-          "metadataToken": 100663689,
+          "metadataToken": 100663705,
           "canonicalSignature": "(System.String,System.String):express.Response",
           "normalizedSignature": "append|(System.String,System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4069,7 +4057,7 @@
         {
           "stableId": "express:express.Response::append(System.String,System.Collections.Generic.IEnumerable_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "append",
-          "metadataToken": 100663690,
+          "metadataToken": 100663706,
           "canonicalSignature": "(System.String,System.Collections.Generic.IEnumerable_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "append|(System.String,System.Collections.Generic.IEnumerable_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4089,7 +4077,7 @@
         {
           "stableId": "express:express.Response::attachment(System.String):express.Response",
           "clrName": "attachment",
-          "metadataToken": 100663691,
+          "metadataToken": 100663707,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "attachment|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4109,7 +4097,7 @@
         {
           "stableId": "express:express.Response::cookie(System.String,System.Object,express.CookieOptions):express.Response",
           "clrName": "cookie",
-          "metadataToken": 100663692,
+          "metadataToken": 100663708,
           "canonicalSignature": "(System.String,System.Object,express.CookieOptions):express.Response",
           "normalizedSignature": "cookie|(System.String,System.Object,express.CookieOptions):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4129,7 +4117,7 @@
         {
           "stableId": "express:express.Response::clearCookie(System.String,express.CookieOptions):express.Response",
           "clrName": "clearCookie",
-          "metadataToken": 100663693,
+          "metadataToken": 100663709,
           "canonicalSignature": "(System.String,express.CookieOptions):express.Response",
           "normalizedSignature": "clearCookie|(System.String,express.CookieOptions):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4147,11 +4135,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::download(System.String,System.String,express.DownloadOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "stableId": "express:express.Response::download(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
           "clrName": "download",
-          "metadataToken": 100663694,
-          "canonicalSignature": "(System.String,System.String,express.DownloadOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
-          "normalizedSignature": "download|(System.String,System.String,express.DownloadOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
+          "metadataToken": 100663710,
+          "canonicalSignature": "(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
+          "normalizedSignature": "download|(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4169,7 +4157,7 @@
         {
           "stableId": "express:express.Response::end(System.Object,System.String,System.Action):express.Response",
           "clrName": "end",
-          "metadataToken": 100663695,
+          "metadataToken": 100663711,
           "canonicalSignature": "(System.Object,System.String,System.Action):express.Response",
           "normalizedSignature": "end|(System.Object,System.String,System.Action):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4189,7 +4177,7 @@
         {
           "stableId": "express:express.Response::format(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Action,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "format",
-          "metadataToken": 100663696,
+          "metadataToken": 100663712,
           "canonicalSignature": "(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Action,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "format|(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Action,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4209,7 +4197,7 @@
         {
           "stableId": "express:express.Response::get(System.String):System.String",
           "clrName": "get",
-          "metadataToken": 100663697,
+          "metadataToken": 100663713,
           "canonicalSignature": "(System.String):System.String",
           "normalizedSignature": "get|(System.String):System.String|static=false",
           "emitScope": "ClassSurface",
@@ -4229,7 +4217,7 @@
         {
           "stableId": "express:express.Response::json(System.Object):express.Response",
           "clrName": "json",
-          "metadataToken": 100663698,
+          "metadataToken": 100663714,
           "canonicalSignature": "(System.Object):express.Response",
           "normalizedSignature": "json|(System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4249,7 +4237,7 @@
         {
           "stableId": "express:express.Response::jsonp(System.Object):express.Response",
           "clrName": "jsonp",
-          "metadataToken": 100663699,
+          "metadataToken": 100663715,
           "canonicalSignature": "(System.Object):express.Response",
           "normalizedSignature": "jsonp|(System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4269,7 +4257,7 @@
         {
           "stableId": "express:express.Response::links(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "links",
-          "metadataToken": 100663700,
+          "metadataToken": 100663716,
           "canonicalSignature": "(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "links|(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4289,7 +4277,7 @@
         {
           "stableId": "express:express.Response::location(System.String):express.Response",
           "clrName": "location",
-          "metadataToken": 100663701,
+          "metadataToken": 100663717,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "location|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4309,7 +4297,7 @@
         {
           "stableId": "express:express.Response::redirect(System.String):express.Response",
           "clrName": "redirect",
-          "metadataToken": 100663702,
+          "metadataToken": 100663718,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "redirect|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4327,11 +4315,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::redirect(System.Int32,System.String):express.Response",
+          "stableId": "express:express.Response::redirect(System.Double,System.String):express.Response",
           "clrName": "redirect",
-          "metadataToken": 100663703,
-          "canonicalSignature": "(System.Int32,System.String):express.Response",
-          "normalizedSignature": "redirect|(System.Int32,System.String):express.Response|static=false",
+          "metadataToken": 100663719,
+          "canonicalSignature": "(System.Double,System.String):express.Response",
+          "normalizedSignature": "redirect|(System.Double,System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4349,7 +4337,7 @@
         {
           "stableId": "express:express.Response::render(System.String):express.Response",
           "clrName": "render",
-          "metadataToken": 100663704,
+          "metadataToken": 100663720,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "render|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4369,7 +4357,7 @@
         {
           "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
-          "metadataToken": 100663705,
+          "metadataToken": 100663721,
           "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4387,11 +4375,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::render(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "stableId": "express:express.Response::render(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
-          "metadataToken": 100663706,
-          "canonicalSignature": "(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
-          "normalizedSignature": "render|(System.String,System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
+          "metadataToken": 100663722,
+          "canonicalSignature": "(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "normalizedSignature": "render|(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4407,11 +4395,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
-          "metadataToken": 100663707,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
-          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
+          "metadataToken": 100663723,
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4429,7 +4417,7 @@
         {
           "stableId": "express:express.Response::send(System.Object):express.Response",
           "clrName": "send",
-          "metadataToken": 100663708,
+          "metadataToken": 100663724,
           "canonicalSignature": "(System.Object):express.Response",
           "normalizedSignature": "send|(System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4447,11 +4435,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::sendFile(System.String,express.SendFileOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "stableId": "express:express.Response::sendFile(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
           "clrName": "sendFile",
-          "metadataToken": 100663709,
-          "canonicalSignature": "(System.String,express.SendFileOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
-          "normalizedSignature": "sendFile|(System.String,express.SendFileOptions,System.Action_1[[System.Exception,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
+          "metadataToken": 100663725,
+          "canonicalSignature": "(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
+          "normalizedSignature": "sendFile|(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4467,11 +4455,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::sendStatus(System.Int32):express.Response",
+          "stableId": "express:express.Response::sendStatus(System.Double):express.Response",
           "clrName": "sendStatus",
-          "metadataToken": 100663710,
-          "canonicalSignature": "(System.Int32):express.Response",
-          "normalizedSignature": "sendStatus|(System.Int32):express.Response|static=false",
+          "metadataToken": 100663726,
+          "canonicalSignature": "(System.Double):express.Response",
+          "normalizedSignature": "sendStatus|(System.Double):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4489,7 +4477,7 @@
         {
           "stableId": "express:express.Response::set(System.String,System.Object):express.Response",
           "clrName": "set",
-          "metadataToken": 100663711,
+          "metadataToken": 100663727,
           "canonicalSignature": "(System.String,System.Object):express.Response",
           "normalizedSignature": "set|(System.String,System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4509,7 +4497,7 @@
         {
           "stableId": "express:express.Response::set(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "set",
-          "metadataToken": 100663712,
+          "metadataToken": 100663728,
           "canonicalSignature": "(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "normalizedSignature": "set|(System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4529,7 +4517,7 @@
         {
           "stableId": "express:express.Response::header(System.String,System.Object):express.Response",
           "clrName": "header",
-          "metadataToken": 100663713,
+          "metadataToken": 100663729,
           "canonicalSignature": "(System.String,System.Object):express.Response",
           "normalizedSignature": "header|(System.String,System.Object):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4547,11 +4535,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::status(System.Int32):express.Response",
+          "stableId": "express:express.Response::status(System.Double):express.Response",
           "clrName": "status",
-          "metadataToken": 100663714,
-          "canonicalSignature": "(System.Int32):express.Response",
-          "normalizedSignature": "status|(System.Int32):express.Response|static=false",
+          "metadataToken": 100663730,
+          "canonicalSignature": "(System.Double):express.Response",
+          "normalizedSignature": "status|(System.Double):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4569,7 +4557,7 @@
         {
           "stableId": "express:express.Response::type(System.String):express.Response",
           "clrName": "type",
-          "metadataToken": 100663715,
+          "metadataToken": 100663731,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "type|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4589,7 +4577,7 @@
         {
           "stableId": "express:express.Response::contentType(System.String):express.Response",
           "clrName": "contentType",
-          "metadataToken": 100663716,
+          "metadataToken": 100663732,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "contentType|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4609,7 +4597,7 @@
         {
           "stableId": "express:express.Response::vary(System.String):express.Response",
           "clrName": "vary",
-          "metadataToken": 100663717,
+          "metadataToken": 100663733,
           "canonicalSignature": "(System.String):express.Response",
           "normalizedSignature": "vary|(System.String):express.Response|static=false",
           "emitScope": "ClassSurface",
@@ -4667,11 +4655,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.Response::statusCode:System.Int32",
+          "stableId": "express:express.Response::statusCode:System.Double",
           "clrName": "statusCode",
           "metadataToken": 385876097,
-          "canonicalSignature": ":System.Int32",
-          "normalizedSignature": "statusCode|:System.Int32|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "statusCode|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -4729,7 +4717,7 @@
       "constructors": [
         {
           "stableId": "express:express.Response::.ctor():void",
-          "metadataToken": 100663686,
+          "metadataToken": 100663702,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -4762,7 +4750,7 @@
         {
           "stableId": "express:express.Route::all(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "all",
-          "metadataToken": 100663732,
+          "metadataToken": 100663748,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "all|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4782,7 +4770,7 @@
         {
           "stableId": "express:express.Route::delete(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "delete",
-          "metadataToken": 100663733,
+          "metadataToken": 100663749,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "delete|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4802,7 +4790,7 @@
         {
           "stableId": "express:express.Route::get(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "get",
-          "metadataToken": 100663734,
+          "metadataToken": 100663750,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "get|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4822,7 +4810,7 @@
         {
           "stableId": "express:express.Route::options(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "options",
-          "metadataToken": 100663735,
+          "metadataToken": 100663751,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "options|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4842,7 +4830,7 @@
         {
           "stableId": "express:express.Route::patch(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "patch",
-          "metadataToken": 100663736,
+          "metadataToken": 100663752,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "patch|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4862,7 +4850,7 @@
         {
           "stableId": "express:express.Route::post(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "post",
-          "metadataToken": 100663737,
+          "metadataToken": 100663753,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "post|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -4882,7 +4870,7 @@
         {
           "stableId": "express:express.Route::put(express.RequestHandler,express.RequestHandler[]):express.Route",
           "clrName": "put",
-          "metadataToken": 100663738,
+          "metadataToken": 100663754,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):express.Route",
           "normalizedSignature": "put|(express.RequestHandler,express.RequestHandler[]):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5087,7 +5075,7 @@
         {
           "stableId": "express:express.Router::param(System.String,express.ParamHandler):express.Router",
           "clrName": "param",
-          "metadataToken": 100663797,
+          "metadataToken": 100663813,
           "canonicalSignature": "(System.String,express.ParamHandler):express.Router",
           "normalizedSignature": "param|(System.String,express.ParamHandler):express.Router|static=false",
           "emitScope": "ClassSurface",
@@ -5107,7 +5095,7 @@
         {
           "stableId": "express:express.Router::use(express.Router):express.Router",
           "clrName": "use",
-          "metadataToken": 100663799,
+          "metadataToken": 100663815,
           "canonicalSignature": "(express.Router):express.Router",
           "normalizedSignature": "use|(express.Router):express.Router|static=false",
           "emitScope": "ClassSurface",
@@ -5127,7 +5115,7 @@
         {
           "stableId": "express:express.Router::use(System.String,express.Router):express.Router",
           "clrName": "use",
-          "metadataToken": 100663800,
+          "metadataToken": 100663816,
           "canonicalSignature": "(System.String,express.Router):express.Router",
           "normalizedSignature": "use|(System.String,express.Router):express.Router|static=false",
           "emitScope": "ClassSurface",
@@ -5191,7 +5179,7 @@
       "constructors": [
         {
           "stableId": "express:express.Router::.ctor(express.RouterOptions):void",
-          "metadataToken": 100663771,
+          "metadataToken": 100663787,
           "canonicalSignature": "(express.RouterOptions):void",
           "normalizedSignature": "constructor|(express.RouterOptions):void|static=false",
           "isStatic": false,
@@ -5282,7 +5270,7 @@
       "constructors": [
         {
           "stableId": "express:express.RouterOptions::.ctor():void",
-          "metadataToken": 100663388,
+          "metadataToken": 100663400,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -5315,7 +5303,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::all(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "all",
-          "metadataToken": 100663818,
+          "metadataToken": 100663834,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "all|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5335,7 +5323,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::checkout(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "checkout",
-          "metadataToken": 100663819,
+          "metadataToken": 100663835,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "checkout|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5355,7 +5343,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::copy(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "copy",
-          "metadataToken": 100663820,
+          "metadataToken": 100663836,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "copy|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5375,7 +5363,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::delete(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "delete",
-          "metadataToken": 100663821,
+          "metadataToken": 100663837,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "delete|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5395,7 +5383,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::get(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "get",
-          "metadataToken": 100663822,
+          "metadataToken": 100663838,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "get|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5415,7 +5403,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::head(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "head",
-          "metadataToken": 100663823,
+          "metadataToken": 100663839,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "head|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5435,7 +5423,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::lock_(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "lock_",
-          "metadataToken": 100663824,
+          "metadataToken": 100663840,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "lock_|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5455,7 +5443,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::merge(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "merge",
-          "metadataToken": 100663825,
+          "metadataToken": 100663841,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "merge|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5475,7 +5463,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkactivity(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "mkactivity",
-          "metadataToken": 100663826,
+          "metadataToken": 100663842,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "mkactivity|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5495,7 +5483,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::mkcol(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "mkcol",
-          "metadataToken": 100663827,
+          "metadataToken": 100663843,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "mkcol|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5515,7 +5503,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::move(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "move",
-          "metadataToken": 100663828,
+          "metadataToken": 100663844,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "move|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5535,7 +5523,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::m_search(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "m_search",
-          "metadataToken": 100663829,
+          "metadataToken": 100663845,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "m_search|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5555,7 +5543,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::notify(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "notify",
-          "metadataToken": 100663830,
+          "metadataToken": 100663846,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "notify|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5575,7 +5563,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::options(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "options",
-          "metadataToken": 100663831,
+          "metadataToken": 100663847,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "options|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5595,7 +5583,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::patch(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "patch",
-          "metadataToken": 100663832,
+          "metadataToken": 100663848,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "patch|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5615,7 +5603,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::post(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "post",
-          "metadataToken": 100663833,
+          "metadataToken": 100663849,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "post|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5635,7 +5623,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::purge(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "purge",
-          "metadataToken": 100663834,
+          "metadataToken": 100663850,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "purge|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5655,7 +5643,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::put(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "put",
-          "metadataToken": 100663835,
+          "metadataToken": 100663851,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "put|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5675,7 +5663,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::report(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "report",
-          "metadataToken": 100663836,
+          "metadataToken": 100663852,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "report|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5695,7 +5683,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::search(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "search",
-          "metadataToken": 100663837,
+          "metadataToken": 100663853,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "search|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5715,7 +5703,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::subscribe(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "subscribe",
-          "metadataToken": 100663838,
+          "metadataToken": 100663854,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "subscribe|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5735,7 +5723,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::trace(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "trace",
-          "metadataToken": 100663839,
+          "metadataToken": 100663855,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "trace|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5755,7 +5743,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unlock(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "unlock",
-          "metadataToken": 100663840,
+          "metadataToken": 100663856,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "unlock|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5775,7 +5763,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::unsubscribe(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "unsubscribe",
-          "metadataToken": 100663841,
+          "metadataToken": 100663857,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "unsubscribe|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5795,7 +5783,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::use(express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "use",
-          "metadataToken": 100663842,
+          "metadataToken": 100663858,
           "canonicalSignature": "(express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "use|(express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5815,7 +5803,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::use(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "use",
-          "metadataToken": 100663843,
+          "metadataToken": 100663859,
           "canonicalSignature": "(System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "use|(System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5835,7 +5823,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::useError(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
           "clrName": "useError",
-          "metadataToken": 100663844,
+          "metadataToken": 100663860,
           "canonicalSignature": "(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
           "normalizedSignature": "useError|(express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5855,7 +5843,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::useError(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
           "clrName": "useError",
-          "metadataToken": 100663845,
+          "metadataToken": 100663861,
           "canonicalSignature": "(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf",
           "normalizedSignature": "useError|(System.String,express.ErrorRequestHandler,express.ErrorRequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5875,7 +5863,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::route(System.String):express.Route",
           "clrName": "route",
-          "metadataToken": 100663846,
+          "metadataToken": 100663862,
           "canonicalSignature": "(System.String):express.Route",
           "normalizedSignature": "route|(System.String):express.Route|static=false",
           "emitScope": "ClassSurface",
@@ -5895,7 +5883,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::method(System.String,System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "clrName": "method",
-          "metadataToken": 100663847,
+          "metadataToken": 100663863,
           "canonicalSignature": "(System.String,System.String,express.RequestHandler,express.RequestHandler[]):TSelf",
           "normalizedSignature": "method|(System.String,System.String,express.RequestHandler,express.RequestHandler[]):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5915,7 +5903,7 @@
         {
           "stableId": "express:express.RoutingHost\u00601::param(System.String,express.ParamHandler):TSelf",
           "clrName": "param",
-          "metadataToken": 100663873,
+          "metadataToken": 100663889,
           "canonicalSignature": "(System.String,express.ParamHandler):TSelf",
           "normalizedSignature": "param|(System.String,express.ParamHandler):TSelf|static=false",
           "emitScope": "ClassSurface",
@@ -5959,7 +5947,7 @@
       "constructors": [
         {
           "stableId": "express:express.RoutingHost\u00601::.ctor():void",
-          "metadataToken": 100663877,
+          "metadataToken": 100663893,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -6145,7 +6133,7 @@
       "constructors": [
         {
           "stableId": "express:express.SendFileOptions::.ctor():void",
-          "metadataToken": 100663507,
+          "metadataToken": 100663519,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -6407,7 +6395,7 @@
       "constructors": [
         {
           "stableId": "express:express.StaticOptions::.ctor():void",
-          "metadataToken": 100663490,
+          "metadataToken": 100663502,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -6536,7 +6524,7 @@
       "constructors": [
         {
           "stableId": "express:express.TextOptions::.ctor():void",
-          "metadataToken": 100663421,
+          "metadataToken": 100663433,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -6564,11 +6552,11 @@
       },
       "methods": [
         {
-          "stableId": "express:express.UploadedFile::openReadStream():System.IO.Stream",
-          "clrName": "openReadStream",
-          "metadataToken": 100663675,
-          "canonicalSignature": "():System.IO.Stream",
-          "normalizedSignature": "openReadStream|():System.IO.Stream|static=false",
+          "stableId": "express:express.UploadedFile::bytes():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]",
+          "clrName": "bytes",
+          "metadataToken": 100663691,
+          "canonicalSignature": "():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]",
+          "normalizedSignature": "bytes|():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.5.0,Culture=neutral,PublicKeyToken=null]]|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -6584,15 +6572,15 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.UploadedFile::copyToAsync(System.IO.Stream):System.Threading.Tasks.Task",
-          "clrName": "copyToAsync",
-          "metadataToken": 100663676,
-          "canonicalSignature": "(System.IO.Stream):System.Threading.Tasks.Task",
-          "normalizedSignature": "copyToAsync|(System.IO.Stream):System.Threading.Tasks.Task|static=false",
+          "stableId": "express:express.UploadedFile::text():System.Threading.Tasks.Task_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "clrName": "text",
+          "metadataToken": 100663692,
+          "canonicalSignature": "():System.Threading.Tasks.Task_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]",
+          "normalizedSignature": "text|():System.Threading.Tasks.Task_1[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
-          "parameterCount": 1,
+          "parameterCount": 0,
           "isStatic": false,
           "isAbstract": false,
           "isVirtual": false,
@@ -6606,7 +6594,7 @@
         {
           "stableId": "express:express.UploadedFile::save(System.String):System.Threading.Tasks.Task",
           "clrName": "save",
-          "metadataToken": 100663677,
+          "metadataToken": 100663693,
           "canonicalSignature": "(System.String):System.Threading.Tasks.Task",
           "normalizedSignature": "save|(System.String):System.Threading.Tasks.Task|static=false",
           "emitScope": "ClassSurface",
@@ -6683,11 +6671,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.UploadedFile::size:System.Int64",
+          "stableId": "express:express.UploadedFile::size:System.Double",
           "clrName": "size",
           "metadataToken": 385876094,
-          "canonicalSignature": ":System.Int64",
-          "normalizedSignature": "size|:System.Int64|static=false|accessor=get",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "size|:System.Double|static=false|accessor=get",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -6781,11 +6769,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.UrlEncodedOptions::parameterLimit:System.Int32",
+          "stableId": "express:express.UrlEncodedOptions::parameterLimit:System.Double",
           "clrName": "parameterLimit",
           "metadataToken": 385875997,
-          "canonicalSignature": ":System.Int32",
-          "normalizedSignature": "parameterLimit|:System.Int32|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "parameterLimit|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -6838,11 +6826,11 @@
           "declaringAssemblyName": "express"
         },
         {
-          "stableId": "express:express.UrlEncodedOptions::depth:System.Int32",
+          "stableId": "express:express.UrlEncodedOptions::depth:System.Double",
           "clrName": "depth",
           "metadataToken": 385876000,
-          "canonicalSignature": ":System.Int32",
-          "normalizedSignature": "depth|:System.Int32|static=false|accessor=getset",
+          "canonicalSignature": ":System.Double",
+          "normalizedSignature": "depth|:System.Double|static=false|accessor=getset",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "isIndexer": false,
@@ -6862,7 +6850,7 @@
       "constructors": [
         {
           "stableId": "express:express.UrlEncodedOptions::.ctor():void",
-          "metadataToken": 100663436,
+          "metadataToken": 100663448,
           "canonicalSignature": "():void",
           "normalizedSignature": "constructor|():void|static=false",
           "isStatic": false,
@@ -6892,7 +6880,7 @@
         {
           "stableId": "express:express.express::create():express.Application",
           "clrName": "create",
-          "metadataToken": 100663570,
+          "metadataToken": 100663584,
           "canonicalSignature": "():express.Application",
           "normalizedSignature": "create|():express.Application|static=true",
           "emitScope": "ClassSurface",
@@ -6912,7 +6900,7 @@
         {
           "stableId": "express:express.express::application():express.Application",
           "clrName": "application",
-          "metadataToken": 100663571,
+          "metadataToken": 100663585,
           "canonicalSignature": "():express.Application",
           "normalizedSignature": "application|():express.Application|static=true",
           "emitScope": "ClassSurface",
@@ -6932,7 +6920,7 @@
         {
           "stableId": "express:express.express::app():express.Application",
           "clrName": "app",
-          "metadataToken": 100663572,
+          "metadataToken": 100663586,
           "canonicalSignature": "():express.Application",
           "normalizedSignature": "app|():express.Application|static=true",
           "emitScope": "ClassSurface",
@@ -6952,7 +6940,7 @@
         {
           "stableId": "express:express.express::cookieParser(System.String):express.RequestHandler",
           "clrName": "cookieParser",
-          "metadataToken": 100663573,
+          "metadataToken": 100663587,
           "canonicalSignature": "(System.String):express.RequestHandler",
           "normalizedSignature": "cookieParser|(System.String):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -6972,7 +6960,7 @@
         {
           "stableId": "express:express.express::cors(express.CorsOptions):express.RequestHandler",
           "clrName": "cors",
-          "metadataToken": 100663574,
+          "metadataToken": 100663588,
           "canonicalSignature": "(express.CorsOptions):express.RequestHandler",
           "normalizedSignature": "cors|(express.CorsOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -6992,7 +6980,7 @@
         {
           "stableId": "express:express.express::json(express.JsonOptions):express.RequestHandler",
           "clrName": "json",
-          "metadataToken": 100663575,
+          "metadataToken": 100663589,
           "canonicalSignature": "(express.JsonOptions):express.RequestHandler",
           "normalizedSignature": "json|(express.JsonOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -7012,7 +7000,7 @@
         {
           "stableId": "express:express.express::raw(express.RawOptions):express.RequestHandler",
           "clrName": "raw",
-          "metadataToken": 100663576,
+          "metadataToken": 100663590,
           "canonicalSignature": "(express.RawOptions):express.RequestHandler",
           "normalizedSignature": "raw|(express.RawOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -7032,7 +7020,7 @@
         {
           "stableId": "express:express.express::Router(express.RouterOptions):express.Router",
           "clrName": "Router",
-          "metadataToken": 100663577,
+          "metadataToken": 100663591,
           "canonicalSignature": "(express.RouterOptions):express.Router",
           "normalizedSignature": "Router|(express.RouterOptions):express.Router|static=true",
           "emitScope": "ClassSurface",
@@ -7052,7 +7040,7 @@
         {
           "stableId": "express:express.express::multipart(express.MultipartOptions):express.Multipart",
           "clrName": "multipart",
-          "metadataToken": 100663578,
+          "metadataToken": 100663592,
           "canonicalSignature": "(express.MultipartOptions):express.Multipart",
           "normalizedSignature": "multipart|(express.MultipartOptions):express.Multipart|static=true",
           "emitScope": "ClassSurface",
@@ -7072,7 +7060,7 @@
         {
           "stableId": "express:express.express::static(System.String,express.StaticOptions):express.RequestHandler",
           "clrName": "static",
-          "metadataToken": 100663579,
+          "metadataToken": 100663593,
           "canonicalSignature": "(System.String,express.StaticOptions):express.RequestHandler",
           "normalizedSignature": "static|(System.String,express.StaticOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -7092,7 +7080,7 @@
         {
           "stableId": "express:express.express::text(express.TextOptions):express.RequestHandler",
           "clrName": "text",
-          "metadataToken": 100663580,
+          "metadataToken": 100663594,
           "canonicalSignature": "(express.TextOptions):express.RequestHandler",
           "normalizedSignature": "text|(express.TextOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
@@ -7112,7 +7100,7 @@
         {
           "stableId": "express:express.express::urlencoded(express.UrlEncodedOptions):express.RequestHandler",
           "clrName": "urlencoded",
-          "metadataToken": 100663581,
+          "metadataToken": 100663595,
           "canonicalSignature": "(express.UrlEncodedOptions):express.RequestHandler",
           "normalizedSignature": "urlencoded|(express.UrlEncodedOptions):express.RequestHandler|static=true",
           "emitScope": "ClassSurface",
