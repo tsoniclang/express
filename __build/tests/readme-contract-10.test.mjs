@@ -15,6 +15,7 @@ import {
   ensureLocalRuntimeNugetConfig,
   expressLocalSpec,
   jsLocalSpec,
+  overlayInstalledBindingsPackage,
   repoRoot,
   run,
   runTsonic,
@@ -76,6 +77,7 @@ test("express README contract (net10)", async () => {
     runTsonic(dir, ["init", "--surface", "@tsonic/js"]);
     if (!process.env.PUBLISHED) {
       run(dir, "npm", ["install", jsLocalSpec]);
+      overlayInstalledBindingsPackage(dir, "@tsonic/js");
     }
     runTsonic(dir, ["add", "npm", expressSpec]);
 
