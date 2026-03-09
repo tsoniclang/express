@@ -1,6 +1,6 @@
 {
   "name": "@tsonic/express",
-  "version": "10.0.37",
+  "version": "10.0.38",
   "description": "TypeScript type definitions for Express.js style API on ASP.NET Core",
   "type": "module",
   "keywords": [
@@ -31,6 +31,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@tsonic/js": "10.0.42"
+    "@tsonic/js": "10.0.43"
   }
 }
