@@ -7,6 +7,7 @@ import {
   ensureLocalRuntimeNugetConfig,
   expressLocalSpec,
   jsLocalSpec,
+  overlayInstalledBindingsPackage,
   repoRoot,
   run,
   runTsonic,
@@ -88,6 +89,7 @@ test("express local package compiles in a JS-surface project with JS-native APIs
   try {
     runTsonic(dir, ["init", "--surface", "@tsonic/js"]);
     run(dir, "npm", ["install", jsLocalSpec]);
+    overlayInstalledBindingsPackage(dir, "@tsonic/js");
     runTsonic(dir, ["add", "npm", expressLocalSpec]);
     ensureLocalRuntimeNugetConfig(dir);
 

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -88,4 +88,46 @@ export const ensureLocalRuntimeNugetConfig = (dir) => {
     `  </packageSources>\n` +
     `</configuration>\n`;
   writeFileSync(join(dir, "NuGet.Config"), nugetConfig, "utf-8");
+};
+
+export const overlayInstalledBindingsPackage = (dir, packageName) => {
+  const packageRoot = join(dir, "node_modules", ...packageName.split("/"));
+  const bindingsPath = join(packageRoot, "tsonic.bindings.json");
+  const workspacePath = join(dir, "tsonic.workspace.json");
+
+  if (!existsSync(bindingsPath)) return;
+
+  const bindings = JSON.parse(readFileSync(bindingsPath, "utf-8"));
+  const workspace = JSON.parse(readFileSync(workspacePath, "utf-8"));
+  const dotnet = workspace.dotnet ?? (workspace.dotnet = {});
+  const typeRoots = Array.isArray(dotnet.typeRoots) ? [...dotnet.typeRoots] : [];
+
+  for (const relativeRoot of bindings.requiredTypeRoots ?? []) {
+    const resolvedRoot =
+      relativeRoot === "."
+        ? `node_modules/${packageName}`
+        : `node_modules/${packageName}/${relativeRoot}`;
+    if (!typeRoots.includes(resolvedRoot)) {
+      typeRoots.push(resolvedRoot);
+    }
+  }
+  dotnet.typeRoots = typeRoots;
+
+  const mergeById = (existing, incoming) => {
+    const merged = Array.isArray(existing) ? [...existing] : [];
+    for (const item of incoming ?? []) {
+      const index = merged.findIndex((candidate) => candidate.id === item.id);
+      if (index >= 0) {
+        merged[index] = item;
+      } else {
+        merged.push(item);
+      }
+    }
+    return merged;
+  };
+
+  dotnet.frameworkReferences = mergeById(dotnet.frameworkReferences, bindings.dotnet?.frameworkReferences);
+  dotnet.packageReferences = mergeById(dotnet.packageReferences, bindings.dotnet?.packageReferences);
+
+  writeFileSync(workspacePath, `${JSON.stringify(workspace, null, 2)}\n`, "utf-8");
 };
