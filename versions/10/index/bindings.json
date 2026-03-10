@@ -863,11 +863,11 @@
       ],
       "methods": [
         {
-          "stableId": "express:express.TemplateEngine::Invoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.TemplateEngine::Invoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
           "clrName": "Invoke",
           "metadataToken": 100663375,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "Invoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "normalizedSignature": "Invoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -883,11 +883,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.TemplateEngine::BeginInvoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
+          "stableId": "express:express.TemplateEngine::BeginInvoke(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
           "clrName": "BeginInvoke",
           "metadataToken": 100663376,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
-          "normalizedSignature": "BeginInvoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult",
+          "normalizedSignature": "BeginInvoke|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.AsyncCallback,System.Object):System.IAsyncResult|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1405,11 +1405,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::render(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.Application::render(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
           "clrName": "render",
           "metadataToken": 100663315,
-          "canonicalSignature": "(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "render|(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "normalizedSignature": "render|(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1425,11 +1425,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Application::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "stableId": "express:express.Application::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
           "clrName": "render",
           "metadataToken": 100663316,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
-          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void",
+          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -1608,11 +1608,11 @@
       },
       "methods": [
         {
-          "stableId": "express:express.AppServer::close(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):System.Void",
+          "stableId": "express:express.AppServer::close(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):System.Void",
           "clrName": "close",
           "metadataToken": 100663333,
-          "canonicalSignature": "(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):System.Void",
-          "normalizedSignature": "close|(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):System.Void|static=false",
+          "canonicalSignature": "(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):System.Void",
+          "normalizedSignature": "close|(System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):System.Void|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4135,11 +4135,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::download(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
+          "stableId": "express:express.Response::download(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
           "clrName": "download",
           "metadataToken": 100663710,
-          "canonicalSignature": "(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
-          "normalizedSignature": "download|(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):express.Response|static=false",
+          "canonicalSignature": "(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
+          "normalizedSignature": "download|(System.String,System.String,express.DownloadOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4375,11 +4375,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::render(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "stableId": "express:express.Response::render(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
           "metadataToken": 100663722,
-          "canonicalSignature": "(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
-          "normalizedSignature": "render|(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
+          "canonicalSignature": "(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "normalizedSignature": "render|(System.String,System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4395,11 +4395,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "stableId": "express:express.Response::render(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
           "clrName": "render",
           "metadataToken": 100663723,
-          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
-          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
+          "canonicalSignature": "(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response",
+          "normalizedSignature": "render|(System.String,System.Collections.Generic.Dictionary_2[[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e],[System.Object,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]],System.Action_2[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null],[System.String,System.Private.CoreLib,Version=10.0.0.0,Culture=neutral,PublicKeyToken=7cec85d7bea7798e]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -4435,11 +4435,11 @@
           "isExtensionMethod": false
         },
         {
-          "stableId": "express:express.Response::sendFile(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
+          "stableId": "express:express.Response::sendFile(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
           "clrName": "sendFile",
           "metadataToken": 100663725,
-          "canonicalSignature": "(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
-          "normalizedSignature": "sendFile|(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]):express.Response|static=false",
+          "canonicalSignature": "(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):express.Response",
+          "normalizedSignature": "sendFile|(System.String,express.SendFileOptions,System.Action_1[[Tsonic.JSRuntime.Error,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]):express.Response|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
@@ -6552,11 +6552,11 @@
       },
       "methods": [
         {
-          "stableId": "express:express.UploadedFile::bytes():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]",
+          "stableId": "express:express.UploadedFile::bytes():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]",
           "clrName": "bytes",
           "metadataToken": 100663691,
-          "canonicalSignature": "():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]",
-          "normalizedSignature": "bytes|():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.6.0,Culture=neutral,PublicKeyToken=null]]|static=false",
+          "canonicalSignature": "():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]",
+          "normalizedSignature": "bytes|():System.Threading.Tasks.Task_1[[Tsonic.JSRuntime.Uint8Array,Tsonic.JSRuntime,Version=0.0.7.0,Culture=neutral,PublicKeyToken=null]]|static=false",
           "emitScope": "ClassSurface",
           "provenance": "Original",
           "arity": 0,
