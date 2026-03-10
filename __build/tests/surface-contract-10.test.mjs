@@ -19,6 +19,9 @@ test("express package surface stays JS-native and package-focused", () => {
     join(repoRoot, "versions", "10", "index", "internal", "index.d.ts"),
     "utf-8"
   );
+  const bindingsJson = JSON.parse(
+    readFileSync(join(repoRoot, "versions", "10", "index", "bindings.json"), "utf-8")
+  );
   const packageJson = JSON.parse(
     readFileSync(join(repoRoot, "versions", "10", "package.json"), "utf-8")
   );
@@ -46,19 +49,34 @@ test("express package surface stays JS-native and package-focused", () => {
 
   const requiredSnippets = [
     "VerifyBodyHandler = (req: Request, res: Response, buffer: Uint8Array, encoding: string) => void;",
-    "listen(port: number, callback?: () => void): AppServer;",
-    "statusCode: number;",
+    "listen(port: int, callback?: () => void): AppServer;",
+    "statusCode: int;",
     "readonly locals: Record<string, unknown | undefined>;",
     "query: Record<string, unknown | undefined>;",
     "bytes(): Promise<Uint8Array>;",
     "text(): Promise<string>;",
     "save(path: string): Promise<void>;",
-    "range(size: number, options?: RangeOptions): RangeResult | -1;",
+    "range(size: long, options?: RangeOptions): RangeResult | -1;",
+    "readonly size: long;",
+    "size: long;",
+    "readonly port: int | undefined;",
+    "maxFileCount?: int;",
+    "maxFileSizeBytes?: long;",
+    "maxAge?: long;",
+    "limit?: string | long;",
+    "parameterLimit?: int;",
+    "depth?: int;",
   ];
 
   for (const snippet of requiredSnippets) {
     assert.match(internalIndex, new RegExp(snippet.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
+
+  assert.equal(
+    JSON.stringify(bindingsJson).includes("\"numericSemantics\""),
+    false,
+    "express should expose tsonic numeric types directly instead of relying on numeric proof metadata"
+  );
 
   assert.deepEqual(packageJson.dependencies, { "@tsonic/js": jsPackageJson.version });
   assert.equal("peerDependencies" in packageJson, false);
@@ -99,7 +117,8 @@ test("express local package compiles in a JS-surface project with JS-native APIs
 
     writeFileSync(
       appPath,
-      `import { CookieOptions, MultipartField, MultipartOptions, Request, Response, VerifyBodyHandler, express } from "@tsonic/express/index.js";
+      `import type { int, long } from "@tsonic/core/types.js";
+import { CookieOptions, MultipartField, MultipartOptions, Request, Response, VerifyBodyHandler, express } from "@tsonic/express/index.js";
 
 export function main(): void {
   const app = express.create();
@@ -137,7 +156,9 @@ export function main(): void {
     req.ips.map((ip) => ip.length);
     res.locals["startedAt"] = new Date();
     res.statusCode = 201;
-    const range = req.range(1024);
+    const statusCode: int = res.statusCode;
+    void statusCode;
+    const range = req.range(1024 as long);
     if (range !== -1) {
       range.ranges[0]?.start.toString();
     }
@@ -156,7 +177,8 @@ export function main(): void {
       const bytes = await file.bytes();
       const text = await file.text();
       await file.save("./upload.bin");
-      res.json({ size: file.size, bytes: bytes.length, text });
+      const uploadedSize: long = file.size;
+      res.json({ size: uploadedSize, bytes: bytes.length, text });
       return;
     }
     res.sendStatus(204);
