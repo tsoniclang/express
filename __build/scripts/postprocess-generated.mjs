@@ -138,6 +138,18 @@ const stripInternalClrImports = (text) => {
     .replace(/^import \* as System_Internal from .*?\n/gm, "");
 };
 
+const syncCoreTypeImports = (text) => {
+  const withoutImport = text.replace(
+    /^import type \{[^}]+\} from "@tsonic\/core\/types\.js";\n/m,
+    ""
+  );
+  const requiredTypes = [];
+  if (/\bint\b/.test(withoutImport)) requiredTypes.push("int");
+  if (/\blong\b/.test(withoutImport)) requiredTypes.push("long");
+  if (requiredTypes.length === 0) return withoutImport;
+  return `import type { ${requiredTypes.join(", ")} } from "@tsonic/core/types.js";\n${withoutImport}`;
+};
+
 const replaceAll = (text, replacements) => {
   let updated = text;
   for (const [pattern, replacement] of replacements) {
@@ -174,7 +186,7 @@ export const RouterOptions: {
   JsonOptions: `
 export interface JsonOptions {
     inflate?: boolean;
-    limit?: string | number;
+    limit?: string | long;
     reviver?: unknown;
     strict?: boolean;
     type?: string | string[] | MediaTypeMatcher;
@@ -188,7 +200,7 @@ export const JsonOptions: {
   RawOptions: `
 export interface RawOptions {
     inflate?: boolean;
-    limit?: string | number;
+    limit?: string | long;
     type?: string | string[] | MediaTypeMatcher;
     verify?: VerifyBodyHandler;
 }
@@ -201,7 +213,7 @@ export const RawOptions: {
 export interface TextOptions {
     defaultCharset?: string;
     inflate?: boolean;
-    limit?: string | number;
+    limit?: string | long;
     type?: string | string[] | MediaTypeMatcher;
     verify?: VerifyBodyHandler;
 }
@@ -212,11 +224,11 @@ export const TextOptions: {
 };`,
   UrlEncodedOptions: `
 export interface UrlEncodedOptions {
-    depth?: number;
+    depth?: int;
     extended?: boolean;
     inflate?: boolean;
-    limit?: string | number;
-    parameterLimit?: number;
+    limit?: string | long;
+    parameterLimit?: int;
     type?: string | string[] | MediaTypeMatcher;
     verify?: VerifyBodyHandler;
 }
@@ -227,7 +239,7 @@ export const UrlEncodedOptions: {
 };`,
   MultipartField: `
 export interface MultipartField {
-    maxCount?: number;
+    maxCount?: int;
     name: string;
 }
 
@@ -237,8 +249,8 @@ export const MultipartField: {
 };`,
   MultipartOptions: `
 export interface MultipartOptions {
-    maxFileCount?: number;
-    maxFileSizeBytes?: number;
+    maxFileCount?: int;
+    maxFileSizeBytes?: long;
     type?: string;
 }
 
@@ -251,9 +263,9 @@ export interface CorsOptions {
     allowedHeaders?: string[];
     credentials?: boolean;
     exposedHeaders?: string[];
-    maxAgeSeconds?: number;
+    maxAgeSeconds?: int;
     methods?: string[];
-    optionsSuccessStatus?: number;
+    optionsSuccessStatus?: int;
     origins?: string[];
     preflightContinue?: boolean;
 }
@@ -270,7 +282,7 @@ export interface DownloadOptions {
     headers?: Record<string, string>;
     immutable?: boolean;
     lastModified?: boolean;
-    maxAge?: string | number;
+    maxAge?: string | long;
     root?: string;
 }
 
@@ -286,7 +298,7 @@ export interface SendFileOptions {
     headers?: Record<string, string>;
     immutable?: boolean;
     lastModified?: boolean;
-    maxAge?: string | number;
+    maxAge?: string | long;
     root?: string;
 }
 
@@ -305,7 +317,7 @@ export interface StaticOptions {
     immutable?: boolean;
     index?: string | string[] | false;
     lastModified?: boolean;
-    maxAge?: string | number;
+    maxAge?: string | long;
     redirect?: boolean;
     setHeaders?: SetHeadersHandler;
 }
@@ -320,7 +332,7 @@ export interface CookieOptions {
     encode?: CookieEncoder;
     expires?: Date;
     httpOnly?: boolean;
-    maxAge?: number;
+    maxAge?: long;
     partitioned?: boolean;
     path?: string;
     priority?: string;
@@ -360,18 +372,20 @@ const rewriteGeneratedExpressSurfaceForJs = (text, filePath) => {
     [/Dictionary_2<System_Internal\.String, ([^>]+)>/g, "Record<string, $1>"],
     ["IEnumerable_1<System_Internal.String>", "readonly string[]"],
     ["Nullable_1<System_Internal.Double>", "number | undefined"],
-    ["Nullable_1<System_Internal.Int32>", "number | undefined"],
-    ["Nullable_1<System_Internal.Int64>", "number | undefined"],
+    ["Nullable_1<System_Internal.Int32>", "int | undefined"],
+    ["Nullable_1<System_Internal.Int64>", "long | undefined"],
     ["Exception", "Error"],
     ["Action", "() => void"],
+    ["System_Internal.Int32", "int"],
+    ["System_Internal.Int64", "long"],
     ["double", "number"],
     ["System_Internal.String", "string"],
     ["mountpath: unknown;", "mountpath: string | string[];"],
     ["get sameSite(): unknown | undefined;", "get sameSite(): string | boolean | undefined;"],
     ["set sameSite(value: unknown | undefined);", "set sameSite(value: string | boolean | undefined);"],
-    ["maxAge: unknown;", "maxAge: string | number;"],
-    ["get limit(): unknown | undefined;", "get limit(): string | number | undefined;"],
-    ["set limit(value: unknown | undefined);", "set limit(value: string | number | undefined);"],
+    ["maxAge: unknown;", "maxAge: string | long;"],
+    ["get limit(): unknown | undefined;", "get limit(): string | long | undefined;"],
+    ["set limit(value: unknown | undefined);", "set limit(value: string | long | undefined);"],
     ["get type(): unknown | undefined;", "get type(): string | string[] | MediaTypeMatcher | undefined;"],
     ["set type(value: unknown | undefined);", "set type(value: string | string[] | MediaTypeMatcher | undefined);"],
     ["get extensions(): unknown | undefined;", "get extensions(): string[] | false | undefined;"],
@@ -383,7 +397,7 @@ const rewriteGeneratedExpressSurfaceForJs = (text, filePath) => {
     ["acceptsEncodings(...encodings: string[]): unknown | undefined;", "acceptsEncodings(...encodings: string[]): string | false;"],
     ["acceptsLanguages(...languages: string[]): unknown;", "acceptsLanguages(...languages: string[]): string | string[] | false;"],
     ["is(...types: string[]): unknown | undefined;", "is(...types: string[]): string | false | undefined;"],
-    ["range(size: number, options?: RangeOptions): unknown;", "range(size: number, options?: RangeOptions): RangeResult | -1;"],
+    ["range(size: long, options?: RangeOptions): unknown;", "range(size: long, options?: RangeOptions): RangeResult | -1;"],
     [/\bnumber \| undefined \| number\b/g, "number | undefined"],
   ]);
 
@@ -421,9 +435,9 @@ const rewriteGeneratedExpressSurfaceForJs = (text, filePath) => {
 
   const requiredSnippets = [
     "VerifyBodyHandler = (req: Request, res: Response, buffer: Uint8Array, encoding: string) => void;",
-    "listen(port: number, callback?: () => void): AppServer;",
-    "statusCode: number;",
-    "range(size: number, options?: RangeOptions): RangeResult | -1;",
+    "listen(port: int, callback?: () => void): AppServer;",
+    "statusCode: int;",
+    "range(size: long, options?: RangeOptions): RangeResult | -1;",
     "bytes(): Promise<Uint8Array>;",
     "text(): Promise<string>;",
     "save(path: string): Promise<void>;",
@@ -437,7 +451,7 @@ const rewriteGeneratedExpressSurfaceForJs = (text, filePath) => {
     }
   }
 
-  return updated;
+  return syncCoreTypeImports(updated);
 };
 
 const syncNugetBindingsVersion = ({ major, repoRoot }) => {
@@ -462,6 +476,28 @@ const syncNugetBindingsVersion = ({ major, repoRoot }) => {
 
   expressRef.version = nugetVersion;
   writeFileSync(bindingsPath, `${JSON.stringify(bindings, null, 2)}\n`, "utf-8");
+};
+
+const stripNumericSemantics = (value) => {
+  if (Array.isArray(value)) {
+    return value.map(stripNumericSemantics);
+  }
+
+  if (value && typeof value === "object") {
+    const entries = Object.entries(value)
+      .filter(([key]) => key !== "numericSemantics")
+      .map(([key, nested]) => [key, stripNumericSemantics(nested)]);
+    return Object.fromEntries(entries);
+  }
+
+  return value;
+};
+
+const syncPackageBindings = ({ major, repoRoot }) => {
+  const bindingsPath = join(repoRoot, "versions", major, "index", "bindings.json");
+  const original = JSON.parse(readFileSync(bindingsPath, "utf-8"));
+  const rewritten = stripNumericSemantics(original);
+  writeFileSync(bindingsPath, `${JSON.stringify(rewritten, null, 2)}\n`, "utf-8");
 };
 
 const syncPackageMetadata = ({ major, repoRoot }) => {
@@ -523,6 +559,7 @@ const main = () => {
   }
 
   syncNugetBindingsVersion({ major, repoRoot });
+  syncPackageBindings({ major, repoRoot });
   syncPackageMetadata({ major, repoRoot });
 };
 
