@@ -31,6 +31,6 @@
     "LICENSE"
   ],
   "dependencies": {
-    "@tsonic/js": "10.0.44"
+    "@tsonic/js": "10.0.45"
   }
 }
