@@ -80,6 +80,9 @@ test("express README contract (net10)", async () => {
       overlayInstalledBindingsPackage(dir, "@tsonic/js");
     }
     runTsonic(dir, ["add", "npm", expressSpec]);
+    if (!process.env.PUBLISHED) {
+      overlayInstalledBindingsPackage(dir, "@tsonic/express");
+    }
 
     // Local development mode: allow restoring against a sibling express-clr pack output
     // before it's published to nuget.org.
