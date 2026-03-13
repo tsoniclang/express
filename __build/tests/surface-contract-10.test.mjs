@@ -109,6 +109,7 @@ test("express local package compiles in a JS-surface project with JS-native APIs
     run(dir, "npm", ["install", jsLocalSpec]);
     overlayInstalledBindingsPackage(dir, "@tsonic/js");
     runTsonic(dir, ["add", "npm", expressLocalSpec]);
+    overlayInstalledBindingsPackage(dir, "@tsonic/express");
     ensureLocalRuntimeNugetConfig(dir);
 
     const projectName = dir.split("/").filter(Boolean).at(-1);
