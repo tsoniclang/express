@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
     "target": "ES2022",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": ".",
+    "outDir": "dist",
     "strict": true,
+    "noEmitOnError": true,
+    "declaration": false,
+    "sourceMap": false,
     "skipLibCheck": true,
-    "noEmit": true
+    "esModuleInterop": true
   },
   "include": [
-    "versions/**/*.d.ts"
+    "src/**/*.ts",
+    "tests/**/*.ts"
   ]
 }
