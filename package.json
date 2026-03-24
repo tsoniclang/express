@@ -1,15 +1,40 @@
 {
-  "name": "@tsonic/express-repo",
-  "private": true,
-  "description": "Repo for @tsonic/express (versioned by .NET major in versions/<major>/)",
+  "name": "@tsonic/express",
+  "version": "10.0.49",
+  "private": false,
+  "description": "Native Tsonic implementation of Express",
   "type": "module",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./index.js": {
+      "types": "./index.d.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "files": [
+    "index.d.ts",
+    "src/**/*.ts",
+    "tsonic/package-manifest.json",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
-    "docs:render:10": "node ./__build/scripts/render-readme.mjs 10",
-    "docs:check:10": "node ./__build/scripts/render-readme.mjs 10 --check",
-    "generate:10": "./__build/scripts/generate.sh 10",
-    "test:contracts:10": "node --test --test-concurrency=1 ./__build/tests/*.test.mjs",
-    "test:readme:10": "node --test ./__build/tests/readme-contract-10.test.mjs",
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/tests/runtime/*.test.js dist/tests/tsonic/*.test.js",
     "selftest": "bash scripts/selftest.sh",
-    "publish:10": "bash scripts/selftest.sh && npm publish ./versions/10 --access public"
+    "check:branches": "bash scripts/check-branch-hygiene.sh",
+    "publish:10": "bash scripts/selftest.sh && npm publish --access public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsoniclang/express.git"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "typescript": "^5.9.3"
   }
 }
