@@ -5,6 +5,7 @@
     "@tsonic/js"
   ],
   "source": {
+    "namespace": "express",
     "exports": {
       ".": "./src/index.ts",
       "./index.js": "./src/index.ts"
