@@ -4,19 +4,11 @@
   "private": false,
   "description": "Native Tsonic implementation of Express",
   "type": "module",
-  "types": "index.d.ts",
   "exports": {
-    ".": {
-      "types": "./index.d.ts",
-      "default": "./src/index.ts"
-    },
-    "./index.js": {
-      "types": "./index.d.ts",
-      "default": "./src/index.ts"
-    }
+    ".": "./src/index.ts",
+    "./index.js": "./src/index.ts"
   },
   "files": [
-    "index.d.ts",
     "src/**/*.ts",
     "tsonic.package.json",
     "README.md",
