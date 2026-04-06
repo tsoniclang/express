@@ -1,3 +1,4 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import type { Request } from "./request.js";
 import type { Response } from "./response.js";
 
@@ -37,7 +38,7 @@ export interface RouterOptions {
 export interface JsonOptions {
   inflate?: boolean;
   limit?: string | number;
-  reviver?: unknown;
+  reviver?: JsValue;
   strict?: boolean;
   type?: string | string[];
   verify?: VerifyBodyHandler;

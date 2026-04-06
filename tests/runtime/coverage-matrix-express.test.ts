@@ -1,3 +1,4 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -75,7 +76,7 @@ test("urlencoded body parsing middleware converts form data", async () => {
       req.get("content-type") === "application/x-www-form-urlencoded" &&
       req.transport.bodyText
     ) {
-      const body: Record<string, unknown> = {};
+      const body: Record<string, JsValue> = {};
       for (const pair of req.transport.bodyText.split("&")) {
         const eqIndex = pair.indexOf("=");
         if (eqIndex < 0) {
@@ -98,7 +99,7 @@ test("urlencoded body parsing middleware converts form data", async () => {
   });
 
   app.post("/form", (req, res) => {
-    const body = req.body as Record<string, unknown>;
+    const body = req.body as Record<string, JsValue>;
     const values = body["a"] as string[];
     res.send(`${values[0]}-${values[1]}`);
   });

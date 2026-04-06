@@ -54,7 +54,7 @@ test("app param array and engine render overloads work", async () => {
   assert.equal(seen.has("id"), true);
   assert.equal(seen.has("page"), true);
 
-  app.engine(".tpl", (_view, locals, callback) => callback(null, `name=${locals["name"]}`));
+  app.engine(".tpl", (_view, locals, callback) => callback(null, `name=${String(locals["name"])}`));
 
   let renderedWithLocals: string | undefined;
   app.render("welcome.tpl", { name: "sam" }, (_error, html) => {

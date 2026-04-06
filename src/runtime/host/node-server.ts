@@ -1,9 +1,11 @@
+import { asinterface, overloads as O } from "@tsonic/core/lang.js";
+import type { JsValue } from "@tsonic/core/types.js";
 import { Buffer } from "node:buffer";
-import { createServer } from "node:http";
-import type {
-  IncomingMessage,
-  Server,
-  ServerResponse
+import {
+  createServer,
+  type IncomingMessage,
+  type Server,
+  type ServerResponse
 } from "node:http";
 
 import type { Application } from "../application.js";
@@ -14,9 +16,51 @@ import type {
 } from "../types.js";
 import { AppServer } from "./app-server.js";
 
-type ListenCallback = (() => void) | undefined;
-type HeaderLookupValue = string | string[] | number | null | undefined;
+interface RequestBodyReadable {
+  on(eventName: "data", listener: (chunk: string | Uint8Array) => void): JsValue;
+  on(eventName: "end", listener: () => void): JsValue;
+  on(eventName: "error", listener: (error: JsValue) => void): JsValue;
+}
 
+interface RequestHeadersLookup {
+  [name: string]: string | readonly string[] | undefined;
+}
+
+interface RequestWithHeadersLookup {
+  headers: RequestHeadersLookup;
+}
+
+interface PathListeningServer {
+  listen(path: string, callback: () => void): JsValue;
+}
+
+interface PortListeningServer {
+  listen(port: number, callback: () => void): JsValue;
+}
+
+interface PortHostListeningServer {
+  listen(port: number, host: string, callback: () => void): JsValue;
+}
+
+interface PortHostBacklogListeningServer {
+  listen(port: number, host: string, backlog: number, callback: () => void): JsValue;
+}
+
+interface EmptyEndableResponse {
+  end(): JsValue;
+}
+
+interface TextEndableResponse {
+  end(chunk: string): JsValue;
+}
+
+interface BytesEndableResponse {
+  end(chunk: Uint8Array): JsValue;
+}
+
+interface ResponseHeaderLookup {
+  getHeader(name: string): string | readonly string[] | undefined;
+}
 export function listenOnPath(
   app: Application,
   path: string,
@@ -64,15 +108,69 @@ export function listenOnPort(
   backlogOrCallback?: number | (() => void),
   maybeCallback?: () => void
 ): AppServer {
-  const host = typeof hostOrCallback === "string" ? hostOrCallback : undefined;
-  const backlog =
-    typeof backlogOrCallback === "number" ? backlogOrCallback : undefined;
-  const callback = resolveListenCallback(
+  if (typeof hostOrCallback === "function" || hostOrCallback === undefined) {
+    return listenOnPort_port(
+      app,
+      port,
+      typeof hostOrCallback === "function" ? hostOrCallback : undefined
+    );
+  }
+
+  if (
+    typeof backlogOrCallback === "function" ||
+    backlogOrCallback === undefined
+  ) {
+    return listenOnPort_host(
+      app,
+      port,
+      hostOrCallback,
+      typeof backlogOrCallback === "function" ? backlogOrCallback : undefined
+    );
+  }
+
+  return listenOnPort_backlog(
+    app,
+    port,
     hostOrCallback,
     backlogOrCallback,
     maybeCallback
   );
+}
 
+export function listenOnPort_port(
+  app: Application,
+  port: number,
+  callback?: () => void
+): AppServer {
+  return listenOnPortResolved(app, port, undefined, undefined, callback);
+}
+
+export function listenOnPort_host(
+  app: Application,
+  port: number,
+  host: string,
+  callback?: () => void
+): AppServer {
+  return listenOnPortResolved(app, port, host, undefined, callback);
+}
+
+export function listenOnPort_backlog(
+  app: Application,
+  port: number,
+  host: string,
+  backlog: number,
+  callback?: () => void
+): AppServer {
+  return listenOnPortResolved(app, port, host, backlog, callback);
+}
+
+function listenOnPortResolved(
+  app: Application,
+  port: number,
+  host: string | undefined,
+  backlog: number | undefined,
+  callback: (() => void) | undefined
+): AppServer {
   const { appServer, nodeServer } = createNodeServer(
     app,
     port,
@@ -118,7 +216,11 @@ function createNodeServer(
       });
     } catch (error) {
       if (done) {
-        done(normalizeError(error));
+        if (error instanceof Error) {
+          done(error);
+        } else {
+          done(new Error("Server close failed."));
+        }
       }
     }
   });
@@ -139,11 +241,7 @@ function callListenOnPath(
   path: string,
   callback: () => void
 ): void {
-  (
-    nodeServer as unknown as {
-      listen(path: string, callback: () => void): unknown;
-    }
-  ).listen(path, callback);
+  asinterface<PathListeningServer>(nodeServer).listen(path, callback);
 }
 
 function callListenOnPort(
@@ -151,11 +249,7 @@ function callListenOnPort(
   port: number,
   callback: () => void
 ): void {
-  (
-    nodeServer as unknown as {
-      listen(port: number, callback: () => void): unknown;
-    }
-  ).listen(port, callback);
+  asinterface<PortListeningServer>(nodeServer).listen(port, callback);
 }
 
 function callListenOnPortHost(
@@ -164,11 +258,11 @@ function callListenOnPortHost(
   host: string,
   callback: () => void
 ): void {
-  (
-    nodeServer as unknown as {
-      listen(port: number, host: string, callback: () => void): unknown;
-    }
-  ).listen(port, host, callback);
+  asinterface<PortHostListeningServer>(nodeServer).listen(
+    port,
+    host,
+    callback
+  );
 }
 
 function callListenOnPortHostBacklog(
@@ -178,16 +272,12 @@ function callListenOnPortHostBacklog(
   backlog: number,
   callback: () => void
 ): void {
-  (
-    nodeServer as unknown as {
-      listen(
-        port: number,
-        host: string,
-        backlog: number,
-        callback: () => void
-      ): unknown;
-    }
-  ).listen(port, host, backlog, callback);
+  asinterface<PortHostBacklogListeningServer>(nodeServer).listen(
+    port,
+    host,
+    backlog,
+    callback
+  );
 }
 
 async function dispatchNodeRequest(
@@ -195,7 +285,8 @@ async function dispatchNodeRequest(
   request: IncomingMessage,
   response: ServerResponse
 ): Promise<void> {
-  const bodyBytes = await readRequestBody(request);
+  const rawBodyBytes = await readRequestBody(request);
+  const bodyBytes = rawBodyBytes.length > 0 ? rawBodyBytes : undefined;
   const transportResponse = new NodeTransportResponse(response);
   const context: TransportContext = {
     request: createTransportRequest(request, bodyBytes),
@@ -206,33 +297,23 @@ async function dispatchNodeRequest(
     await app.handle(context, app);
     if (!response.headersSent && response.statusCode === 200) {
       response.statusCode = 404;
-      response.end();
+      asinterface<EmptyEndableResponse>(response).end();
     }
   } catch (error) {
     if (!response.headersSent) {
       response.statusCode = 500;
-      response.end(normalizeError(error).message);
+      if (error instanceof Error) {
+        asinterface<TextEndableResponse>(response).end(error.message);
+      } else {
+        asinterface<TextEndableResponse>(response).end(
+          "Internal Server Error"
+        );
+      }
       return;
     }
 
     request.destroy();
   }
-}
-
-function resolveListenCallback(
-  hostOrCallback?: string | (() => void),
-  backlogOrCallback?: number | (() => void),
-  maybeCallback?: () => void
-): (() => void) | undefined {
-  if (typeof hostOrCallback === "function") {
-    return hostOrCallback;
-  }
-
-  if (typeof backlogOrCallback === "function") {
-    return backlogOrCallback;
-  }
-
-  return maybeCallback;
 }
 
 function syncBinding(appServer: AppServer, nodeServer: Server): void {
@@ -255,10 +336,11 @@ function createTransportRequest(
   const url = request.url ?? "/";
   const parsedUrl = splitPathAndQuery(url);
   const headers: Record<string, string> = {};
-  for (const key in request.headers) {
-    const normalized = normalizeHeaderValue(request.headers[key]);
-    if (normalized !== undefined) {
-      headers[key.toLowerCase()] = normalized;
+  const requestHeaders = asinterface<RequestWithHeadersLookup>(request).headers;
+  for (const key in requestHeaders) {
+    const headerValue = normalizeHeaderValue(requestHeaders[key]);
+    if (headerValue !== undefined) {
+      headers[key.toLowerCase()] = headerValue;
     }
   }
 
@@ -277,7 +359,7 @@ function createTransportRequest(
 
 function splitPathAndQuery(rawUrl: string): {
   pathname: string;
-  query: Record<string, unknown>;
+  query: Record<string, JsValue>;
 } {
   const queryIndex = rawUrl.indexOf("?");
   if (queryIndex < 0) {
@@ -293,8 +375,8 @@ function splitPathAndQuery(rawUrl: string): {
   };
 }
 
-function parseQueryString(queryString: string): Record<string, unknown> {
-  const query: Record<string, unknown> = {};
+function parseQueryString(queryString: string): Record<string, JsValue> {
+  const query: Record<string, JsValue> = {};
 
   if (queryString.length === 0) {
     return query;
@@ -318,103 +400,47 @@ function parseQueryString(queryString: string): Record<string, unknown> {
       continue;
     }
 
-    if (Array.isArray(current)) {
-      query[key] = [...current, value];
+    if (typeof current === "string") {
+      query[key] = [current, value];
       continue;
     }
 
-    query[key] = [current, value];
+    const currentValues = current as string[];
+    query[key] = [...currentValues, value];
   }
 
   return query;
 }
 
-function normalizeHeaderValue(value: HeaderLookupValue): string | undefined {
-  if (value === undefined || value === null) {
-    return undefined;
-  }
-
-  if (typeof value === "string") {
-    return value;
-  }
-
-  if (typeof value === "number") {
-    return String(value);
-  }
-
-  let combined = "";
-  for (let index = 0; index < value.length; index += 1) {
-    const item = value[index]!;
-    if (combined.length > 0) {
-      combined += ", ";
-    }
-    combined += item;
-  }
-
-  return combined.length > 0 ? combined : undefined;
-}
-
 async function readRequestBody(
   request: IncomingMessage
-): Promise<Uint8Array | undefined> {
-  const requestWithReadAll = request as IncomingMessage & {
-    readAll?: () => Promise<string>;
-  };
-  if (typeof requestWithReadAll.readAll === "function") {
-    const text = await requestWithReadAll.readAll();
-    return text.length > 0 ? textToBytes(text) : undefined;
-  }
+): Promise<Uint8Array> {
+  const bodyPromise: Promise<Uint8Array> = new Promise(
+    (resolve, reject) => {
+      const chunks: Uint8Array[] = [];
 
-  return await readNativeRequestBody(request);
-}
+      asinterface<RequestBodyReadable>(request).on(
+        "data",
+        (chunk: string | Uint8Array) => {
+          if (typeof chunk === "string") {
+            chunks.push(toUint8Array(Buffer.from(chunk, "utf-8")));
+            return;
+          }
 
-async function readNativeRequestBody(
-  request: IncomingMessage
-): Promise<Uint8Array | undefined> {
-  const chunks: Uint8Array[] = [];
-  const stream = request as unknown as {
-    on(eventName: string, listener: (value?: unknown) => void): unknown;
-  };
-  let bodyBytes: Uint8Array | undefined;
+          chunks.push(toUint8Array(chunk));
+        }
+      );
 
-  await new Promise<void>((resolve, reject) => {
-    stream.on("data", (chunk?: unknown) => {
-      if (chunk === undefined || chunk === null) {
-        return;
-      }
+      asinterface<RequestBodyReadable>(request).on("end", () => {
+        const bytes = concatChunks(chunks);
+        resolve(bytes);
+      });
 
-      chunks.push(toChunkBytes(chunk));
-    });
+      asinterface<RequestBodyReadable>(request).on("error", reject);
+    }
+  );
 
-    stream.on("end", () => {
-      if (chunks.length === 0) {
-        bodyBytes = undefined;
-        resolve();
-        return;
-      }
-
-      bodyBytes = concatChunks(chunks);
-      resolve();
-    });
-
-    stream.on("error", (error?: unknown) => {
-      reject(normalizeError(error));
-    });
-  });
-
-  return bodyBytes;
-}
-
-function toChunkBytes(chunk: unknown): Uint8Array {
-  if (chunk instanceof Uint8Array) {
-    return chunk;
-  }
-
-  if (typeof chunk === "string") {
-    return textToBytes(chunk);
-  }
-
-  return textToBytes(String(chunk));
+  return await bodyPromise;
 }
 
 function concatChunks(chunks: readonly Uint8Array[]): Uint8Array {
@@ -460,7 +486,7 @@ class NodeTransportResponse implements TransportResponse {
 
   getHeader(name: string): string | undefined {
     return normalizeHeaderValue(
-      this.#response.getHeader(name) as HeaderLookupValue
+      asinterface<ResponseHeaderLookup>(this.#response).getHeader(name)
     );
   }
 
@@ -475,17 +501,17 @@ class NodeTransportResponse implements TransportResponse {
   }
 
   sendText(text: string): void {
-    this.#response.end(text);
+    asinterface<TextEndableResponse>(this.#response).end(text);
   }
 
   sendBytes(bytes: Uint8Array): void {
-    this.#response.end(bytes);
+    asinterface<BytesEndableResponse>(this.#response).end(bytes);
   }
 }
 
-function normalizeError(error: unknown): Error {
-  return error instanceof Error ? error : new Error(String(error));
-}
+O(listenOnPort_port).family(listenOnPort);
+O(listenOnPort_host).family(listenOnPort);
+O(listenOnPort_backlog).family(listenOnPort);
 
 function decodeQueryComponent(value: string): string {
   return decodePercentEscapes(value.replaceAll("+", " "));
@@ -496,7 +522,7 @@ function decodePercentEscapes(value: string): string {
     return value;
   }
 
-  const bytes: number[] = [];
+  let bytes: number[] = [];
   let index = 0;
 
   while (index < value.length) {
@@ -511,7 +537,7 @@ function decodePercentEscapes(value: string): string {
       }
     }
 
-    appendBufferBytes(bytes, Buffer.from(current, "utf-8"));
+    bytes = appendBufferBytes(bytes, Buffer.from(current, "utf-8"));
     index += 1;
   }
 
@@ -535,16 +561,25 @@ function parseHexDigit(value: string): number {
   return -1;
 }
 
-function appendBufferBytes(target: number[], buffer: Buffer): void {
+function appendBufferBytes(target: number[], buffer: Buffer): number[] {
   for (let byteIndex = 0; byteIndex < buffer.length; byteIndex += 1) {
     target.push(buffer.readUInt8(byteIndex));
   }
+  return target;
 }
 
-function toUint8Array(buffer: Buffer): Uint8Array {
+function toUint8Array(buffer: Buffer | Uint8Array): Uint8Array {
+  if (buffer instanceof Buffer) {
+    const bytes = new Uint8Array(buffer.length);
+    for (let index = 0; index < buffer.length; index += 1) {
+      bytes[index] = buffer.readUInt8(index);
+    }
+    return bytes;
+  }
+
   const bytes = new Uint8Array(buffer.length);
   for (let index = 0; index < buffer.length; index += 1) {
-    bytes[index] = buffer.readUInt8(index);
+    bytes[index] = buffer[index]!;
   }
   return bytes;
 }
@@ -553,6 +588,16 @@ function bytesToText(bytes: Uint8Array): string {
   return Buffer.from(bytes).toString("utf-8");
 }
 
-function textToBytes(value: string): Uint8Array {
-  return toUint8Array(Buffer.from(value, "utf-8"));
+function normalizeHeaderValue(
+  value: string | readonly string[] | undefined
+): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return value.join(", ");
 }

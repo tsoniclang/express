@@ -45,6 +45,19 @@ test("get slash matches only root path", async () => {
   assert.equal(itemContext.response.bodyText, "123");
 });
 
+test("route params are percent-decoded before request handlers read them", async () => {
+  const app = express.create();
+
+  app.get("/users/:id", (req, res) => {
+    res.send(req.param("id") ?? "");
+  });
+
+  const context = createContext("GET", "/users/user-123%40test.local");
+  await app.handle(context, app);
+
+  assert.equal(context.response.bodyText, "user-123@test.local");
+});
+
 test("next route skips remaining handlers for current route", async () => {
   const app = express.create();
 

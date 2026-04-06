@@ -1,3 +1,4 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import type { PathSpec } from "../types.js";
 
 /**
@@ -16,7 +17,7 @@ export interface Layer {
   /** `true` when this layer is middleware rather than a terminal route. */
   readonly middleware: boolean;
   /** Ordered list of handlers attached to this layer. */
-  readonly handlers: readonly unknown[];
+  readonly handlers: readonly JsValue[];
 }
 
 /**
@@ -26,7 +27,7 @@ export function createLayer(
   path: PathSpec,
   method: string | null,
   middleware: boolean,
-  handlers: readonly unknown[]
+  handlers: readonly JsValue[]
 ): Layer {
   return {
     path,

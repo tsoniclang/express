@@ -1,3 +1,5 @@
+import type { JsValue } from "@tsonic/core/types.js";
+
 export class Params {
   readonly #entries: Record<string, string | undefined> = {};
 
@@ -5,7 +7,7 @@ export class Params {
     return readEntry(this.#entries, name.toLowerCase());
   }
 
-  set(name: string, value: unknown): void {
+  set(name: string, value: JsValue | undefined): void {
     this.#entries[name.toLowerCase()] = value == null ? "" : String(value);
   }
 

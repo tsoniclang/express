@@ -147,6 +147,133 @@ test("listen supports host and backlog overloads", async () => {
   await closeServer(server);
 });
 
+test("listen decodes percent-encoded query strings and form bodies", async () => {
+  const port = 32133;
+  const app = express.create();
+
+  app.get("/query", async (req, res, _next) => {
+    res.json({
+      email: req.query["email"],
+      payload: req.query["payload"]
+    });
+  });
+
+  app.post("/form", express.urlencoded(), async (req, res, _next) => {
+    res.json(req.body as Record<string, unknown>);
+  });
+
+  const server = app.listen(port, () => {});
+
+  try {
+    const queryBody = await waitFor(
+      `http://127.0.0.1:${String(port)}/query?email=user-123%40test.local&payload=%7B%22ok%22%3Atrue%7D`
+    );
+    assert.equal(
+      queryBody,
+      '{"email":"user-123@test.local","payload":"{\\"ok\\":true}"}'
+    );
+
+    const formBody = await new Promise<string>((resolve, reject) => {
+      const payload =
+        "username=user-123%40test.local&tags=%5B%22alpha%22%2C%22beta%22%5D";
+      const req = httpRequest(
+        {
+          hostname: "127.0.0.1",
+          port,
+          path: "/form",
+          method: "POST",
+          headers: {
+            "content-type": "application/x-www-form-urlencoded",
+            "content-length": String(Buffer.byteLength(payload))
+          }
+        },
+        (response) => {
+          const chunks: string[] = [];
+          response.setEncoding("utf8");
+          response.on("data", (chunk) => {
+            chunks.push(chunk);
+          });
+          response.on("end", () => {
+            resolve(chunks.join(""));
+          });
+        }
+      );
+      req.on("error", reject);
+      req.write(payload);
+      req.end();
+    });
+
+    assert.equal(
+      formBody,
+      '{"username":"user-123@test.local","tags":"[\\"alpha\\",\\"beta\\"]"}'
+    );
+  } finally {
+    await closeServer(server);
+  }
+});
+
+test("listen preserves binary multipart upload bytes", async () => {
+  const port = 32134;
+  const app = express.create();
+
+  app.post("/multipart", express.multipart().single("file"), async (req, res, _next) => {
+    const file = req.files.get("file")?.[0];
+    const bytes = file ? await file.bytes() : new Uint8Array(0);
+    let hex = "";
+    for (const value of bytes) {
+      hex += value.toString(16).padStart(2, "0");
+    }
+    res.send(hex);
+  });
+
+  const server = app.listen(port, () => {});
+
+  try {
+    const boundary = "----tsonic-binary-boundary";
+    const binaryBytes = Buffer.from([0xff, 0x00, 0x80, 0x41]);
+    const prefix = Buffer.from(
+      `--${boundary}\r\n` +
+        `Content-Disposition: form-data; name="file"; filename="binary.bin"\r\n` +
+        `Content-Type: application/octet-stream\r\n\r\n`,
+      "utf8"
+    );
+    const suffix = Buffer.from(`\r\n--${boundary}--\r\n`, "utf8");
+    const payload = Buffer.concat([prefix, binaryBytes, suffix]);
+
+    const body = await new Promise<string>((resolve, reject) => {
+      const req = httpRequest(
+        {
+          hostname: "127.0.0.1",
+          port,
+          path: "/multipart",
+          method: "POST",
+          headers: {
+            "content-type": `multipart/form-data; boundary=${boundary}`,
+            "content-length": String(payload.length)
+          }
+        },
+        (response) => {
+          const chunks: string[] = [];
+          response.setEncoding("utf8");
+          response.on("data", (chunk) => {
+            chunks.push(chunk);
+          });
+          response.on("end", () => {
+            resolve(chunks.join(""));
+          });
+        }
+      );
+      req.on("error", reject);
+      req.write(payload);
+      req.end();
+    });
+
+    assert.equal(body, "ff008041");
+  } finally {
+    await closeServer(server);
+  }
+});
+
 test("listen supports unix socket paths", async () => {
   const socketPath = join(
     tmpdir(),

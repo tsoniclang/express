@@ -1,7 +1,10 @@
+import { overloads as O } from "@tsonic/core/lang.js";
+import type { JsValue } from "@tsonic/core/types.js";
 import { Request } from "./request.js";
 import { Response } from "./response.js";
 import { Route } from "./route.js";
 import { Params } from "./params.js";
+import { decodePercentEncoded } from "./percent-decoding.js";
 import type { Application } from "./application.js";
 import type {
   ErrorRequestHandler,
@@ -16,7 +19,7 @@ import type {
 type HandlerControl = {
   ended: boolean;
   control?: string | null;
-  error?: unknown;
+  error?: JsValue;
 };
 
 type MiddlewareLike = RequestHandler | Router;
@@ -56,14 +59,32 @@ export class Router {
     return this;
   }
 
-  get(name: string): unknown;
+  get(name: string): JsValue | undefined;
   get(path: PathSpec, ...handlers: RouteHandler[]): this;
-  get(nameOrPath: string | PathSpec, ...handlers: RouteHandler[]): this | undefined {
-    if (handlers.length === 0 && typeof nameOrPath === "string") {
-      return undefined;
+  get(
+    nameOrPath: string | PathSpec,
+    ...handlers: RouteHandler[]
+  ): JsValue | undefined | this {
+    if (typeof nameOrPath === "string" && handlers.length === 0) {
+      return this.get_name(nameOrPath);
     }
 
-    this.addRouteLayer("GET", nameOrPath as PathSpec, handlers);
+    return this.get_route(nameOrPath, ...handlers);
+  }
+
+  get_name(_name: string): JsValue | undefined {
+    return undefined;
+  }
+
+  get_route(path: PathSpec, ...handlers: RouteHandler[]): this {
+    return this.addGetRoute(path, handlers);
+  }
+
+  protected addGetRoute(
+    path: PathSpec,
+    handlers: readonly RouteHandler[]
+  ): this {
+    this.addRouteLayer("GET", path, handlers);
     return this;
   }
 
@@ -91,17 +112,30 @@ export class Router {
   param(name: string[], callback: ParamHandler): this;
   param(name: string | string[], callback: ParamHandler): this {
     if (Array.isArray(name)) {
-      for (let index = 0; index < name.length; index += 1) {
-        const item = name[index]!;
-        this.param(item, callback);
-      }
-      return this;
+      return this.param_names(name, callback);
     }
 
+    return this.param_name(name, callback);
+  }
+
+  param_name(name: string, callback: ParamHandler): this {
+    return this.addParamHandler(name, callback);
+  }
+
+  protected addParamHandler(name: string, callback: ParamHandler): this {
     const key = name.toLowerCase();
     const handlers = readParamHandlers(this.#paramHandlers, key) ?? [];
     handlers.push(callback);
     this.#paramHandlers[key] = handlers;
+    return this;
+  }
+
+  param_names(name: string[], callback: ParamHandler): this {
+    for (let index = 0; index < name.length; index += 1) {
+      const item = name[index]!;
+      this.param_name(item, callback);
+    }
+
     return this;
   }
 
@@ -126,7 +160,7 @@ export class Router {
     return this;
   }
 
-  addRouteLayer(method: string | null, path: PathSpec, handlers: readonly unknown[]): void {
+  addRouteLayer(method: string | null, path: PathSpec, handlers: readonly RouteHandler[]): void {
     this.#layers.push(
       new RouteLayer(
         path,
@@ -138,7 +172,7 @@ export class Router {
     );
   }
 
-  addMiddlewareLayer(path: PathSpec, handlers: readonly unknown[]): void {
+  addMiddlewareLayer(path: PathSpec, handlers: readonly MiddlewareLike[]): void {
     for (const handler of flattenMiddlewareEntries(handlers)) {
       if (handler instanceof Router) {
         for (const exported of handler.export(path)) {
@@ -153,7 +187,7 @@ export class Router {
 
   addErrorMiddlewareLayer(
     path: PathSpec,
-    handlers: readonly unknown[]
+    handlers: readonly ErrorRequestHandler[]
   ): void {
     for (const handler of flattenErrorMiddlewareEntries(handlers)) {
       this.#layers.push(new RouteLayer(path, null, true, [handler], true));
@@ -168,7 +202,7 @@ export class Router {
     const request = new Request(context.request, app);
     const response = new Response(context.response, request);
     const processedParams: Record<string, true | undefined> = {};
-    let currentError: unknown = undefined;
+    let currentError: JsValue | undefined = undefined;
 
     for (const layer of this.#layers) {
       const extractedParams = new Params();
@@ -270,7 +304,7 @@ function combinePath(left: PathSpec, right: PathSpec): PathSpec {
   return `${lhs}/${rhs}`;
 }
 
-function flattenRouteHandlers(handlers: readonly unknown[]): RouteHandler[] {
+function flattenRouteHandlers(handlers: readonly RouteHandler[]): RouteHandler[] {
   const result: RouteHandler[] = [];
 
   for (const handler of handlers) {
@@ -284,9 +318,7 @@ function flattenRouteHandlers(handlers: readonly unknown[]): RouteHandler[] {
   return result;
 }
 
-function flattenMiddlewareEntries(
-  handlers: readonly unknown[]
-): MiddlewareLike[] {
+function flattenMiddlewareEntries(handlers: readonly MiddlewareLike[]): MiddlewareLike[] {
   const result: MiddlewareLike[] = [];
 
   for (const handler of handlers) {
@@ -305,9 +337,7 @@ function flattenMiddlewareEntries(
   return result;
 }
 
-function flattenErrorMiddlewareEntries(
-  handlers: readonly unknown[]
-): ErrorRequestHandler[] {
+function flattenErrorMiddlewareEntries(handlers: readonly ErrorRequestHandler[]): ErrorRequestHandler[] {
   const result: ErrorRequestHandler[] = [];
 
   for (const handler of handlers) {
@@ -330,7 +360,7 @@ function matchesPathSpec(
   middleware: boolean,
   parameters: Params
 ): boolean {
-  if (pathSpec == null) {
+  if (pathSpec === null || pathSpec === undefined) {
     return true;
   }
 
@@ -428,8 +458,8 @@ function normalizePath(path: string): string {
   return normalized;
 }
 
-function isPathSpec(value: unknown): value is PathSpec {
-  if (value == null || typeof value === "string" || value instanceof RegExp) {
+function isPathSpec(value: JsValue): value is PathSpec {
+  if (typeof value === "string" || value instanceof RegExp) {
     return true;
   }
 
@@ -437,7 +467,7 @@ function isPathSpec(value: unknown): value is PathSpec {
     return false;
   }
 
-  const items = value as readonly unknown[];
+  const items = value as readonly JsValue[];
   for (let index = 0; index < items.length; index += 1) {
     if (!isPathSpec(items[index])) {
       return false;
@@ -447,7 +477,7 @@ function isPathSpec(value: unknown): value is PathSpec {
   return true;
 }
 
-function isMiddlewareHandler(handler: unknown): handler is MiddlewareHandler {
+function isMiddlewareHandler(handler: JsValue): handler is MiddlewareHandler {
   return typeof handler === "function";
 }
 
@@ -455,10 +485,10 @@ async function invokeHandlers(
   handlers: readonly MiddlewareHandler[],
   request: Request,
   response: Response,
-  currentError: unknown,
+  currentError: JsValue | undefined,
   treatAsError: boolean
 ): Promise<HandlerControl> {
-  let error: unknown = currentError;
+  let error: JsValue | undefined = currentError;
 
   for (let index = 0; index < handlers.length; index += 1) {
     const entry = handlers[index]!;
@@ -496,7 +526,20 @@ async function invokeHandlers(
 
       return { ended: true };
     } catch (thrownError) {
-      error = thrownError;
+      if (
+        thrownError == null ||
+        typeof thrownError === "string" ||
+        typeof thrownError === "number" ||
+        typeof thrownError === "boolean" ||
+        typeof thrownError === "bigint" ||
+        typeof thrownError === "symbol" ||
+        typeof thrownError === "object" ||
+        typeof thrownError === "function"
+      ) {
+        error = thrownError;
+      } else {
+        error = new Error("Route handler threw an unsupported value.");
+      }
     }
   }
 
@@ -537,7 +580,11 @@ function splitPathParts(value: string): string[] {
 }
 
 function decodePathValue(value: string): string {
-  return value;
+  try {
+    return decodePercentEncoded(value);
+  } catch {
+    return value;
+  }
 }
 
 function readParamHandlers(
@@ -565,3 +612,8 @@ function readProcessedParam(
 
   return undefined;
 }
+
+O<Router>().method(x => x.get_name).family(x => x.get);
+O<Router>().method(x => x.get_route).family(x => x.get);
+O<Router>().method(x => x.param_name).family(x => x.param);
+O<Router>().method(x => x.param_names).family(x => x.param);

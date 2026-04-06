@@ -1,3 +1,5 @@
+import { overloads as O } from "@tsonic/core/lang.js";
+import type { JsValue } from "@tsonic/core/types.js";
 import type { Application } from "./application.js";
 import { sign } from "./response-cookie-signature.js";
 import type { Request } from "./request.js";
@@ -23,7 +25,7 @@ export class Response {
   #statusCode: number = 200;
 
   req?: Request;
-  readonly locals: Record<string, unknown> = {};
+  readonly locals: Record<string, JsValue> = {};
   headersSent: boolean = false;
 
   constructor(transport: TransportResponse, request?: Request) {
@@ -52,23 +54,26 @@ export class Response {
   append(field: string, value: string[]): this;
   append(field: string, value: string | string[]): this {
     if (Array.isArray(value)) {
-      for (let index = 0; index < value.length; index += 1) {
-        const item = value[index]!;
-        this.append(field, item);
-      }
-
-      return this;
+      return this.append_many(field, value);
     }
 
-    const key = field.toLowerCase();
-    const current = readHeader(this.#headers, key);
-    const next = current ? `${current}, ${value}` : value;
-    this.#headers[key] = next;
-    this.#transport.appendHeader(field, value);
+    return this.append_one(field, value);
+  }
+
+  append_one(field: string, value: string): this {
+    return this.appendValue(field, value);
+  }
+
+  append_many(field: string, value: string[]): this {
+    for (let index = 0; index < value.length; index += 1) {
+      const item = value[index]!;
+      this.append(field, item);
+    }
+
     return this;
   }
 
-  cookie(name: string, value: unknown, options?: CookieOptions): this {
+  cookie(name: string, value: JsValue, options?: CookieOptions): this {
     let payload = typeof value === "string" ? value : JSON.stringify(value);
     if (options?.signed) {
       const secret =
@@ -143,16 +148,16 @@ export class Response {
     );
   }
 
-  header(field: string, value: unknown): this {
+  header(field: string, value: JsValue): this {
     return this.set(field, value);
   }
 
-  json(body?: unknown): this {
+  json(body?: JsValue): this {
     this.type("application/json");
     return this.send(typeof body === "string" ? body : JSON.stringify(body ?? null));
   }
 
-  jsonp(body?: unknown): this {
+  jsonp(body?: JsValue): this {
     const callbackName = typeof this.app?.get("jsonp callback name") === "string"
       ? String(this.app?.get("jsonp callback name"))
       : "callback";
@@ -161,14 +166,14 @@ export class Response {
     return this.send(`${callbackName}(${payload})`);
   }
 
-  render(view: string, locals?: Record<string, unknown>, callback?: TemplateCallback): this {
+  render(view: string, locals?: Record<string, JsValue>, callback?: TemplateCallback): this {
     const engine = this.app?.resolveEngine(view);
     const viewLocals = locals ?? this.locals;
 
     if (!engine) {
       const html = `<rendered:${view}>`;
       if (callback) {
-        callback(undefined, html);
+        callback(null, html);
         return this;
       }
 
@@ -186,11 +191,11 @@ export class Response {
     return this;
   }
 
-  end(body?: unknown): this {
+  end(body?: JsValue): this {
     return this.send(body);
   }
 
-  send(body?: unknown): this {
+  send(body?: JsValue): this {
     this.#transport.statusCode = this.#statusCode;
 
     const contentType = this.get("content-type");
@@ -214,7 +219,7 @@ export class Response {
     return this;
   }
 
-  set(field: string, value: unknown): this {
+  set(field: string, value: JsValue): this {
     const rendered = value == null ? "" : String(value);
     this.#headers[field.toLowerCase()] = rendered;
     this.#transport.setHeader(field, rendered);
@@ -245,7 +250,19 @@ export class Response {
 
     return this.set("Vary", `${current}, ${field}`);
   }
+
+  private appendValue(field: string, value: string): this {
+    const key = field.toLowerCase();
+    const current = readHeader(this.#headers, key);
+    const next = current ? `${current}, ${value}` : value;
+    this.#headers[key] = next;
+    this.#transport.appendHeader(field, value);
+    return this;
+  }
 }
+
+O<Response>().method(x => x.append_one).family(x => x.append);
+O<Response>().method(x => x.append_many).family(x => x.append);
 
 function readHeader(
   headers: Record<string, string>,

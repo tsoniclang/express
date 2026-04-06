@@ -1,10 +1,11 @@
+import type { JsValue } from "@tsonic/core/types.js";
+import { Buffer } from "node:buffer";
+import { Readable } from "node:stream";
 import type { MultipartField, MultipartOptions } from "../options.js";
 import type { Request } from "../request.js";
 import { UploadedFile, type TransportFile } from "../request-uploaded-file.js";
 import type { Response } from "../response.js";
 import type { NextFunction, RequestHandler } from "../types.js";
-import { Readable } from "node:stream";
-import { Buffer } from "node:buffer";
 
 /**
  * Express-shaped multipart middleware factory.
@@ -256,7 +257,7 @@ async function parse(
 }
 
 type ParsedMultipartBody = {
-  readonly body: Record<string, unknown> | undefined;
+  readonly body: Record<string, JsValue> | undefined;
   readonly files: readonly TransportFile[];
 };
 
@@ -270,7 +271,7 @@ function parseMultipartBody(
     throw new Error("Multipart payload did not start with the expected boundary.");
   }
 
-  const fields: Record<string, unknown> = {};
+  const fields: Record<string, JsValue> = {};
   const files: TransportFile[] = [];
 
   const sections = raw.split(delimiter);
@@ -384,7 +385,7 @@ function createTransportFile(
 }
 
 function appendBodyField(
-  target: Record<string, unknown>,
+  target: Record<string, JsValue>,
   key: string,
   value: string
 ): void {

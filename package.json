@@ -25,6 +25,10 @@
     "type": "git",
     "url": "https://github.com/tsoniclang/express.git"
   },
+  "peerDependencies": {
+    "@tsonic/core": "10.0.40",
+    "@tsonic/nodejs": "10.0.49"
+  },
   "devDependencies": {
     "@types/node": "^24.6.0",
     "typescript": "^5.9.3"

@@ -1,5 +1,7 @@
-import type { Readable } from "node:stream";
 import { Buffer } from "node:buffer";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { dirname } from "node:path";
+import type { Readable } from "node:stream";
 
 /**
  * Represents a single file received via a multipart upload.
@@ -50,14 +52,14 @@ export class UploadedFile {
     return Buffer.from(bytes).toString("utf-8");
   }
 
-  /**
-   * Write the uploaded file to `path` on disk.
-   *
-   * TODO: wire to the host fs layer once the transport adapter lands.
-   */
   async save(path: string): Promise<void> {
-    void path;
-    throw new Error("UploadedFile.save is not yet supported.");
+    const parent = dirname(path);
+    if (parent !== "." && !existsSync(parent)) {
+      mkdirSync(parent, { recursive: true });
+    }
+
+    const bytes = await this.#transport.buffer();
+    writeFileSync(path, Buffer.from(bytes).toString("latin1"), "latin1");
   }
 
   /** @internal – expose the underlying readable for piping. */

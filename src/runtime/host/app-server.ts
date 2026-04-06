@@ -51,7 +51,7 @@ export class AppServer {
   close(callback?: (error?: Error) => void): void {
     if (!this.#listening) {
       if (callback) {
-        callback(undefined);
+        callback();
       }
       return;
     }
@@ -68,7 +68,7 @@ export class AppServer {
 
           this.#listening = false;
           if (callback) {
-            callback(undefined);
+            callback();
           }
         });
         return;
@@ -76,13 +76,16 @@ export class AppServer {
 
       this.#listening = false;
       if (callback) {
-        callback(undefined);
+        callback();
       }
     } catch (ex) {
       if (callback) {
-        callback(
-          ex instanceof Error ? ex : new Error(String(ex))
-        );
+        if (ex instanceof Error) {
+          callback(ex);
+          return;
+        }
+
+        callback(new Error("Server close failed."));
       }
     }
   }

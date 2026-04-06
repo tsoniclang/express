@@ -1,3 +1,4 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import type { Application } from "../../src/index.js";
 import { createContext, MemoryResponse } from "./memory-context.js";
 import type { TransportContext, TransportRequest } from "../../src/index.js";
@@ -46,9 +47,9 @@ export function readBody(context: TestContext): string {
   return context.response.bodyText;
 }
 
-function parseQueryString(qs: string): Record<string, unknown> {
+function parseQueryString(qs: string): Record<string, JsValue> {
   const clean = qs.startsWith("?") ? qs.slice(1) : qs;
-  const result: Record<string, unknown> = {};
+  const result: Record<string, JsValue> = {};
 
   for (const pair of clean.split("&")) {
     const eqIndex = pair.indexOf("=");
