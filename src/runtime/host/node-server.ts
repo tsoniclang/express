@@ -16,12 +16,6 @@ import type {
 } from "../types.js";
 import { AppServer } from "./app-server.js";
 
-interface RequestBodyReadable {
-  on(eventName: "data", listener: (chunk: string | Uint8Array) => void): JsValue;
-  on(eventName: "end", listener: () => void): JsValue;
-  on(eventName: "error", listener: (error: JsValue) => void): JsValue;
-}
-
 interface RequestHeadersLookup {
   [name: string]: string | readonly string[] | undefined;
 }
@@ -419,24 +413,32 @@ async function readRequestBody(
     (resolve, reject) => {
       const chunks: Uint8Array[] = [];
 
-      asinterface<RequestBodyReadable>(request).on(
+      request.on(
         "data",
-        (chunk: string | Uint8Array) => {
+        (...args: JsValue[]) => {
+          const chunk = args[0];
           if (typeof chunk === "string") {
             chunks.push(toUint8Array(Buffer.from(chunk, "utf-8")));
             return;
           }
 
-          chunks.push(toUint8Array(chunk));
+          if (chunk instanceof Uint8Array) {
+            chunks.push(toUint8Array(chunk));
+            return;
+          }
+
+          reject(new Error("Incoming request emitted a non-bytes data chunk."));
         }
       );
 
-      asinterface<RequestBodyReadable>(request).on("end", () => {
+      request.on("end", (..._args: JsValue[]) => {
         const bytes = concatChunks(chunks);
         resolve(bytes);
       });
 
-      asinterface<RequestBodyReadable>(request).on("error", reject);
+      request.on("error", (...args: JsValue[]) => {
+        reject(args[0]);
+      });
     }
   );
 
