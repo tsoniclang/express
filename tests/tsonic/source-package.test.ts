@@ -23,6 +23,7 @@ test("native express sources compile and run through tsonic", () => {
       dir,
       `import { express } from "./express/index.js";
 import type { TransportContext, TransportResponse } from "./express/runtime/types.js";
+import { HttpClient } from "@tsonic/dotnet/System.Net.Http.js";
 
 class MemoryResponse implements TransportResponse {
   statusCode: number = 200;
@@ -137,6 +138,34 @@ export async function main(): Promise<void> {
   });
   if (errorResponse.statusCode !== 500) throw new Error("error handler failed");
   if (errorResponse.bodyText !== "handled") throw new Error("error response failed");
+
+  const liveApp = express.create();
+  liveApp.use(express.json());
+  liveApp.use(express.urlencoded());
+  liveApp.get("/health", async (_req, res, _next) => {
+    res.json({ ok: true });
+  });
+
+  const server = liveApp.listen(0, "127.0.0.1");
+  const port = server.port;
+  if (typeof port !== "number") throw new Error("server port missing");
+
+  const client = new HttpClient();
+  try {
+    const liveBody = await client.GetStringAsync(\`http://127.0.0.1:\${String(port)}/health\`);
+    if (liveBody !== "{\\"ok\\":true}") throw new Error("live listen failed");
+  } finally {
+    client.Dispose();
+    await new Promise<void>((resolve, reject) => {
+      server.close((error) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve();
+      });
+    });
+  }
 }
 `
     );

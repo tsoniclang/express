@@ -1,3 +1,5 @@
+import type { JsValue } from "@tsonic/core/types.js";
+
 /**
  * Thin JS interop helpers that mirror the CLR `js_interop` static class.
  *
@@ -35,13 +37,13 @@ export function fromDateOrUndefined(
 }
 
 /**
- * Wrap an unknown thrown value as an `Error`.
+ * Wrap an arbitrary thrown value as an `Error`.
  *
  * In the CLR build this wraps `System.Exception` into a JS `Error`.
  * In native TS the value might already be an `Error`; if not we wrap
  * its string representation.
  */
-export function fromException(value: unknown): Error | undefined {
+export function fromException(value: JsValue): Error | undefined {
   if (value == null) {
     return undefined;
   }

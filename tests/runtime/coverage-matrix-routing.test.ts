@@ -1,3 +1,4 @@
+import { asinterface } from "@tsonic/core/lang.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -176,7 +177,7 @@ test("router use with mounted application routes correctly", async () => {
 
 test("null route path matches all requests", async () => {
   const app = express.create();
-  app.method("GET", null as unknown as string, (_req, res) => res.send("null-path"));
+  app.method("GET", asinterface<string>(null), (_req, res) => res.send("null-path"));
   await assertRoute(app, "GET", "/anywhere", "null-path");
 });
 

@@ -19,7 +19,7 @@ test("response cookie sets set-cookie header", async () => {
 test("response render uses registered engine", async () => {
   const app = express.create();
   app.engine("tpl", (_view, locals, callback) => {
-    callback(null, `hello ${locals["name"]}`);
+    callback(null, `hello ${String(locals["name"])}`);
   });
 
   app.get("/view", (_req, res) => {

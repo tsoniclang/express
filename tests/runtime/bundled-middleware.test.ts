@@ -1,5 +1,9 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import test from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 
 import { express, Request, Response } from "../../src/index.js";
 import { createContext } from "../helpers/memory-context.js";
@@ -198,7 +202,7 @@ test("json text raw and urlencoded middleware parse request bodies", async () =>
     res.send(String(body.length));
   });
   app.post("/form", express.urlencoded(), (req, res) => {
-    const body = req.body as Record<string, unknown>;
+    const body = req.body as Record<string, JsValue>;
     const value = body["name"];
     res.send(Array.isArray(value) ? value.join("|") : String(value));
   });
@@ -232,12 +236,36 @@ test("json text raw and urlencoded middleware parse request bodies", async () =>
   assert.equal(formContext.response.bodyText, "tsonic|lang");
 });
 
+test("urlencoded middleware preserves percent-decoded text around escaped bytes", async () => {
+  const app = express.create();
+  app.post("/form", express.urlencoded(), (req, res) => {
+    const body = req.body as Record<string, JsValue>;
+    res.json({
+      username: body["username"],
+      tags: body["tags"],
+      payload: body["payload"]
+    });
+  });
+
+  const formContext = createContext("POST", "/form", {
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    bodyText:
+      "username=user-123%40test.local&tags=%5B%22alpha%22%2C%22beta%22%5D&payload=%7B%22ok%22%3Atrue%7D"
+  });
+  await app.handle(formContext, app);
+
+  assert.equal(
+    formContext.response.bodyText,
+    '{"username":"user-123@test.local","tags":"[\\"alpha\\",\\"beta\\"]","payload":"{\\"ok\\":true}"}'
+  );
+});
+
 test("multipart parses fields and files for single upload", async () => {
   const app = express.create();
   const upload = express.multipart();
   app.use(upload.single("avatar"));
   app.post("/upload", (req, res) => {
-    const body = req.body as Record<string, unknown> | undefined;
+    const body = req.body as Record<string, JsValue> | undefined;
     res.json({
       title: body?.["title"],
       file: req.file?.originalname,
@@ -265,6 +293,45 @@ test("multipart parses fields and files for single upload", async () => {
   assert.match(context.response.bodyText, /"title":"hello"/);
   assert.match(context.response.bodyText, /"file":"a.txt"/);
   assert.match(context.response.bodyText, /"count":1/);
+});
+
+test("multipart uploaded file save persists bytes to disk", async () => {
+  const app = express.create();
+  const upload = express.multipart();
+  const tempRoot = fs.mkdtempSync(path.join(os.tmpdir(), "express-upload-"));
+  const savedPath = path.join(tempRoot, "nested", "avatar.txt");
+
+  app.use(upload.single("avatar"));
+  app.post("/upload", async (req, res) => {
+    await req.file!.save(savedPath);
+    res.json({
+      saved: fs.readFileSync(savedPath, "utf8"),
+      exists: fs.existsSync(savedPath),
+    });
+  });
+
+  const boundary = "----tsonic-upload-save";
+  const multipartBody =
+    `--${boundary}\r\n` +
+    "Content-Disposition: form-data; name=\"avatar\"; filename=\"a.txt\"\r\n" +
+    "Content-Type: text/plain\r\n\r\n" +
+    "file-body\r\n" +
+    `--${boundary}--\r\n`;
+
+  const context = createContext("POST", "/upload", {
+    headers: { "content-type": `multipart/form-data; boundary=${boundary}` },
+    bodyBytes: new Uint8Array(Buffer.from(multipartBody, "utf-8"))
+  });
+
+  try {
+    await app.handle(context, app);
+    assert.equal(
+      context.response.bodyText,
+      '{"saved":"file-body","exists":true}'
+    );
+  } finally {
+    fs.rmSync(tempRoot, { recursive: true, force: true });
+  }
 });
 
 test("multipart single throws for unexpected file field", async () => {

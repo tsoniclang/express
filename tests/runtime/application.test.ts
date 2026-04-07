@@ -51,7 +51,7 @@ test("app param array registers multiple handlers", async () => {
 
 test("app render uses registered engine callback", () => {
   const app = express.create();
-  app.engine("tpl", (_view, locals, callback) => callback(null, `name=${locals["name"]}`));
+  app.engine("tpl", (_view, locals, callback) => callback(null, `name=${String(locals["name"])}`));
 
   let rendered: string | undefined;
   app.render("welcome.tpl", { name: "alex" }, (_error, html) => {

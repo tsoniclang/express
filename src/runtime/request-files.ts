@@ -1,3 +1,4 @@
+import { overloads as O } from "@tsonic/core/lang.js";
 import type { UploadedFile } from "./request-uploaded-file.js";
 
 /**
@@ -23,11 +24,23 @@ export class Files {
   add(field: string, file: UploadedFile): void;
   add(fieldOrFile: string | UploadedFile, maybeFile?: UploadedFile): void {
     if (typeof fieldOrFile === "string") {
-      this.addToField(fieldOrFile, maybeFile!);
+      if (maybeFile === undefined) {
+        throw new Error("Expected UploadedFile when adding by field name.");
+      }
+
+      this.add_field(fieldOrFile, maybeFile);
       return;
     }
 
-    this.addToField(fieldOrFile.fieldname, fieldOrFile);
+    this.add_file(fieldOrFile);
+  }
+
+  add_file(file: UploadedFile): void {
+    this.addToField(file.fieldname, file);
+  }
+
+  add_field(field: string, file: UploadedFile): void {
+    this.addToField(field, file);
   }
 
   /** @internal */
@@ -71,3 +84,6 @@ function readEntry(
 
   return undefined;
 }
+
+O<Files>().method(x => x.add_file).family(x => x.add);
+O<Files>().method(x => x.add_field).family(x => x.add);

@@ -1,3 +1,5 @@
+import { overloads as O } from "@tsonic/core/lang.js";
+import type { JsValue } from "@tsonic/core/types.js";
 import { Emitter } from "../internal/emitter.js";
 import { Router } from "./router.js";
 import { AppServer } from "./host/app-server.js";
@@ -14,10 +16,10 @@ import type { TransportContext } from "./types.js";
 
 export class Application extends Router {
   readonly #events: Emitter = new Emitter();
-  readonly #settings: Record<string, unknown> = {};
+  readonly #settings: Record<string, JsValue> = {};
   readonly #engines: Record<string, TemplateEngine | undefined> = {};
 
-  readonly locals: Record<string, unknown> = {};
+  readonly locals: Record<string, JsValue> = {};
   mountpath: string | string[] = "/";
   readonly router: Application = this;
 
@@ -48,14 +50,26 @@ export class Application extends Router {
     await super.handle(context, app);
   }
 
-  get(name: string): unknown;
+  get(name: string): JsValue | undefined;
   override get(path: PathSpec, ...handlers: RouteHandler[]): this;
-  override get(nameOrPath: string | PathSpec, ...handlers: RouteHandler[]): unknown {
-    if (handlers.length === 0 && typeof nameOrPath === "string") {
-      return readSetting(this.#settings, nameOrPath);
+  override get(
+    nameOrPath: string | PathSpec,
+    ...handlers: RouteHandler[]
+  ): JsValue | undefined | this {
+    if (typeof nameOrPath === "string" && handlers.length === 0) {
+      return this.get_name(nameOrPath);
     }
 
-    return super.get(nameOrPath as PathSpec, ...handlers);
+    return this.get_route(nameOrPath, ...handlers);
+  }
+
+  override get_name(name: string): JsValue | undefined {
+    return readSetting(this.#settings, name);
+  }
+
+  override get_route(path: PathSpec, ...handlers: RouteHandler[]): this {
+    this.addGetRoute(path, handlers);
+    return this;
   }
 
   listen(path: string, callback?: () => void): AppServer;
@@ -68,50 +82,66 @@ export class Application extends Router {
     callback?: () => void
   ): AppServer;
   listen(
-    portOrPath: number | string,
+    portOrPath: string | number,
     hostOrCallback?: string | (() => void),
     backlogOrCallback?: number | (() => void),
     maybeCallback?: () => void
   ): AppServer {
     if (typeof portOrPath === "string") {
-      const callback =
-        typeof hostOrCallback === "function" ? hostOrCallback : maybeCallback;
-      return listenOnPath(this, portOrPath, callback);
-    }
-
-    if (typeof hostOrCallback === "string") {
-      if (typeof backlogOrCallback === "number") {
-        return listenOnPort(
-          this,
-          portOrPath,
-          hostOrCallback,
-          backlogOrCallback,
-          maybeCallback
-        );
-      }
-
-      return listenOnPort(
-        this,
+      return this.listen_path(
         portOrPath,
-        hostOrCallback,
-        typeof backlogOrCallback === "function"
-          ? backlogOrCallback
-          : maybeCallback
+        typeof hostOrCallback === "function" ? hostOrCallback : undefined
       );
     }
 
-    if (typeof hostOrCallback === "function") {
-      return listenOnPort(this, portOrPath, hostOrCallback);
+    if (typeof hostOrCallback === "function" || hostOrCallback === undefined) {
+      return this.listen_port(
+        portOrPath,
+        typeof hostOrCallback === "function" ? hostOrCallback : undefined
+      );
     }
 
-    if (typeof backlogOrCallback === "function") {
-      return listenOnPort(this, portOrPath, backlogOrCallback);
+    if (
+      typeof backlogOrCallback === "function" ||
+      backlogOrCallback === undefined
+    ) {
+      return this.listen_host(
+        portOrPath,
+        hostOrCallback,
+        typeof backlogOrCallback === "function" ? backlogOrCallback : undefined
+      );
     }
 
-    return listenOnPort(this, portOrPath, maybeCallback);
+    return this.listen_backlog(
+      portOrPath,
+      hostOrCallback,
+      backlogOrCallback,
+      maybeCallback
+    );
   }
 
-  on(eventName: string, listener: (...args: unknown[]) => void): this {
+  listen_path(path: string, callback?: () => void): AppServer {
+    return listenOnPath(this, path, callback);
+  }
+
+  listen_port(port: number, callback?: () => void): AppServer {
+    return listenOnPort(this, port, callback);
+  }
+
+  listen_host(port: number, host: string, callback?: () => void): AppServer {
+    return listenOnPort(this, port, host, callback);
+  }
+
+  listen_backlog(
+    port: number,
+    host: string,
+    backlog: number,
+    callback?: () => void
+  ): AppServer {
+    return listenOnPort(this, port, host, backlog, callback);
+  }
+
+  on(eventName: string, listener: (...args: JsValue[]) => void): this {
     this.#events.on(eventName, listener);
     return this;
   }
@@ -120,14 +150,22 @@ export class Application extends Router {
   param(name: string[], callback: ParamHandler): this;
   override param(name: string | string[], callback: ParamHandler): this {
     if (Array.isArray(name)) {
-      for (let index = 0; index < name.length; index += 1) {
-        const item = name[index]!;
-        super.param(item, callback);
-      }
-      return this;
+      return this.param_names(name, callback);
     }
 
-    super.param(name, callback);
+    return this.param_name(name, callback);
+  }
+
+  override param_name(name: string, callback: ParamHandler): this {
+    this.addParamHandler(name, callback);
+    return this;
+  }
+
+  override param_names(name: string[], callback: ParamHandler): this {
+    for (let index = 0; index < name.length; index += 1) {
+      this.addParamHandler(name[index]!, callback);
+    }
+
     return this;
   }
 
@@ -136,37 +174,39 @@ export class Application extends Router {
       return this.mountpath;
     }
 
+    const mountPaths = this.mountpath as string[];
     let combined = "";
-    for (let index = 0; index < this.mountpath.length; index += 1) {
+    for (let index = 0; index < mountPaths.length; index += 1) {
       if (index > 0) {
         combined += ",";
       }
-      combined += this.mountpath[index]!;
+      combined += mountPaths[index]!;
     }
     return combined;
   }
 
   render(
     view: string,
-    localsOrCallback?: Record<string, unknown> | TemplateCallback,
+    localsOrCallback?: Record<string, JsValue> | TemplateCallback,
     maybeCallback?: TemplateCallback
   ): void {
     const locals = typeof localsOrCallback === "function" || localsOrCallback === undefined ? this.locals : localsOrCallback;
-    const callback = typeof localsOrCallback === "function" ? localsOrCallback : maybeCallback;
+    const callback: TemplateCallback | undefined =
+      typeof localsOrCallback === "function" ? localsOrCallback : maybeCallback;
     if (!callback) {
       throw new Error("render callback is required");
     }
 
     const engine = this.resolveEngine(view);
     if (!engine) {
-      callback(undefined, `<rendered:${view}>`);
+      callback(null, `<rendered:${view}>`);
       return;
     }
 
     engine(view, locals, callback);
   }
 
-  set(name: string, value: unknown): this {
+  set(name: string, value: JsValue): this {
     this.#settings[name] = value;
     return this;
   }
@@ -190,6 +230,9 @@ export class Application extends Router {
   ): void {
     for (let index = 0; index < candidates.length; index += 1) {
       const candidate = candidates[index]!;
+      if (typeof candidate === "function") {
+        continue;
+      }
       if (candidate instanceof Application) {
         candidate.mountpath = typeof mountedAt === "string" ? mountedAt : "/";
         candidate.#events.emit("mount", this);
@@ -214,8 +257,8 @@ export class Application extends Router {
   }
 }
 
-function isPathSpec(value: unknown): value is PathSpec {
-  if (value == null || typeof value === "string" || value instanceof RegExp) {
+function isPathSpec(value: JsValue): value is PathSpec {
+  if (typeof value === "string" || value instanceof RegExp) {
     return true;
   }
 
@@ -223,7 +266,7 @@ function isPathSpec(value: unknown): value is PathSpec {
     return false;
   }
 
-  const items = value as readonly unknown[];
+  const items = value as readonly JsValue[];
   for (let index = 0; index < items.length; index += 1) {
     if (!isPathSpec(items[index])) {
       return false;
@@ -242,9 +285,9 @@ function trimLeadingDot(value: string): string {
 }
 
 function readSetting(
-  settings: Record<string, unknown>,
+  settings: Record<string, JsValue>,
   name: string
-): unknown {
+): JsValue | undefined {
   for (const currentKey in settings) {
     if (currentKey === name) {
       return settings[currentKey];
@@ -266,3 +309,12 @@ function readEngine(
 
   return undefined;
 }
+
+O<Application>().method(x => x.get_name).family(x => x.get);
+O<Application>().method(x => x.get_route).family(x => x.get);
+O<Application>().method(x => x.listen_path).family(x => x.listen);
+O<Application>().method(x => x.listen_port).family(x => x.listen);
+O<Application>().method(x => x.listen_host).family(x => x.listen);
+O<Application>().method(x => x.listen_backlog).family(x => x.listen);
+O<Application>().method(x => x.param_name).family(x => x.param);
+O<Application>().method(x => x.param_names).family(x => x.param);

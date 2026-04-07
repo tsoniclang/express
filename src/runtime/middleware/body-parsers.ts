@@ -1,3 +1,4 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import { Buffer } from "node:buffer";
 import type {
   JsonOptions,
@@ -5,6 +6,7 @@ import type {
   TextOptions,
   UrlEncodedOptions
 } from "../options.js";
+import { decodePercentEncoded } from "../percent-decoding.js";
 import type { NextFunction, RequestHandler } from "../types.js";
 import type { Request } from "../request.js";
 import type { Response } from "../response.js";
@@ -108,8 +110,8 @@ function matchesType(
   return contentType.toLowerCase().includes(configuredType.toLowerCase());
 }
 
-function parseUrlEncoded(body: string): Record<string, unknown> {
-  const result: Record<string, unknown> = {};
+function parseUrlEncoded(body: string): Record<string, JsValue> {
+  const result: Record<string, JsValue> = {};
   if (body.length === 0) {
     return result;
   }
@@ -131,7 +133,7 @@ function parseUrlEncoded(body: string): Record<string, unknown> {
 }
 
 function appendBodyField(
-  target: Record<string, unknown>,
+  target: Record<string, JsValue>,
   key: string,
   value: string
 ): void {
@@ -196,91 +198,6 @@ function replacePluses(value: string): string {
   return result;
 }
 
-function decodePercentEncoded(value: string): string {
-  if (!value.includes("%")) {
-    return value;
-  }
-
-  const bytes: number[] = [];
-  let index = 0;
-  while (index < value.length) {
-    const current = value[index]!;
-    if (current === "%" && index + 2 < value.length) {
-      const high = value[index + 1]!;
-      const low = value[index + 2]!;
-      if (isHexDigit(high) && isHexDigit(low)) {
-        const decoded = hexDigitValue(high) * 16 + hexDigitValue(low);
-        bytes.push(decoded);
-        index += 3;
-        continue;
-      }
-    }
-
-    const chunk = Buffer.from(current, "utf-8");
-    appendBufferBytes(bytes, chunk);
-    index += 1;
-  }
-
-  return Buffer.from(bytes).toString("utf-8");
-}
-
-function isHexDigit(value: string): boolean {
-  return (
-    (value >= "0" && value <= "9") ||
-    (value.toLowerCase() >= "a" && value.toLowerCase() <= "f")
-  );
-}
-
-function hexDigitValue(value: string): number {
-  switch (value) {
-    case "0":
-      return 0;
-    case "1":
-      return 1;
-    case "2":
-      return 2;
-    case "3":
-      return 3;
-    case "4":
-      return 4;
-    case "5":
-      return 5;
-    case "6":
-      return 6;
-    case "7":
-      return 7;
-    case "8":
-      return 8;
-    case "9":
-      return 9;
-    case "a":
-    case "A":
-      return 10;
-    case "b":
-    case "B":
-      return 11;
-    case "c":
-    case "C":
-      return 12;
-    case "d":
-    case "D":
-      return 13;
-    case "e":
-    case "E":
-      return 14;
-    case "f":
-    case "F":
-      return 15;
-    default:
-      throw new Error(`Invalid hexadecimal digit '${value}'.`);
-  }
-}
-
-function appendBufferBytes(target: number[], buffer: Buffer): void {
-  for (let byteIndex = 0; byteIndex < buffer.length; byteIndex += 1) {
-    target.push(buffer.readUInt8(byteIndex));
-  }
-}
 
 function toUint8Array(buffer: Buffer): Uint8Array {
   const bytes = new Uint8Array(buffer.length);

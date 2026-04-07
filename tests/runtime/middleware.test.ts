@@ -1,3 +1,4 @@
+import type { JsValue } from "@tsonic/core/types.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -88,7 +89,7 @@ test("urlencoded middleware parses form payload", async () => {
       req.get("content-type") === "application/x-www-form-urlencoded" &&
       req.transport.bodyText
     ) {
-      const body: Record<string, unknown> = {};
+      const body: Record<string, JsValue> = {};
       for (const pair of req.transport.bodyText.split("&")) {
         const eqIndex = pair.indexOf("=");
         if (eqIndex < 0) {
@@ -104,7 +105,7 @@ test("urlencoded middleware parses form payload", async () => {
   });
 
   app.post("/form", (req, res) => {
-    const body = req.body as Record<string, unknown>;
+    const body = req.body as Record<string, JsValue>;
     res.send(body["name"] as string);
   });
 
@@ -133,7 +134,7 @@ test("response cookie sets set-cookie header", async () => {
 test("response render uses registered engine", async () => {
   const app = express.create();
   app.engine("tpl", (_view, locals, callback) => {
-    callback(null, `hello ${locals["name"]}`);
+    callback(null, `hello ${String(locals["name"])}`);
   });
 
   app.get("/view", (_req, res) => {

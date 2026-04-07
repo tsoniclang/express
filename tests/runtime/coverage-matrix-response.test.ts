@@ -1,3 +1,4 @@
+import { asinterface } from "@tsonic/core/lang.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -144,7 +145,7 @@ test("status type and status code chain correctly", async () => {
 
 test("render overloads use engine when available or fallback when missing", async () => {
   const app = express.create();
-  app.engine("tpl", (_view, locals, callback) => callback(null, `hello ${locals["name"]}`));
+  app.engine("tpl", (_view, locals, callback) => callback(null, `hello ${String(locals["name"])}`));
 
   app.get("/render-locals", (_req, res) => {
     res.render("home.tpl", { name: "world" });
@@ -227,7 +228,7 @@ test("set with null value produces empty string", async () => {
   const app = express.create();
 
   app.get("/", (_req, res) => {
-    res.set("x-null", null as unknown as string);
+    res.set("x-null", asinterface<string>(null));
     res.send(res.get("x-null") ?? "undefined");
   });
 

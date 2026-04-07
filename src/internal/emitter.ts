@@ -1,4 +1,6 @@
-export type EventListener = (...args: unknown[]) => void;
+import type { JsValue } from "@tsonic/core/types.js";
+
+export type EventListener = (...args: JsValue[]) => void;
 
 export class Emitter {
   readonly #listeners: Record<string, EventListener[] | undefined> = {};
@@ -10,7 +12,7 @@ export class Emitter {
     return this;
   }
 
-  emit(eventName: string, ...args: unknown[]): boolean {
+  emit(eventName: string, ...args: JsValue[]): boolean {
     const listeners = readListeners(this.#listeners, eventName);
     if (!listeners || listeners.length === 0) {
       return false;
