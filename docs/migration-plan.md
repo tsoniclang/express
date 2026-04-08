@@ -6,7 +6,7 @@ This repo becomes the native source of truth for `@tsonic/express`.
 
 - Keep host substrate thin.
 - Move library behavior into native source.
-- Port the current `express-clr` tests as the baseline.
+- Port the current `earlier C# baseline` tests as the baseline.
 - Add broader tests for any current best-effort or simplified behavior.
 
 ## Initial migration slices
@@ -34,9 +34,9 @@ This repo becomes the native source of truth for `@tsonic/express`.
 
 ## Existing baseline test sources
 
-- `express-clr/tests/express.Tests/runtime/application.runtime.tests.cs`
-- `express-clr/tests/express.Tests/runtime/router.runtime.tests.cs`
-- `express-clr/tests/express.Tests/runtime/params.runtime.tests.cs`
-- `express-clr/tests/express.Tests/runtime/middleware.runtime.tests.cs`
-- `express-clr/tests/express.Tests/runtime/request.response.runtime.tests.cs`
-- `express-clr/tests/express.Tests/runtime/coverage.matrix.*.cs`
+- `earlier C# baseline/tests/express.Tests/runtime/application.runtime.tests.cs`
+- `earlier C# baseline/tests/express.Tests/runtime/router.runtime.tests.cs`
+- `earlier C# baseline/tests/express.Tests/runtime/params.runtime.tests.cs`
+- `earlier C# baseline/tests/express.Tests/runtime/middleware.runtime.tests.cs`
+- `earlier C# baseline/tests/express.Tests/runtime/request.response.runtime.tests.cs`
+- `earlier C# baseline/tests/express.Tests/runtime/coverage.matrix.*.cs`
