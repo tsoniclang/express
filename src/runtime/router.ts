@@ -538,7 +538,7 @@ async function invokeHandlers(
       ) {
         error = thrownError;
       } else {
-        error = new Error("Route handler threw an unsupported value.");
+        error = new Error("Route handler threw a non-Error value.");
       }
     }
   }

@@ -67,20 +67,37 @@ test("request exposes expected properties and methods", async () => {
     assert.ok("cookies" in req);
     assert.ok("file" in req);
     assert.ok("files" in req);
+    assert.ok("fresh" in req);
+    assert.ok("host" in req);
+    assert.ok("ip" in req);
+    assert.ok("ips" in req);
     assert.ok("method" in req);
     assert.ok("originalUrl" in req);
     assert.ok("params" in req);
     assert.ok("path" in req);
+    assert.ok("protocol" in req);
+    assert.ok("hostname" in req);
     assert.ok("query" in req);
     assert.ok("res" in req);
     assert.ok("route" in req);
+    assert.ok("secure" in req);
     assert.ok("signed" in req);
     assert.ok("signedCookies" in req);
+    assert.ok("stale" in req);
+    assert.ok("subdomains" in req);
+    assert.ok("xhr" in req);
 
     // Methods
     assert.equal(typeof req.get, "function");
     assert.equal(typeof req.header, "function");
     assert.equal(typeof req.param, "function");
+    assert.equal(typeof req.accepts, "function");
+    assert.equal(typeof req.acceptsCharsets, "function");
+    assert.equal(typeof req.acceptsEncodings, "function");
+    assert.equal(typeof req.acceptsLanguages, "function");
+    assert.equal(typeof req.is, "function");
+    assert.equal(typeof req.range, "function");
+    assert.equal(typeof req.setHeader, "function");
 
     res.send("ok");
   });
@@ -114,16 +131,25 @@ test("response exposes expected properties and methods", async () => {
 
     // Methods
     assert.equal(typeof res.append, "function");
+    assert.equal(typeof res.attachment, "function");
     assert.equal(typeof res.cookie, "function");
     assert.equal(typeof res.clearCookie, "function");
+    assert.equal(typeof res.download, "function");
     assert.equal(typeof res.end, "function");
+    assert.equal(typeof res.format, "function");
     assert.equal(typeof res.get, "function");
     assert.equal(typeof res.json, "function");
     assert.equal(typeof res.jsonp, "function");
+    assert.equal(typeof res.links, "function");
+    assert.equal(typeof res.location, "function");
+    assert.equal(typeof res.redirect, "function");
     assert.equal(typeof res.render, "function");
     assert.equal(typeof res.send, "function");
+    assert.equal(typeof res.sendFile, "function");
+    assert.equal(typeof res.sendStatus, "function");
     assert.equal(typeof res.set, "function");
     assert.equal(typeof res.status, "function");
+    assert.equal(typeof res.contentType, "function");
     assert.equal(typeof res.type, "function");
     assert.equal(typeof res.vary, "function");
     assert.equal(typeof res.header, "function");

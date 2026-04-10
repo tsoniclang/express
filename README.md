@@ -4,7 +4,7 @@ Native Tsonic source-of-truth implementation of Express.
 
 ## Current phase
 
-This repo replaces the old `express-clr` + generated `express` split with a canonical native package.
+This repo is the canonical native package for `@tsonic/express`.
 
 The initial slice in this repo ports the host-independent core:
 
