@@ -1,6 +1,6 @@
 # Agent Notes (express)
 
-This repo is the canonical native Tsonic replacement for `express-clr` + the old generated `express`.
+This repo is the canonical native Tsonic implementation of `@tsonic/express`.
 
 ## Branch Hygiene (IMPORTANT)
 
@@ -13,7 +13,7 @@ This repo is the canonical native Tsonic replacement for `express-clr` + the old
 ## Work Standard
 
 - This port is airplane-grade. Favor correct architecture and comprehensive tests over quick translation.
-- The goal is not a tactical port. Eliminate whole classes of drift from the old `express-clr` / generated-package split.
+- The goal is not a tactical port. Eliminate whole classes of drift from split ownership or generated-package indirection.
 - New logic should be written in native Tsonic-facing source (`.ts`) unless it is clearly substrate-only.
 
 ## Migration Policy
@@ -28,6 +28,6 @@ This repo is the canonical native Tsonic replacement for `express-clr` + the old
 
 ## Testing Policy
 
-- Port the existing `express-clr` runtime tests as the baseline.
+- Keep runtime coverage comprehensive and source-owned.
 - Add broader tests than the CLR repo where the old implementation was best-effort or simplified.
 - Final quality bar is stricter than parity: preserve behavior and shrink deviation classes.

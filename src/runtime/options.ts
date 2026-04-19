@@ -3,7 +3,7 @@ import type { Request } from "./request.js";
 import type { Response } from "./response.js";
 
 // ---------------------------------------------------------------------------
-// Delegate types (ported from express-clr delegates.cs)
+// Delegate types
 // ---------------------------------------------------------------------------
 
 export type VerifyBodyHandler = (
@@ -122,7 +122,7 @@ export interface StaticOptions {
 // File send / download options
 // ---------------------------------------------------------------------------
 
-export interface SendFileOptions {
+export interface FileTransferOptions {
   maxAge?: number | string;
   root?: string;
   lastModified?: boolean;
@@ -133,16 +133,9 @@ export interface SendFileOptions {
   immutable?: boolean;
 }
 
-export interface DownloadOptions {
-  maxAge?: number | string;
-  root?: string;
-  lastModified?: boolean;
-  headers?: Record<string, string>;
-  dotfiles?: string;
-  acceptRanges?: boolean;
-  cacheControl?: boolean;
-  immutable?: boolean;
-}
+export interface SendFileOptions extends FileTransferOptions {}
+
+export interface DownloadOptions extends FileTransferOptions {}
 
 // ---------------------------------------------------------------------------
 // Cookie options (re-exported from response.ts for broader use)
