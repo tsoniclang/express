@@ -26,12 +26,9 @@ including:
 - typed handler interfaces such as `RequestHandler`, `NextFunction`, and
   `ParamHandler`
 
-## Why this page exists
+## Ownership
 
-Older docs and older mental models split Express across generated and CLR
-companions. That is not how the active stack should be explained anymore.
-
-The current package owns both:
+The package owns:
 
 - host-independent routing and middleware behavior
 - host-bound request/response substrate
@@ -59,7 +56,7 @@ This is the normal application path for HTTP services.
 
 ## What users should expect from the package
 
-The current package owns the following behavior directly:
+The package implements:
 
 - route registration and matching
 - middleware chaining
@@ -77,5 +74,3 @@ Users should think in terms of:
 - one package dependency
 - one authored TypeScript source package
 - one runtime model expressed through package code and package metadata
-
-not a layered public story involving separate companion packages.

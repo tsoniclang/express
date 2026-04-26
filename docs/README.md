@@ -6,16 +6,13 @@ title: Express Package
 
 `@tsonic/express` is the canonical Express-style package for Tsonic.
 
-## Current position
+## Package model
 
-This package replaces the older public multi-repo packaging story that used to
-describe Express through more than one public layer.
-
-The active documentation model is simple:
-
-- `@tsonic/express` is the package users depend on
-- it is a first-party `tsonic-source-package`
-- it lives alongside `@tsonic/js` and `@tsonic/nodejs`
+- `@tsonic/express` is the package application code depends on.
+- The package is a first-party `tsonic-source-package`.
+- Applications use it with the `@tsonic/js` surface and `@tsonic/nodejs`.
+- The package owns routing, middleware, request helpers, response helpers, and
+  HTTP hosting integration.
 
 ## Quick start
 
@@ -50,6 +47,7 @@ For Node/HTTP-style applications, the normal authored stack is:
 
 - [Getting Started](getting-started.md)
 - [Runtime Model](runtime-model.md)
+- [Implementation Scope](implementation-scope.md)
 
 ## What it covers
 

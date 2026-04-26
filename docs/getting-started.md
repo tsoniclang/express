@@ -46,10 +46,5 @@ export async function main(): Promise<void> {
 
 Think of Express as one package you install and author against.
 
-You should not plan your application around a separate public split between:
-
-- routing code in one repo
-- transport/runtime in another repo
-- generated companion packages elsewhere
-
-The current public model is one first-party source package.
+Application code imports the public Express surface from
+`@tsonic/express/index.js`; host details remain package implementation details.
