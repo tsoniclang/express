@@ -24,7 +24,7 @@ export class Params {
 
   clear(): void {
     for (const key in this.#entries) {
-      delete this.#entries[key];
+      this.#entries[key] = undefined;
     }
   }
 

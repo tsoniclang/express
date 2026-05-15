@@ -134,12 +134,19 @@ export class Request {
       .map((value) => value.trim())
       .filter((value) => value.length > 0);
     const offsetValue = this.app?.get("subdomain offset");
-    const offset = typeof offsetValue === "number" ? Math.trunc(offsetValue) : 2;
+    let offset: number = 2;
+    if (typeof offsetValue === "number") {
+      offset = Math.trunc(offsetValue);
+    }
     if (parts.length <= offset) {
       return [];
     }
 
-    const result = parts.slice(0, parts.length - offset);
+    const result: string[] = [];
+    const subdomainCount = parts.length - offset;
+    for (let index = 0; index < subdomainCount; index += 1) {
+      result.push(parts[index]!);
+    }
     result.reverse();
     return result;
   }
@@ -283,7 +290,7 @@ export class Request {
 
   is(type: string): string | false;
   is(types: string[]): string | false;
-  is(typeOrTypes: any): any {
+  is(typeOrTypes: string | string[]): string | false {
     if (Array.isArray(typeOrTypes)) {
       return this.is_many(typeOrTypes);
     }
@@ -339,7 +346,9 @@ export class Request {
 
     return new ParsedRangeResult(
       unit,
-      options?.combine ? combineRanges(ranges) : ranges
+      options !== undefined && options.combine === true
+        ? combineRanges(ranges)
+        : ranges
     );
   }
 }
@@ -423,7 +432,7 @@ function parseWeightedValue(
   }
 
   const value = parts[0]!.toLowerCase();
-  let quality = 1;
+  let quality: number = 1;
   for (let index = 1; index < parts.length; index += 1) {
     const current = parts[index]!;
     if (!current.startsWith("q=")) {

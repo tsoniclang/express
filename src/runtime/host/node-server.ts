@@ -14,6 +14,7 @@ import type {
   TransportRequest,
   TransportResponse
 } from "../types.js";
+import { toHttpStatusCode } from "../numeric.js";
 import { AppServer } from "./app-server.js";
 
 interface RequestHeadersLookup {
@@ -103,23 +104,22 @@ export function listenOnPort(
   maybeCallback?: () => void
 ): AppServer {
   if (typeof hostOrCallback === "function" || hostOrCallback === undefined) {
-    return listenOnPort_port(
-      app,
-      port,
-      typeof hostOrCallback === "function" ? hostOrCallback : undefined
-    );
+    let portCallback: (() => void) | undefined;
+    if (typeof hostOrCallback === "function") {
+      portCallback = hostOrCallback;
+    }
+    return listenOnPort_port(app, port, portCallback);
   }
 
   if (
     typeof backlogOrCallback === "function" ||
     backlogOrCallback === undefined
   ) {
-    return listenOnPort_host(
-      app,
-      port,
-      hostOrCallback,
-      typeof backlogOrCallback === "function" ? backlogOrCallback : undefined
-    );
+    let hostCallback: (() => void) | undefined;
+    if (typeof backlogOrCallback === "function") {
+      hostCallback = backlogOrCallback;
+    }
+    return listenOnPort_host(app, port, hostOrCallback, hostCallback);
   }
 
   return listenOnPort_backlog(
@@ -473,7 +473,7 @@ class NodeTransportResponse implements TransportResponse {
   }
 
   set statusCode(value: number) {
-    this.#response.statusCode = value;
+    this.#response.statusCode = toHttpStatusCode(value);
   }
 
   get headersSent(): boolean {
@@ -571,17 +571,14 @@ function appendBufferBytes(target: number[], buffer: Buffer): number[] {
 }
 
 function toUint8Array(buffer: Buffer | Uint8Array): Uint8Array {
-  if (buffer instanceof Buffer) {
-    const bytes = new Uint8Array(buffer.length);
-    for (let index = 0; index < buffer.length; index += 1) {
-      bytes[index] = buffer.readUInt8(index);
-    }
-    return bytes;
+  if (buffer instanceof Uint8Array) {
+    return new Uint8Array(buffer);
   }
 
-  const bytes = new Uint8Array(buffer.length);
-  for (let index = 0; index < buffer.length; index += 1) {
-    bytes[index] = buffer[index]!;
+  const source = buffer as unknown as Buffer;
+  const bytes = new Uint8Array(source.length);
+  for (let index = 0; index < source.length; index += 1) {
+    bytes[index] = source.readUInt8(index) & 0xff;
   }
   return bytes;
 }

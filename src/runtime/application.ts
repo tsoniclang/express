@@ -88,28 +88,30 @@ export class Application extends Router {
     maybeCallback?: () => void
   ): AppServer {
     if (typeof portOrPath === "string") {
-      return this.listen_path(
-        portOrPath,
-        typeof hostOrCallback === "function" ? hostOrCallback : undefined
-      );
+      let pathCallback: (() => void) | undefined;
+      if (typeof hostOrCallback === "function") {
+        pathCallback = hostOrCallback;
+      }
+      return this.listen_path(portOrPath, pathCallback);
     }
 
     if (typeof hostOrCallback === "function" || hostOrCallback === undefined) {
-      return this.listen_port(
-        portOrPath,
-        typeof hostOrCallback === "function" ? hostOrCallback : undefined
-      );
+      let portCallback: (() => void) | undefined;
+      if (typeof hostOrCallback === "function") {
+        portCallback = hostOrCallback;
+      }
+      return this.listen_port(portOrPath, portCallback);
     }
 
     if (
       typeof backlogOrCallback === "function" ||
       backlogOrCallback === undefined
     ) {
-      return this.listen_host(
-        portOrPath,
-        hostOrCallback,
-        typeof backlogOrCallback === "function" ? backlogOrCallback : undefined
-      );
+      let hostCallback: (() => void) | undefined;
+      if (typeof backlogOrCallback === "function") {
+        hostCallback = backlogOrCallback;
+      }
+      return this.listen_host(portOrPath, hostOrCallback, hostCallback);
     }
 
     return this.listen_backlog(
@@ -190,9 +192,13 @@ export class Application extends Router {
     localsOrCallback?: Record<string, JsValue> | TemplateCallback,
     maybeCallback?: TemplateCallback
   ): void {
-    const locals = typeof localsOrCallback === "function" || localsOrCallback === undefined ? this.locals : localsOrCallback;
-    const callback: TemplateCallback | undefined =
-      typeof localsOrCallback === "function" ? localsOrCallback : maybeCallback;
+    let locals = this.locals;
+    let callback = maybeCallback;
+    if (typeof localsOrCallback === "function") {
+      callback = localsOrCallback;
+    } else if (localsOrCallback !== undefined) {
+      locals = localsOrCallback;
+    }
     if (!callback) {
       throw new Error("render callback is required");
     }
@@ -234,7 +240,11 @@ export class Application extends Router {
         continue;
       }
       if (candidate instanceof Application) {
-        candidate.mountpath = typeof mountedAt === "string" ? mountedAt : "/";
+        if (typeof mountedAt === "string") {
+          candidate.mountpath = mountedAt;
+        } else {
+          candidate.mountpath = "/";
+        }
         candidate.#events.emit("mount", this);
       }
     }
