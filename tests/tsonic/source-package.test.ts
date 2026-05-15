@@ -60,9 +60,12 @@ export async function main(): Promise<void> {
   let mounted = false;
 
   app.set("jsonp callback name", "cb");
-  app.engine("tpl", (_view, locals, callback) => callback(undefined, "hello " + locals["name"]));
+  app.engine("tpl", (_view, locals, callback) => callback(null, "hello " + locals["name"]));
   app.param("id", async (_req, _res, next, _value, _name) => {
     await next();
+  });
+  app.get("/probe/:id", async (req, res, _next) => {
+    res.send("probe:" + String(req.param("id")));
   });
 
   const child = express.create();
@@ -83,6 +86,19 @@ export async function main(): Promise<void> {
   });
 
   const response = new MemoryResponse();
+  const probeResponse = new MemoryResponse();
+  await express.dispatch(app, {
+    request: {
+      method: "GET",
+      path: "/probe/world",
+      headers: {}
+    },
+    response: probeResponse
+  });
+  if (probeResponse.bodyText !== "probe:world") {
+    throw new Error("param route failed: body=" + probeResponse.bodyText);
+  }
+
   const context: TransportContext = {
     request: {
       method: "GET",
@@ -93,7 +109,9 @@ export async function main(): Promise<void> {
   };
 
   await express.dispatch(app, context);
-  if (response.bodyText !== "hello world") throw new Error("render failed");
+  if (response.bodyText !== "hello world") {
+    throw new Error("render failed: body=" + response.bodyText + "; cookie=" + String(response.getHeader("set-cookie")));
+  }
   if (response.getHeader("set-cookie")?.includes("sid=abc") !== true) throw new Error("cookie failed");
 
   const mountedResponse = new MemoryResponse();

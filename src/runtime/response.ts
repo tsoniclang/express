@@ -36,6 +36,8 @@ export type FormatHandlers = Record<string, FormatHandler>;
 
 export type SendFileCallback = (error: Error | null) => void;
 
+export type JsonRecord = Record<string, JsValue>;
+
 class HttpError extends Error {
   statusCode: number;
 
@@ -79,7 +81,7 @@ export class Response {
   append(field: string, value: string): this;
   append(field: string, value: string[]): this;
   append(field: string, value: string | string[]): this {
-    if (Array.isArray(value)) {
+    if (Array.isArray(value) === true) {
       return this.append_many(field, value);
     }
 
@@ -99,13 +101,28 @@ export class Response {
     return this;
   }
 
+  cookie(name: string, value: JsonRecord, options?: CookieOptions): this;
+  cookie(name: string, value: JsValue, options?: CookieOptions): this;
   cookie(name: string, value: JsValue, options?: CookieOptions): this {
-    let payload = typeof value === "string" ? value : JSON.stringify(value);
-    if (options?.signed) {
-      const secret =
-        typeof this.app?.get("cookie secret") === "string"
-          ? String(this.app?.get("cookie secret"))
-          : undefined;
+    return this.cookie_value(name, value, options);
+  }
+
+  cookie_record(name: string, value: JsonRecord, options?: CookieOptions): this {
+    return this.writeCookie(name, value, options);
+  }
+
+  cookie_value(name: string, value: JsValue, options?: CookieOptions): this {
+    return this.writeCookie(name, value, options);
+  }
+
+  private writeCookie(name: string, value: JsValue, options?: CookieOptions): this {
+    let payload = stringifyResponseJsonValue(value);
+    if (options !== undefined && options.signed === true) {
+      const configuredSecret = this.app?.get("cookie secret");
+      let secret: string | undefined;
+      if (typeof configuredSecret === "string") {
+        secret = configuredSecret;
+      }
       if (!secret) {
         throw new Error(
           "Cannot set signed cookie without a secret. Install cookieParser() first."
@@ -115,45 +132,64 @@ export class Response {
       payload = sign(payload, secret);
     }
 
-    const encoded = options?.encode ? options.encode(payload) : payload;
-    const segments = [`${name}=${encoded}`, `Path=${options?.path ?? "/"}`];
-
-    if (options?.domain) {
-      segments.push(`Domain=${options.domain}`);
+    let encode: ((value: string) => string) | undefined;
+    let path = "/";
+    let domain: string | undefined;
+    let maxAge: number | undefined;
+    let expires: Date | undefined;
+    let sameSite: string | boolean | undefined;
+    let priority: string | undefined;
+    if (options !== undefined) {
+      encode = options.encode;
+      if (options.path !== undefined) {
+        path = options.path;
+      }
+      domain = options.domain;
+      maxAge = options.maxAge;
+      expires = options.expires;
+      sameSite = options.sameSite;
+      priority = options.priority;
     }
 
-    if (typeof options?.maxAge === "number") {
-      let maxAgeSeconds = options.maxAge - (options.maxAge % 1000);
+    const encoded = encode ? encode(payload) : payload;
+    const segments = [`${name}=${encoded}`, `Path=${path}`];
+
+    if (domain !== undefined && domain.length > 0) {
+      segments.push(`Domain=${domain}`);
+    }
+
+    if (maxAge !== undefined) {
+      let maxAgeSeconds = maxAge - (maxAge % 1000);
       if (maxAgeSeconds < 0) {
         maxAgeSeconds = 0;
       }
       segments.push(`Max-Age=${String(maxAgeSeconds / 1000)}`);
     }
 
-    if (options?.expires) {
-      segments.push(`Expires=${options.expires.toUTCString()}`);
+    if (expires !== undefined) {
+      segments.push(`Expires=${expires.toUTCString()}`);
     }
 
-    if (options?.httpOnly) {
+    if (options !== undefined && options.httpOnly === true) {
       segments.push("HttpOnly");
     }
 
-    if (options?.partitioned) {
+    if (options !== undefined && options.partitioned === true) {
       segments.push("Partitioned");
     }
 
-    if (options?.secure) {
+    if (options !== undefined && options.secure === true) {
       segments.push("Secure");
     }
 
-    if (typeof options?.sameSite === "string" && options.sameSite.length > 0) {
-      segments.push(`SameSite=${options.sameSite}`);
-    } else if (options?.sameSite === true) {
+    if (typeof sameSite === "string" && sameSite.length > 0) {
+      segments.push(`SameSite=${sameSite}`);
+    } else if (sameSite === true) {
       segments.push("SameSite=Strict");
     }
 
-    if (options?.priority) {
-      segments.push(`Priority=${options.priority}`);
+    if (priority !== undefined && priority.length > 0) {
+      segments.push(`Priority=${priority}`);
     }
 
     return this.append("Set-Cookie", segments.join("; "));
@@ -178,16 +214,46 @@ export class Response {
     return this.set(field, value);
   }
 
+  json(body: JsonRecord): this;
+  json(body?: JsValue): this;
   json(body?: JsValue): this {
-    this.type("application/json");
-    return this.send(typeof body === "string" ? body : JSON.stringify(body ?? null));
+    return this.json_value(body);
   }
 
+  json_record(body: JsonRecord): this {
+    return this.writeJson(body);
+  }
+
+  json_value(body?: JsValue): this {
+    return this.writeJson(body);
+  }
+
+  private writeJson(body?: JsValue): this {
+    this.type("application/json");
+    return this.send(stringifyOptionalResponseJsonValue(body));
+  }
+
+  jsonp(body: JsonRecord): this;
+  jsonp(body?: JsValue): this;
   jsonp(body?: JsValue): this {
-    const callbackName = typeof this.app?.get("jsonp callback name") === "string"
-      ? String(this.app?.get("jsonp callback name"))
-      : "callback";
-    const payload = typeof body === "string" ? body : JSON.stringify(body ?? null);
+    return this.jsonp_value(body);
+  }
+
+  jsonp_record(body: JsonRecord): this {
+    return this.writeJsonp(body);
+  }
+
+  jsonp_value(body?: JsValue): this {
+    return this.writeJsonp(body);
+  }
+
+  private writeJsonp(body?: JsValue): this {
+    const configuredCallbackName = this.app?.get("jsonp callback name");
+    const callbackName =
+      typeof configuredCallbackName === "string"
+        ? configuredCallbackName
+        : "callback";
+    const payload = stringifyOptionalResponseJsonValue(body);
     this.type("application/javascript");
     return this.send(`${callbackName}(${payload})`);
   }
@@ -379,9 +445,13 @@ export class Response {
   }
 
   links(links: Record<string, string>): this {
-    const entries = Object.entries(links).map(
-      ([rel, url]) => `<${url}>; rel=\"${rel}\"`
-    );
+    const entries: string[] = [];
+    const keys = Object.keys(links);
+    for (let index = 0; index < keys.length; index += 1) {
+      const rel = keys[index]!;
+      const url = links[rel]!;
+      entries.push(`<${url}>; rel=\"${rel}\"`);
+    }
     return this.set("Link", entries.join(", "));
   }
 
@@ -409,7 +479,21 @@ export class Response {
     return this.send(`Redirecting to ${path}`);
   }
 
+  send(body: JsonRecord): this;
+  send(body?: JsValue): this;
   send(body?: JsValue): this {
+    return this.send_value(body);
+  }
+
+  send_record(body: JsonRecord): this {
+    return this.writeSend(body);
+  }
+
+  send_value(body?: JsValue): this {
+    return this.writeSend(body);
+  }
+
+  private writeSend(body?: JsValue): this {
     this.#transport.statusCode = this.#statusCode;
 
     const contentType = this.get("content-type");
@@ -426,7 +510,7 @@ export class Response {
       if (!contentType) {
         this.type("application/json");
       }
-      void this.#transport.sendText(JSON.stringify(body));
+      void this.#transport.sendText(stringifyJsonValue(body));
     }
 
     this.headersSent = true;
@@ -604,8 +688,170 @@ export class Response {
   }
 }
 
+function stringifyResponseJsonValue(value: JsValue): string {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  return stringifyJsonValue(value);
+}
+
+function stringifyOptionalResponseJsonValue(value: JsValue | undefined): string {
+  return value === undefined ? "null" : stringifyResponseJsonValue(value);
+}
+
+function stringifyJsonValue(value: JsValue): string {
+  const serialized = stringifyJsonMemberValue(value, []);
+  return serialized === undefined ? "null" : serialized;
+}
+
+function stringifyJsonMemberValue(
+  value: JsValue | undefined,
+  seen: object[]
+): string | undefined {
+  if (value === undefined) {
+    return undefined;
+  }
+
+  return stringifyJsonDefinedValue(value, seen);
+}
+
+function stringifyJsonDefinedValue(value: JsValue, seen: object[]): string | undefined {
+  if (value === null) {
+    return "null";
+  }
+
+  if (typeof value === "string") {
+    return quoteJsonString(value);
+  }
+
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? String(value) : "null";
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "true" : "false";
+  }
+
+  if (typeof value !== "object") {
+    return undefined;
+  }
+
+  if (hasSeenJsonObject(value, seen)) {
+    throw new Error("Converting circular structure to JSON.");
+  }
+
+  const nextSeen = [...seen, value];
+  if (Array.isArray(value)) {
+    const array = value as JsValue[];
+    const items: string[] = [];
+    for (let index = 0; index < array.length; index += 1) {
+      items.push(stringifyJsonMemberValue(array[index], nextSeen) ?? "null");
+    }
+    return `[${items.join(",")}]`;
+  }
+
+  const record = value as Record<string, JsValue | undefined>;
+  const keys = Object.keys(record);
+  const properties: string[] = [];
+  for (let index = 0; index < keys.length; index += 1) {
+    const key = keys[index]!;
+    const renderedValue = stringifyJsonMemberValue(record[key], nextSeen);
+    if (renderedValue !== undefined) {
+      properties.push(`${quoteJsonString(key)}:${renderedValue}`);
+    }
+  }
+  return `{${properties.join(",")}}`;
+}
+
+function hasSeenJsonObject(value: object, seen: object[]): boolean {
+  for (let index = 0; index < seen.length; index += 1) {
+    if (seen[index] === value) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function quoteJsonString(value: string): string {
+  let result = "\"";
+  for (let index = 0; index < value.length; index += 1) {
+    const current = value[index]!;
+    const code = value.charCodeAt(index);
+    if (current === "\"") {
+      result += "\\\"";
+    } else if (current === "\\") {
+      result += "\\\\";
+    } else if (current === "\b") {
+      result += "\\b";
+    } else if (current === "\f") {
+      result += "\\f";
+    } else if (current === "\n") {
+      result += "\\n";
+    } else if (current === "\r") {
+      result += "\\r";
+    } else if (current === "\t") {
+      result += "\\t";
+    } else if (code < 32) {
+      result += unicodeEscape(code);
+    } else {
+      result += current;
+    }
+  }
+
+  return `${result}\"`;
+}
+
+function unicodeEscape(code: number): string {
+  const first = Math.floor(code / 4096);
+  const second = Math.floor((code - first * 4096) / 256);
+  const third = Math.floor((code - first * 4096 - second * 256) / 16);
+  const fourth = code - first * 4096 - second * 256 - third * 16;
+  return `\\u${hexDigit(first)}${hexDigit(second)}${hexDigit(third)}${hexDigit(fourth)}`;
+}
+
+function hexDigit(value: number): string {
+  switch (value) {
+    case 0:
+      return "0";
+    case 1:
+      return "1";
+    case 2:
+      return "2";
+    case 3:
+      return "3";
+    case 4:
+      return "4";
+    case 5:
+      return "5";
+    case 6:
+      return "6";
+    case 7:
+      return "7";
+    case 8:
+      return "8";
+    case 9:
+      return "9";
+    case 10:
+      return "a";
+    case 11:
+      return "b";
+    case 12:
+      return "c";
+    case 13:
+      return "d";
+    case 14:
+      return "e";
+    default:
+      return "f";
+  }
+}
+
 O<Response>().method(x => x.append_one).family(x => x.append);
 O<Response>().method(x => x.append_many).family(x => x.append);
+O<Response>().method(x => x.cookie_record).family(x => x.cookie);
+O<Response>().method(x => x.cookie_value).family(x => x.cookie);
 O<Response>().method(x => x.download_path).family(x => x.download);
 O<Response>().method(x => x.download_path_callback).family(x => x.download);
 O<Response>().method(x => x.download_path_filename).family(x => x.download);
@@ -614,10 +860,16 @@ O<Response>().method(x => x.download_path_options).family(x => x.download);
 O<Response>().method(x => x.download_path_options_callback).family(x => x.download);
 O<Response>().method(x => x.download_path_filename_options).family(x => x.download);
 O<Response>().method(x => x.download_path_filename_options_callback).family(x => x.download);
+O<Response>().method(x => x.json_record).family(x => x.json);
+O<Response>().method(x => x.json_value).family(x => x.json);
+O<Response>().method(x => x.jsonp_record).family(x => x.jsonp);
+O<Response>().method(x => x.jsonp_value).family(x => x.jsonp);
 O<Response>().method(x => x.redirect_path).family(x => x.redirect);
 O<Response>().method(x => x.set_one).family(x => x.set);
 O<Response>().method(x => x.set_many).family(x => x.set);
 O<Response>().method(x => x.redirect_status).family(x => x.redirect);
+O<Response>().method(x => x.send_record).family(x => x.send);
+O<Response>().method(x => x.send_value).family(x => x.send);
 O<Response>().method(x => x.sendFile_path).family(x => x.sendFile);
 O<Response>().method(x => x.sendFile_path_callback).family(x => x.sendFile);
 O<Response>().method(x => x.sendFile_path_options).family(x => x.sendFile);
@@ -688,13 +940,13 @@ function applyCacheHeaders(
   response: Response,
   options: FileTransferOptions | undefined
 ): void {
-  if (options?.cacheControl === false) {
+  if (options !== undefined && options.cacheControl === false) {
     return;
   }
 
   const maxAge = normalizeMaxAge(options?.maxAge);
   let value = maxAge > 0 ? `public, max-age=${maxAge}` : "public, max-age=0";
-  if (options?.immutable) {
+  if (options !== undefined && options.immutable === true) {
     value += ", immutable";
   }
   response.set("Cache-Control", value);

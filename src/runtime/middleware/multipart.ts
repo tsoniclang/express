@@ -452,7 +452,7 @@ function readMultipartBytes(req: Request): Uint8Array {
 function toUint8Array(buffer: Buffer): Uint8Array {
   const bytes = new Uint8Array(buffer.length);
   for (let index = 0; index < buffer.length; index += 1) {
-    bytes[index] = buffer.readUInt8(index);
+    bytes[index] = buffer.readUInt8(index) & 0xff;
   }
   return bytes;
 }

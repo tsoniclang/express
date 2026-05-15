@@ -46,7 +46,7 @@ export class Files {
   /** @internal */
   clear(): void {
     for (const k in this.#files) {
-      delete this.#files[k];
+      this.#files[k] = undefined;
     }
   }
 

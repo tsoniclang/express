@@ -24,14 +24,14 @@ export class Cookies {
       return false;
     }
 
-    delete this.#values[normalised];
+    this.#values[normalised] = undefined;
     return true;
   }
 
   /** @internal */
   clear(): void {
     for (const k in this.#values) {
-      delete this.#values[k];
+      this.#values[k] = undefined;
     }
   }
 

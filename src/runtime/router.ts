@@ -26,13 +26,25 @@ type MiddlewareLike = RequestHandler | Router;
 type MiddlewareHandler = RequestHandler | ErrorRequestHandler;
 
 class RouteLayer {
+  readonly path: PathSpec;
+  readonly method: string | null;
+  readonly middleware: boolean;
+  readonly handlers: MiddlewareHandler[];
+  readonly handlesError: boolean;
+
   constructor(
-    readonly path: PathSpec,
-    readonly method: string | null,
-    readonly middleware: boolean,
-    readonly handlers: MiddlewareHandler[],
-    readonly handlesError: boolean
-  ) {}
+    path: PathSpec,
+    method: string | null,
+    middleware: boolean,
+    handlers: MiddlewareHandler[],
+    handlesError: boolean
+  ) {
+    this.path = path;
+    this.method = method;
+    this.middleware = middleware;
+    this.handlers = handlers;
+    this.handlesError = handlesError;
+  }
 
   mountedAt(path: PathSpec): RouteLayer {
     return new RouteLayer(
@@ -495,9 +507,10 @@ async function invokeHandlers(
     let nextCalled = false;
     let control: NextControl = undefined;
 
-    const next = async (value?: NextControl): Promise<void> => {
+    const next = (value?: NextControl): Promise<void> => {
       nextCalled = true;
       control = value;
+      return Promise.resolve();
     };
 
     try {
