@@ -30,7 +30,11 @@ export interface TransportContext {
 export type PathSpec = string | RegExp | readonly PathSpec[];
 export type NextControl = "route" | "router" | string | null | undefined;
 export type NextFunction = (value?: NextControl) => void | Promise<void>;
-export type IgnoredHandlerResult = void | JsValue | Promise<void | JsValue>;
+export type IgnoredHandlerResult =
+  | void
+  | JsValue
+  | Response
+  | Promise<void | JsValue | Response>;
 export interface RequestHandler {
   (
     req: Request,
@@ -41,7 +45,7 @@ export interface RequestHandler {
 
 export interface ErrorRequestHandler {
   (
-    error: JsValue,
+    error: unknown,
     req: Request,
     res: Response,
     next: NextFunction

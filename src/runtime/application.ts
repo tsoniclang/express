@@ -5,6 +5,7 @@ import { Router } from "./router.js";
 import { AppServer } from "./host/app-server.js";
 import { listenOnPath, listenOnPort } from "./host/node-server.js";
 import type {
+  ErrorRequestHandler,
   ParamHandler,
   PathSpec,
   RequestHandler,
@@ -217,9 +218,15 @@ export class Application extends Router {
     return this;
   }
 
+  override use(first: PathSpec, ...rest: RequestHandler[]): this;
+  override use(first: PathSpec, ...rest: ErrorRequestHandler[]): this;
+  override use(first: PathSpec, ...rest: Router[]): this;
+  override use(...handlers: RequestHandler[]): this;
+  override use(...handlers: ErrorRequestHandler[]): this;
+  override use(...routers: Router[]): this;
   override use(
-    first: PathSpec | RequestHandler | Router,
-    ...rest: Array<RequestHandler | Router>
+    first: PathSpec | RequestHandler | ErrorRequestHandler | Router,
+    ...rest: Array<RequestHandler | ErrorRequestHandler | Router>
   ): this {
     if (isPathSpec(first)) {
       this.addMiddlewareLayer(first, rest);
@@ -230,9 +237,44 @@ export class Application extends Router {
     return this.useRootApplicationMiddleware(first, rest);
   }
 
+  override use_path(path: PathSpec, ...handlers: RequestHandler[]): this {
+    this.addMiddlewareLayer(path, handlers);
+    return this;
+  }
+
+  override use_path_error(
+    path: PathSpec,
+    ...handlers: ErrorRequestHandler[]
+  ): this {
+    this.addMiddlewareLayer(path, handlers);
+    return this;
+  }
+
+  override use_path_router(path: PathSpec, ...routers: Router[]): this {
+    this.addMiddlewareLayer(path, routers);
+    this.mountApplications(path, routers);
+    return this;
+  }
+
+  override use_middleware(...handlers: RequestHandler[]): this {
+    this.addMiddlewareLayer("/", handlers);
+    return this;
+  }
+
+  override use_error(...handlers: ErrorRequestHandler[]): this {
+    this.addMiddlewareLayer("/", handlers);
+    return this;
+  }
+
+  override use_router(...routers: Router[]): this {
+    this.addMiddlewareLayer("/", routers);
+    this.mountApplications("/", routers);
+    return this;
+  }
+
   private mountApplications(
     mountedAt: PathSpec,
-    candidates: readonly (RequestHandler | Router)[]
+    candidates: readonly (RequestHandler | ErrorRequestHandler | Router)[]
   ): void {
     for (let index = 0; index < candidates.length; index += 1) {
       const candidate = candidates[index]!;
@@ -251,10 +293,13 @@ export class Application extends Router {
   }
 
   private useRootApplicationMiddleware(
-    first: RequestHandler | Router,
-    rest: readonly (RequestHandler | Router)[]
+    first: RequestHandler | ErrorRequestHandler | Router,
+    rest: readonly (RequestHandler | ErrorRequestHandler | Router)[]
   ): this {
-    const handlers: Array<RequestHandler | Router> = [first, ...rest];
+    const handlers: Array<RequestHandler | ErrorRequestHandler | Router> = [
+      first,
+      ...rest,
+    ];
     this.addMiddlewareLayer("/", handlers);
     this.mountApplications("/", handlers);
     return this;
@@ -328,3 +373,9 @@ O<Application>().method(x => x.listen_host).family(x => x.listen);
 O<Application>().method(x => x.listen_backlog).family(x => x.listen);
 O<Application>().method(x => x.param_name).family(x => x.param);
 O<Application>().method(x => x.param_names).family(x => x.param);
+O<Application>().method(x => x.use_path).family(x => x.use);
+O<Application>().method(x => x.use_path_error).family(x => x.use);
+O<Application>().method(x => x.use_path_router).family(x => x.use);
+O<Application>().method(x => x.use_middleware).family(x => x.use);
+O<Application>().method(x => x.use_error).family(x => x.use);
+O<Application>().method(x => x.use_router).family(x => x.use);

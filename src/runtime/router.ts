@@ -22,7 +22,7 @@ type HandlerControl = {
   error?: JsValue;
 };
 
-type MiddlewareLike = RequestHandler | Router;
+type MiddlewareLike = RequestHandler | ErrorRequestHandler | Router;
 type MiddlewareHandler = RequestHandler | ErrorRequestHandler;
 
 class RouteLayer {
@@ -155,6 +155,12 @@ export class Router {
     return new Route(this, path);
   }
 
+  use(first: PathSpec, ...rest: RequestHandler[]): this;
+  use(first: PathSpec, ...rest: ErrorRequestHandler[]): this;
+  use(first: PathSpec, ...rest: Router[]): this;
+  use(...handlers: RequestHandler[]): this;
+  use(...handlers: ErrorRequestHandler[]): this;
+  use(...routers: Router[]): this;
   use(first: PathSpec | MiddlewareLike, ...rest: MiddlewareLike[]): this {
     if (isPathSpec(first)) {
       this.addMiddlewareLayer(first, rest);
@@ -164,11 +170,33 @@ export class Router {
     return this.useRootMiddleware(first, rest);
   }
 
-  useError(
-    handler: ErrorRequestHandler,
-    ...handlers: ErrorRequestHandler[]
-  ): this {
-    this.addErrorMiddlewareLayer("/", [handler, ...handlers]);
+  use_path(path: PathSpec, ...handlers: RequestHandler[]): this {
+    this.addMiddlewareLayer(path, handlers);
+    return this;
+  }
+
+  use_path_error(path: PathSpec, ...handlers: ErrorRequestHandler[]): this {
+    this.addMiddlewareLayer(path, handlers);
+    return this;
+  }
+
+  use_path_router(path: PathSpec, ...routers: Router[]): this {
+    this.addMiddlewareLayer(path, routers);
+    return this;
+  }
+
+  use_middleware(...handlers: RequestHandler[]): this {
+    this.addMiddlewareLayer("/", handlers);
+    return this;
+  }
+
+  use_error(...handlers: ErrorRequestHandler[]): this {
+    this.addMiddlewareLayer("/", handlers);
+    return this;
+  }
+
+  use_router(...routers: Router[]): this {
+    this.addMiddlewareLayer("/", routers);
     return this;
   }
 
@@ -193,16 +221,16 @@ export class Router {
         continue;
       }
 
-      this.#layers.push(new RouteLayer(path, null, true, [handler], false));
-    }
-  }
-
-  addErrorMiddlewareLayer(
-    path: PathSpec,
-    handlers: readonly ErrorRequestHandler[]
-  ): void {
-    for (const handler of flattenErrorMiddlewareEntries(handlers)) {
-      this.#layers.push(new RouteLayer(path, null, true, [handler], true));
+      const middlewareHandler = handler as MiddlewareHandler;
+      this.#layers.push(
+        new RouteLayer(
+          path,
+          null,
+          true,
+          [middlewareHandler],
+          isErrorRequestHandler(middlewareHandler)
+        )
+      );
     }
   }
 
@@ -343,23 +371,16 @@ function flattenMiddlewareEntries(handlers: readonly MiddlewareLike[]): Middlewa
       throw new Error("middleware handlers must be functions");
     }
 
-    result.push(handler as RequestHandler);
+    result.push(handler as MiddlewareHandler);
   }
 
   return result;
 }
 
-function flattenErrorMiddlewareEntries(handlers: readonly ErrorRequestHandler[]): ErrorRequestHandler[] {
-  const result: ErrorRequestHandler[] = [];
-
-  for (const handler of handlers) {
-    if (typeof handler !== "function") {
-      throw new Error("error middleware handlers must be functions");
-    }
-    result.push(handler as ErrorRequestHandler);
-  }
-
-  return result;
+function isErrorRequestHandler(
+  handler: MiddlewareHandler
+): handler is ErrorRequestHandler {
+  return handler.length >= 4;
 }
 
 function matchesLayer(layer: RouteLayer, requestPath: string, parameters: Params): boolean {
@@ -630,3 +651,9 @@ O<Router>().method(x => x.get_name).family(x => x.get);
 O<Router>().method(x => x.get_route).family(x => x.get);
 O<Router>().method(x => x.param_name).family(x => x.param);
 O<Router>().method(x => x.param_names).family(x => x.param);
+O<Router>().method(x => x.use_path).family(x => x.use);
+O<Router>().method(x => x.use_path_error).family(x => x.use);
+O<Router>().method(x => x.use_path_router).family(x => x.use);
+O<Router>().method(x => x.use_middleware).family(x => x.use);
+O<Router>().method(x => x.use_error).family(x => x.use);
+O<Router>().method(x => x.use_router).family(x => x.use);

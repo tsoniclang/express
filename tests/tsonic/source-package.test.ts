@@ -143,7 +143,7 @@ export async function main(): Promise<void> {
   app.get("/boom", () => {
     throw new Error("boom");
   });
-  app.useError(async (_error, _req, res, _next) => {
+  app.use(async (_error, _req, res, _next) => {
     res.status(500).send("handled");
   });
   await express.dispatch(app, {
