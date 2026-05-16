@@ -1,4 +1,5 @@
 import type { Route } from "../route.js";
+import type { Router } from "../router.js";
 import type {
   ErrorRequestHandler,
   NextFunction,
@@ -10,7 +11,7 @@ import type {
 /**
  * Abstract routing host that provides the full set of HTTP-method helpers
  * (`get`, `post`, `put`, `delete`, etc.) and middleware registration
- * (`use`, `useError`).
+ * (`use`).
  *
  * Concrete implementations (`Router`, `Application`) override the
  * `addRoute`, `addMiddleware`, `addErrorMiddleware`, `createRoute`,
@@ -39,15 +40,12 @@ export interface RoutingHost {
   method(methodName: string, path: PathSpec, ...handlers: RequestHandler[]): this;
 
   // Middleware ------------------------------------------------------------
-  use(
-    first: PathSpec | RequestHandler,
-    ...rest: RequestHandler[]
-  ): this;
-  useError(
-    handler: ErrorRequestHandler,
-    ...handlers: ErrorRequestHandler[]
-  ): this;
-
+  use(first: PathSpec, ...handlers: RequestHandler[]): this;
+  use(first: PathSpec, ...handlers: ErrorRequestHandler[]): this;
+  use(first: PathSpec, ...routers: Router[]): this;
+  use(...handlers: RequestHandler[]): this;
+  use(...handlers: ErrorRequestHandler[]): this;
+  use(...routers: Router[]): this;
   // Param handlers -------------------------------------------------------
   param(name: string, callback: ParamHandler): this;
   param(name: string[], callback: ParamHandler): this;

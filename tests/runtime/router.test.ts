@@ -150,7 +150,7 @@ test("error handler with four args is invoked after thrown error", async () => {
   app.get("/boom", () => {
     throw new Error("boom");
   });
-  app.useError(errorHandler);
+  app.use(errorHandler);
 
   const context = createContext("GET", "/boom");
   await app.handle(context, app);
