@@ -11,6 +11,8 @@ title: Express Package
 - `@tsonic/express` is the package application code depends on.
 - The package is a first-party `tsonic-source-package`.
 - Applications use it with the `@tsonic/js` surface and `@tsonic/nodejs`.
+- The package supports the default C# target through `supportedTargets`
+  metadata; imports remain `@tsonic/express`.
 - The package owns routing, middleware, request helpers, response helpers, and
   HTTP hosting integration.
 
