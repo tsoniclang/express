@@ -6,6 +6,13 @@ Express-style routing and middleware for Tsonic applications.
 TypeScript, consumed through `tsonic.package.json`, and used with the
 `@tsonic/js` surface plus `@tsonic/nodejs`.
 
+## Target support
+
+`@tsonic/express` supports the default C# target. The package declares this in
+`tsonic.package.json` with `"supportedTargets": ["csharp"]`. Application code
+imports `@tsonic/express` directly; no target suffix is part of the public
+package name or import path.
+
 ## Install
 
 ```bash
