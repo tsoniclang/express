@@ -18,14 +18,15 @@ export function createJsonMiddleware(options?: JsonOptions): RequestHandler {
       return undefined;
     }
 
-    const body = readBodyText(req);
+    const bytes = readBodyBytes(req);
+    enforceBodyLimit(bytes, options?.limit);
+    const body = bytesToText(bytes);
     if (body.trim().length === 0) {
       req.body = null;
       await next(undefined);
       return undefined;
     }
 
-    const bytes = readBodyBytes(req);
     options?.verify?.(req, res, bytes, "utf-8");
     req.body = JSON.parse(body);
     await next(undefined);
@@ -41,6 +42,7 @@ export function createRawMiddleware(options?: RawOptions): RequestHandler {
     }
 
     const bytes = readBodyBytes(req);
+    enforceBodyLimit(bytes, options?.limit);
     options?.verify?.(req, res, bytes, undefined);
     req.body = bytes;
     await next(undefined);
@@ -56,6 +58,7 @@ export function createTextMiddleware(options?: TextOptions): RequestHandler {
     }
 
     const bytes = readBodyBytes(req);
+    enforceBodyLimit(bytes, options?.limit);
     options?.verify?.(req, res, bytes, "utf-8");
     req.body = bytesToText(bytes);
     await next(undefined);
@@ -75,6 +78,7 @@ export function createUrlEncodedMiddleware(
     }
 
     const bytes = readBodyBytes(req);
+    enforceBodyLimit(bytes, options?.limit);
     options?.verify?.(req, res, bytes, "utf-8");
     req.body = parseUrlEncoded(bytesToText(bytes));
     await next(undefined);
@@ -184,6 +188,57 @@ function readBodyText(req: Request): string {
 
 function bytesToText(bytes: Uint8Array): string {
   return Buffer.from(bytes).toString("utf-8");
+}
+
+function enforceBodyLimit(bytes: Uint8Array, limit: string | number | undefined): void {
+  const maxBytes = parseBodyLimit(limit);
+  if (maxBytes === undefined) {
+    return;
+  }
+
+  if (bytes.length > maxBytes) {
+    throw new Error("request entity too large");
+  }
+}
+
+function parseBodyLimit(limit: string | number | undefined): number | undefined {
+  if (limit === undefined) {
+    return undefined;
+  }
+
+  if (typeof limit === "number") {
+    return validateBodyLimit(limit);
+  }
+
+  const normalized = limit.trim().toLowerCase();
+  if (normalized.length === 0) {
+    throw new Error("Invalid body size limit");
+  }
+
+  const match = /^([0-9]+(?:\.[0-9]+)?)\s*(b|kb|k|mb|m|gb|g)?$/.exec(normalized);
+  if (match === null) {
+    throw new Error("Invalid body size limit");
+  }
+
+  const rawValue = Number(match[1]);
+  const suffix = match[2] ?? "b";
+  let multiplier = 1;
+  if (suffix === "kb" || suffix === "k") {
+    multiplier = 1024;
+  } else if (suffix === "mb" || suffix === "m") {
+    multiplier = 1024 * 1024;
+  } else if (suffix === "gb" || suffix === "g") {
+    multiplier = 1024 * 1024 * 1024;
+  }
+
+  return validateBodyLimit(Math.floor(rawValue * multiplier));
+}
+
+function validateBodyLimit(limit: number): number {
+  if (!Number.isFinite(limit) || limit < 0) {
+    throw new Error("Invalid body size limit");
+  }
+  return Math.floor(limit);
 }
 
 function replacePluses(value: string): string {

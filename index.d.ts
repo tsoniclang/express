@@ -39,7 +39,7 @@ export interface RequestHandler {
 
 export interface ErrorRequestHandler {
   (
-    error: any,
+    error: unknown,
     req: Request,
     res: Response,
     next: NextFunction
@@ -195,6 +195,12 @@ export class Router {
   use(...handlers: RequestHandler[]): this;
   use(...handlers: ErrorRequestHandler[]): this;
   use(...routers: Router[]): this;
+  use_path(path: PathSpec, ...handlers: RequestHandler[]): this;
+  use_path_error(path: PathSpec, ...handlers: ErrorRequestHandler[]): this;
+  use_path_router(path: PathSpec, ...routers: Router[]): this;
+  use_middleware(...handlers: RequestHandler[]): this;
+  use_error(...handlers: ErrorRequestHandler[]): this;
+  use_router(...routers: Router[]): this;
 }
 
 export class Application extends Router {
@@ -257,36 +263,67 @@ export interface RouterOptions {
   strict?: boolean;
 }
 
+export type VerifyBodyHandler = (
+  req: Request,
+  res: Response,
+  buffer: Uint8Array,
+  encoding?: string
+) => void;
+
 export interface JsonOptions {
+  inflate?: boolean;
+  limit?: string | number;
+  reviver?: JsValue;
+  strict?: boolean;
   type?: string | string[];
+  verify?: VerifyBodyHandler;
 }
 
 export interface RawOptions {
+  inflate?: boolean;
+  limit?: string | number;
   type?: string | string[];
+  verify?: VerifyBodyHandler;
 }
 
 export interface TextOptions {
+  defaultCharset?: string;
+  inflate?: boolean;
+  limit?: string | number;
   type?: string | string[];
+  verify?: VerifyBodyHandler;
 }
 
 export interface UrlEncodedOptions {
+  depth?: number;
   extended?: boolean;
+  inflate?: boolean;
+  limit?: string | number;
+  parameterLimit?: number;
   type?: string | string[];
+  verify?: VerifyBodyHandler;
 }
 
 export interface CorsOptions {
-  origin?: string | string[] | boolean;
+  origins?: string[];
+  credentials?: boolean;
   methods?: string[];
   allowedHeaders?: string[];
   exposedHeaders?: string[];
-  credentials?: boolean;
-  maxAge?: number;
+  maxAgeSeconds?: number;
   preflightContinue?: boolean;
+  optionsSuccessStatus?: number;
+}
+
+export interface MultipartField {
+  name: string;
+  maxCount?: number;
 }
 
 export interface MultipartOptions {
-  fields?: string[];
-  files?: string[];
+  type?: string;
+  maxFileCount?: number;
+  maxFileSizeBytes?: number;
 }
 
 export interface Multipart {
