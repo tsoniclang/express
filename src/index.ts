@@ -22,3 +22,18 @@ export type {
   TransportRequest,
   TransportResponse
 } from "./runtime/types.js";
+export type {
+  CorsOptions,
+  DownloadOptions,
+  FileTransferOptions,
+  JsonOptions,
+  MultipartField,
+  MultipartOptions,
+  RawOptions,
+  RouterOptions,
+  SendFileOptions,
+  StaticOptions,
+  TextOptions,
+  UrlEncodedOptions,
+  VerifyBodyHandler
+} from "./runtime/options.js";

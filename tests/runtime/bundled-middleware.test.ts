@@ -6,6 +6,7 @@ import os from "node:os";
 import path from "node:path";
 
 import { express, Request, Response } from "../../src/index.js";
+import type { ErrorRequestHandler } from "../../src/index.js";
 import { createContext } from "../helpers/memory-context.js";
 
 // NOTE: The CLR version tests bundled middleware (cookieParser, cors, multipart)
@@ -234,6 +235,38 @@ test("json text raw and urlencoded middleware parse request bodies", async () =>
   });
   await app.handle(formContext, app);
   assert.equal(formContext.response.bodyText, "tsonic|lang");
+});
+
+test("body parsing middleware enforces byte limits", async () => {
+  const app = express.create();
+  const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+    const message = error instanceof Error ? error.message : String(error);
+    res.status(413).send(message);
+  };
+
+  app.post("/json", express.json({ limit: 5 }), (_req, res) => {
+    res.send("parsed");
+  });
+  app.post("/text", express.text({ limit: "4b" }), (_req, res) => {
+    res.send("parsed");
+  });
+  app.use(errorHandler);
+
+  const jsonContext = createContext("POST", "/json", {
+    headers: { "content-type": "application/json" },
+    bodyText: '{"too":true}'
+  });
+  await app.handle(jsonContext, app);
+  assert.equal(jsonContext.response.statusCode, 413);
+  assert.match(jsonContext.response.bodyText, /request entity too large/);
+
+  const textContext = createContext("POST", "/text", {
+    headers: { "content-type": "text/plain" },
+    bodyText: "hello"
+  });
+  await app.handle(textContext, app);
+  assert.equal(textContext.response.statusCode, 413);
+  assert.match(textContext.response.bodyText, /request entity too large/);
 });
 
 test("urlencoded middleware preserves percent-decoded text around escaped bytes", async () => {
