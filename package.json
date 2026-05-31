@@ -1,6 +1,6 @@
 {
   "name": "@tsonic/express",
-  "version": "10.0.53",
+  "version": "10.0.54",
   "private": false,
   "description": "Native Tsonic implementation of Express",
   "type": "module",
@@ -34,8 +34,8 @@
     "url": "git+https://github.com/tsoniclang/express.git"
   },
   "peerDependencies": {
-    "@tsonic/core": "10.0.45",
-    "@tsonic/nodejs": "10.0.53"
+    "@tsonic/core": "10.0.46",
+    "@tsonic/nodejs": "10.0.55"
   },
   "devDependencies": {
     "@types/node": "^24.6.0",
