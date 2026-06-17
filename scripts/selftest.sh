@@ -6,9 +6,9 @@ REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 cd "$REPO_DIR"
 bash scripts/check-branch-hygiene.sh || true
-if [ -d "$REPO_DIR/../core/versions/10" ] && [ -d "$REPO_DIR/../nodejs/versions/10" ]; then
+if [ -d "$REPO_DIR/../core" ] && [ -d "$REPO_DIR/../nodejs" ]; then
   npm install --no-save --no-package-lock \
-    "$REPO_DIR/../core/versions/10" \
-    "$REPO_DIR/../nodejs/versions/10" >/dev/null
+    "$REPO_DIR/../core" \
+    "$REPO_DIR/../nodejs" >/dev/null
 fi
 npm test

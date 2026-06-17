@@ -27,7 +27,7 @@
     "test": "npm run build && node --test dist/tests/runtime/*.test.js dist/tests/tsonic/*.test.js",
     "selftest": "bash scripts/selftest.sh",
     "check:branches": "bash scripts/check-branch-hygiene.sh",
-    "publish:10": "bash scripts/selftest.sh && npm publish --access public"
+    "publish:npm": "bash scripts/selftest.sh && npm publish --access public"
   },
   "repository": {
     "type": "git",
