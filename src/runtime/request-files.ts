@@ -1,4 +1,3 @@
-import { overloads as O } from "@tsonic/core/lang.js";
 import type { UploadedFile } from "./request-uploaded-file.js";
 
 /**
@@ -84,6 +83,3 @@ function readEntry(
 
   return undefined;
 }
-
-O<Files>().method(x => x.add_file).family(x => x.add);
-O<Files>().method(x => x.add_field).family(x => x.add);

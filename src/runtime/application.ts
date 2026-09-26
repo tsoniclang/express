@@ -1,5 +1,3 @@
-import { overloads as O } from "@tsonic/core/lang.js";
-import type { JsValue } from "@tsonic/core/types.js";
 import { Emitter } from "../internal/emitter.js";
 import { Router } from "./router.js";
 import { AppServer } from "./host/app-server.js";
@@ -17,10 +15,10 @@ import type { TransportContext } from "./types.js";
 
 export class Application extends Router {
   readonly #events: Emitter = new Emitter();
-  readonly #settings: Record<string, JsValue> = {};
+  readonly #settings: Record<string, unknown> = {};
   readonly #engines: Record<string, TemplateEngine | undefined> = {};
 
-  readonly locals: Record<string, JsValue> = {};
+  readonly locals: Record<string, unknown> = {};
   mountpath: string | string[] = "/";
   readonly router: Application = this;
 
@@ -48,15 +46,21 @@ export class Application extends Router {
   }
 
   async handle(context: TransportContext, app?: Application): Promise<void> {
-    await super.handle(context, app);
+    try {
+      await super.handle(context, app);
+    } finally {
+      for (const cleanup of context.request.cleanup) {
+        await cleanup();
+      }
+    }
   }
 
-  get(name: string): JsValue | undefined;
+  get(name: string): unknown | undefined;
   override get(path: PathSpec, ...handlers: RouteHandler[]): this;
   override get(
     nameOrPath: string | PathSpec,
     ...handlers: RouteHandler[]
-  ): JsValue | undefined | this {
+  ): unknown | undefined | this {
     if (typeof nameOrPath === "string" && handlers.length === 0) {
       return this.get_name(nameOrPath);
     }
@@ -64,7 +68,7 @@ export class Application extends Router {
     return this.get_route(nameOrPath, ...handlers);
   }
 
-  override get_name(name: string): JsValue | undefined {
+  override get_name(name: string): unknown | undefined {
     return readSetting(this.#settings, name);
   }
 
@@ -144,7 +148,7 @@ export class Application extends Router {
     return listenOnPort(this, port, host, backlog, callback);
   }
 
-  on(eventName: string, listener: (...args: JsValue[]) => void): this {
+  on(eventName: string, listener: (...args: unknown[]) => void): this {
     this.#events.on(eventName, listener);
     return this;
   }
@@ -190,7 +194,7 @@ export class Application extends Router {
 
   render(
     view: string,
-    localsOrCallback?: Record<string, JsValue> | TemplateCallback,
+    localsOrCallback?: Record<string, unknown> | TemplateCallback,
     maybeCallback?: TemplateCallback
   ): void {
     let locals = this.locals;
@@ -213,20 +217,18 @@ export class Application extends Router {
     engine(view, locals, callback);
   }
 
-  set(name: string, value: JsValue): this {
+  set(name: string, value: unknown): this {
     this.#settings[name] = value;
     return this;
   }
 
   override use(first: PathSpec, ...rest: RequestHandler[]): this;
-  override use(first: PathSpec, ...rest: ErrorRequestHandler[]): this;
   override use(first: PathSpec, ...rest: Router[]): this;
   override use(...handlers: RequestHandler[]): this;
-  override use(...handlers: ErrorRequestHandler[]): this;
   override use(...routers: Router[]): this;
   override use(
-    first: PathSpec | RequestHandler | ErrorRequestHandler | Router,
-    ...rest: Array<RequestHandler | ErrorRequestHandler | Router>
+    first: PathSpec | RequestHandler | Router,
+    ...rest: Array<RequestHandler | Router>
   ): this {
     if (isPathSpec(first)) {
       this.addMiddlewareLayer(first, rest);
@@ -242,14 +244,6 @@ export class Application extends Router {
     return this;
   }
 
-  override use_path_error(
-    path: PathSpec,
-    ...handlers: ErrorRequestHandler[]
-  ): this {
-    this.addMiddlewareLayer(path, handlers);
-    return this;
-  }
-
   override use_path_router(path: PathSpec, ...routers: Router[]): this {
     this.addMiddlewareLayer(path, routers);
     this.mountApplications(path, routers);
@@ -257,11 +251,6 @@ export class Application extends Router {
   }
 
   override use_middleware(...handlers: RequestHandler[]): this {
-    this.addMiddlewareLayer("/", handlers);
-    return this;
-  }
-
-  override use_error(...handlers: ErrorRequestHandler[]): this {
     this.addMiddlewareLayer("/", handlers);
     return this;
   }
@@ -274,7 +263,7 @@ export class Application extends Router {
 
   private mountApplications(
     mountedAt: PathSpec,
-    candidates: readonly (RequestHandler | ErrorRequestHandler | Router)[]
+    candidates: readonly (RequestHandler | Router)[]
   ): void {
     for (let index = 0; index < candidates.length; index += 1) {
       const candidate = candidates[index]!;
@@ -293,10 +282,10 @@ export class Application extends Router {
   }
 
   private useRootApplicationMiddleware(
-    first: RequestHandler | ErrorRequestHandler | Router,
-    rest: readonly (RequestHandler | ErrorRequestHandler | Router)[]
+    first: RequestHandler | Router,
+    rest: readonly (RequestHandler | Router)[]
   ): this {
-    const handlers: Array<RequestHandler | ErrorRequestHandler | Router> = [
+    const handlers: Array<RequestHandler | Router> = [
       first,
       ...rest,
     ];
@@ -312,7 +301,7 @@ export class Application extends Router {
   }
 }
 
-function isPathSpec(value: JsValue): value is PathSpec {
+function isPathSpec(value: unknown): value is PathSpec {
   if (typeof value === "string" || value instanceof RegExp) {
     return true;
   }
@@ -321,7 +310,7 @@ function isPathSpec(value: JsValue): value is PathSpec {
     return false;
   }
 
-  const items = value as readonly JsValue[];
+  const items = value as readonly unknown[];
   for (let index = 0; index < items.length; index += 1) {
     if (!isPathSpec(items[index])) {
       return false;
@@ -340,9 +329,9 @@ function trimLeadingDot(value: string): string {
 }
 
 function readSetting(
-  settings: Record<string, JsValue>,
+  settings: Record<string, unknown>,
   name: string
-): JsValue | undefined {
+): unknown | undefined {
   for (const currentKey in settings) {
     if (currentKey === name) {
       return settings[currentKey];
@@ -364,18 +353,3 @@ function readEngine(
 
   return undefined;
 }
-
-O<Application>().method(x => x.get_name).family(x => x.get);
-O<Application>().method(x => x.get_route).family(x => x.get);
-O<Application>().method(x => x.listen_path).family(x => x.listen);
-O<Application>().method(x => x.listen_port).family(x => x.listen);
-O<Application>().method(x => x.listen_host).family(x => x.listen);
-O<Application>().method(x => x.listen_backlog).family(x => x.listen);
-O<Application>().method(x => x.param_name).family(x => x.param);
-O<Application>().method(x => x.param_names).family(x => x.param);
-O<Application>().method(x => x.use_path).family(x => x.use);
-O<Application>().method(x => x.use_path_error).family(x => x.use);
-O<Application>().method(x => x.use_path_router).family(x => x.use);
-O<Application>().method(x => x.use_middleware).family(x => x.use);
-O<Application>().method(x => x.use_error).family(x => x.use);
-O<Application>().method(x => x.use_router).family(x => x.use);

@@ -189,12 +189,12 @@ test("request helpers negotiate accepts content and ranges", async () => {
       "accept-language": "fr-CA, en;q=0.8",
       "content-type": "application/json; charset=utf-8",
       host: "example.com:3000",
-      range: "bytes=0-4,5-9,15-"
+      range: "bytes=0-4,5-9,15-",
+      "x-forwarded-proto": "https",
+      "x-forwarded-for": "203.0.113.10, 198.51.100.7",
+      "x-requested-with": "XMLHttpRequest"
     }
   });
-  context.request.headers!["x-forwarded-proto"] = "https";
-  context.request.headers!["x-forwarded-for"] = "203.0.113.10, 198.51.100.7";
-  context.request.headers!["x-requested-with"] = "XMLHttpRequest";
   await app.handle(context, app);
 
   assert.equal(context.response.bodyText, "ok");

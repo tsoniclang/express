@@ -7,38 +7,43 @@ title: Getting Started
 The normal stack is:
 
 ```bash
-tsonic init --surface @tsonic/js
-tsonic add npm @tsonic/nodejs
-tsonic add npm @tsonic/express
-tsonic restore
+npm create tsonic@latest my-app -- --target csharp --surface js
+cd my-app
+npm install --save-dev @tsonic/csharp-nodejs@^0.1.0
+npm install @tsonic/express
+npm run build
 ```
+
+For Rust, select `--target rust` and install `@tsonic/rust-nodejs@^0.1.0`
+instead of the C# Node package.
 
 Then author a normal Express-style app:
 
 ```ts
 import { express } from "@tsonic/express/index.js";
 
-export async function main(): Promise<void> {
-  const app = express.create();
+const app = express.create();
 
-  app.get("/", async (_req, res, _next) => {
-    res.send("hello");
-  });
+app.get("/", (_req, res) => {
+  res.send("hello");
+});
 
-  app.get("/health", async (_req, res, _next) => {
-    res.json({ ok: true });
-  });
+app.get("/health", (_req, res) => {
+  res.json({ ok: true });
+});
 
-  app.listen(3000, "127.0.0.1");
-}
+app.listen(3000, "127.0.0.1");
 ```
 
-## Why `@tsonic/nodejs` is part of the stack
+For a Rust binary, put these statements inside an exported
+`main(): void` function instead of running them at module top level.
 
-`@tsonic/express` sits on top of the JS + Node authored package story:
+## Why the Node capability is part of the stack
 
-- `@tsonic/js` supplies the ambient JS world
-- `@tsonic/nodejs` supplies Node-style modules and server substrate
+`@tsonic/express` uses the JS source surface and Node capability:
+
+- `surfaces: ["js"]` selects the target's JavaScript declarations and runtime
+- `@tsonic/csharp-nodejs` or `@tsonic/rust-nodejs` supplies `node:*` modules
 - `@tsonic/express` supplies routing, middleware, request/response helpers, and
   application semantics
 

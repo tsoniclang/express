@@ -4,21 +4,19 @@
   "private": false,
   "description": "Native Tsonic implementation of Express",
   "type": "module",
-  "types": "./index.d.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./index.d.ts",
+      "types": "./src/index.ts",
       "default": "./src/index.ts"
     },
     "./index.js": {
-      "types": "./index.d.ts",
+      "types": "./src/index.ts",
       "default": "./src/index.ts"
     }
   },
   "files": [
-    "index.d.ts",
     "src/**/*.ts",
-    "tsonic.package.json",
     "README.md",
     "LICENSE"
   ],
@@ -33,11 +31,8 @@
     "type": "git",
     "url": "git+https://github.com/tsoniclang/express.git"
   },
-  "peerDependencies": {
-    "@tsonic/core": "10.0.46",
-    "@tsonic/nodejs": "10.0.55"
-  },
   "devDependencies": {
+    "@tsonic/core": "10.0.46",
     "@types/node": "^24.6.0",
     "typescript": "^5.9.3"
   }

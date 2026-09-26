@@ -3,6 +3,8 @@ import { Router } from "./router.js";
 import { Multipart } from "./middleware/multipart.js";
 import { createCookieParser } from "./middleware/cookie-parser.js";
 import { createCorsMiddleware } from "./middleware/cors.js";
+import { createCompressionMiddleware } from "./middleware/compression.js";
+import { createStaticMiddleware } from "./middleware/static.js";
 import {
   createJsonMiddleware,
   createRawMiddleware,
@@ -15,6 +17,7 @@ import type {
   MultipartOptions,
   RawOptions,
   RouterOptions,
+  StaticOptions,
   TextOptions,
   UrlEncodedOptions
 } from "./options.js";
@@ -39,11 +42,17 @@ export const express = {
   cors(options?: CorsOptions) {
     return createCorsMiddleware(options);
   },
+  compression() {
+    return createCompressionMiddleware();
+  },
   json(options?: JsonOptions) {
     return createJsonMiddleware(options);
   },
   raw(options?: RawOptions) {
     return createRawMiddleware(options);
+  },
+  static(root: string, options?: StaticOptions) {
+    return createStaticMiddleware(root, options);
   },
   multipart(options?: MultipartOptions): Multipart {
     return new Multipart(options);

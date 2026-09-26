@@ -1,4 +1,5 @@
-import type { JsValue } from "@tsonic/core/types.js";
+import type { Buffer } from "node:buffer";
+import type { Readable } from "node:stream";
 import type { Request } from "./request.js";
 import type { Response } from "./response.js";
 import type { Router } from "./router.js";
@@ -6,20 +7,24 @@ import type { Router } from "./router.js";
 export interface TransportRequest {
   method: string;
   path: string;
-  headers?: Record<string, string>;
-  bodyText?: string;
-  bodyBytes?: Uint8Array;
-  query?: Record<string, JsValue>;
+  headers: RequestHeaders;
+  body: Readable;
+  cleanup: Array<() => Promise<void>>;
+  query?: Record<string, unknown>;
 }
+
+export type RequestHeaders = Record<string, string[] | undefined>;
 
 export interface TransportResponse {
   statusCode: number;
-  headersSent: boolean;
+  readonly headersSent: boolean;
   setHeader(name: string, value: string): void;
   getHeader(name: string): string | undefined;
+  removeHeader(name: string): void;
   appendHeader(name: string, value: string): void;
   sendText(text: string): void;
-  sendBytes(bytes: Uint8Array): void;
+  sendBytes(bytes: Buffer): void;
+  pipeFrom(source: Readable): Promise<void>;
 }
 
 export interface TransportContext {
@@ -28,13 +33,13 @@ export interface TransportContext {
 }
 
 export type PathSpec = string | RegExp | readonly PathSpec[];
-export type NextControl = "route" | "router" | string | null | undefined;
+export type NextControl = string | Error | null | undefined;
 export type NextFunction = (value?: NextControl) => void | Promise<void>;
 export type IgnoredHandlerResult =
   | void
-  | JsValue
+  | unknown
   | Response
-  | Promise<void | JsValue | Response>;
+  | Promise<void | unknown | Response>;
 export interface RequestHandler {
   (
     req: Request,
@@ -56,7 +61,7 @@ export type RouteHandler = RequestHandler;
 export type TemplateCallback = (error: Error | null, html?: string) => void;
 export type TemplateEngine = (
   view: string,
-  locals: Record<string, JsValue>,
+  locals: Record<string, unknown>,
   callback: TemplateCallback
 ) => void;
 export type ParamHandler = (

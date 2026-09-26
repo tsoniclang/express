@@ -1,5 +1,3 @@
-import { overloads as O } from "@tsonic/core/lang.js";
-import type { JsValue } from "@tsonic/core/types.js";
 import { Request } from "./request.js";
 import { Response } from "./response.js";
 import { Route } from "./route.js";
@@ -18,11 +16,11 @@ import type {
 
 type HandlerControl = {
   ended: boolean;
-  control?: string | null;
-  error?: JsValue;
+  control?: "route" | "router";
+  error?: { value: unknown };
 };
 
-type MiddlewareLike = RequestHandler | ErrorRequestHandler | Router;
+type MiddlewareLike = RequestHandler | Router;
 type MiddlewareHandler = RequestHandler | ErrorRequestHandler;
 
 class RouteLayer {
@@ -71,12 +69,12 @@ export class Router {
     return this;
   }
 
-  get(name: string): JsValue | undefined;
+  get(name: string): unknown | undefined;
   get(path: PathSpec, ...handlers: RouteHandler[]): this;
   get(
     nameOrPath: string | PathSpec,
     ...handlers: RouteHandler[]
-  ): JsValue | undefined | this {
+  ): unknown | undefined | this {
     if (typeof nameOrPath === "string" && handlers.length === 0) {
       return this.get_name(nameOrPath);
     }
@@ -84,7 +82,7 @@ export class Router {
     return this.get_route(nameOrPath, ...handlers);
   }
 
-  get_name(_name: string): JsValue | undefined {
+  get_name(_name: string): unknown | undefined {
     return undefined;
   }
 
@@ -156,10 +154,8 @@ export class Router {
   }
 
   use(first: PathSpec, ...rest: RequestHandler[]): this;
-  use(first: PathSpec, ...rest: ErrorRequestHandler[]): this;
   use(first: PathSpec, ...rest: Router[]): this;
   use(...handlers: RequestHandler[]): this;
-  use(...handlers: ErrorRequestHandler[]): this;
   use(...routers: Router[]): this;
   use(first: PathSpec | MiddlewareLike, ...rest: MiddlewareLike[]): this {
     if (isPathSpec(first)) {
@@ -175,8 +171,14 @@ export class Router {
     return this;
   }
 
-  use_path_error(path: PathSpec, ...handlers: ErrorRequestHandler[]): this {
-    this.addMiddlewareLayer(path, handlers);
+  useError(path: PathSpec, ...handlers: ErrorRequestHandler[]): this;
+  useError(...handlers: ErrorRequestHandler[]): this;
+  useError(first: PathSpec | ErrorRequestHandler, ...rest: ErrorRequestHandler[]): this {
+    if (isPathSpec(first)) {
+      this.addMiddlewareLayer(first, rest, true);
+    } else {
+      this.addMiddlewareLayer("/", [first, ...rest], true);
+    }
     return this;
   }
 
@@ -186,11 +188,6 @@ export class Router {
   }
 
   use_middleware(...handlers: RequestHandler[]): this {
-    this.addMiddlewareLayer("/", handlers);
-    return this;
-  }
-
-  use_error(...handlers: ErrorRequestHandler[]): this {
     this.addMiddlewareLayer("/", handlers);
     return this;
   }
@@ -212,7 +209,7 @@ export class Router {
     );
   }
 
-  addMiddlewareLayer(path: PathSpec, handlers: readonly MiddlewareLike[]): void {
+  addMiddlewareLayer(path: PathSpec, handlers: readonly (MiddlewareLike | ErrorRequestHandler)[], handlesError = false): void {
     for (const handler of flattenMiddlewareEntries(handlers)) {
       if (handler instanceof Router) {
         for (const exported of handler.export(path)) {
@@ -228,7 +225,7 @@ export class Router {
           null,
           true,
           [middlewareHandler],
-          isErrorRequestHandler(middlewareHandler)
+          handlesError
         )
       );
     }
@@ -242,7 +239,7 @@ export class Router {
     const request = new Request(context.request, app);
     const response = new Response(context.response, request);
     const processedParams: Record<string, true | undefined> = {};
-    let currentError: JsValue | undefined = undefined;
+    let currentError: { value: unknown } | undefined;
 
     for (const layer of this.#layers) {
       const extractedParams = new Params();
@@ -275,11 +272,10 @@ export class Router {
         currentError,
         layer.handlesError
       );
-      if (control.error !== undefined) {
-        currentError = control.error;
-      }
+      currentError = control.error;
 
       if (control.ended || response.headersSent) {
+        await response.completion;
         return;
       }
 
@@ -291,6 +287,8 @@ export class Router {
         continue;
       }
     }
+
+    if (currentError !== undefined) throw currentError.value;
   }
 
   private async runParamHandlers(
@@ -358,8 +356,8 @@ function flattenRouteHandlers(handlers: readonly RouteHandler[]): RouteHandler[]
   return result;
 }
 
-function flattenMiddlewareEntries(handlers: readonly MiddlewareLike[]): MiddlewareLike[] {
-  const result: MiddlewareLike[] = [];
+function flattenMiddlewareEntries(handlers: readonly (MiddlewareLike | ErrorRequestHandler)[]): Array<MiddlewareLike | ErrorRequestHandler> {
+  const result: Array<MiddlewareLike | ErrorRequestHandler> = [];
 
   for (const handler of handlers) {
     if (handler instanceof Router) {
@@ -375,12 +373,6 @@ function flattenMiddlewareEntries(handlers: readonly MiddlewareLike[]): Middlewa
   }
 
   return result;
-}
-
-function isErrorRequestHandler(
-  handler: MiddlewareHandler
-): handler is ErrorRequestHandler {
-  return handler.length >= 4;
 }
 
 function matchesLayer(layer: RouteLayer, requestPath: string, parameters: Params): boolean {
@@ -491,7 +483,7 @@ function normalizePath(path: string): string {
   return normalized;
 }
 
-function isPathSpec(value: JsValue): value is PathSpec {
+function isPathSpec(value: unknown): value is PathSpec {
   if (typeof value === "string" || value instanceof RegExp) {
     return true;
   }
@@ -500,7 +492,7 @@ function isPathSpec(value: JsValue): value is PathSpec {
     return false;
   }
 
-  const items = value as readonly JsValue[];
+  const items = value as readonly unknown[];
   for (let index = 0; index < items.length; index += 1) {
     if (!isPathSpec(items[index])) {
       return false;
@@ -510,7 +502,7 @@ function isPathSpec(value: JsValue): value is PathSpec {
   return true;
 }
 
-function isMiddlewareHandler(handler: JsValue): handler is MiddlewareHandler {
+function isMiddlewareHandler(handler: unknown): handler is MiddlewareHandler {
   return typeof handler === "function";
 }
 
@@ -518,10 +510,10 @@ async function invokeHandlers(
   handlers: readonly MiddlewareHandler[],
   request: Request,
   response: Response,
-  currentError: JsValue | undefined,
+  currentError: { value: unknown } | undefined,
   treatAsError: boolean
 ): Promise<HandlerControl> {
-  let error: JsValue | undefined = currentError;
+  let error = currentError;
 
   for (let index = 0; index < handlers.length; index += 1) {
     const entry = handlers[index]!;
@@ -531,7 +523,7 @@ async function invokeHandlers(
     const next = (value?: NextControl): Promise<void> => {
       nextCalled = true;
       control = value;
-      return Promise.resolve();
+      return Promise.resolve(undefined);
     };
 
     try {
@@ -544,12 +536,17 @@ async function invokeHandlers(
         if (!treatAsError) {
           continue;
         }
-        await (entry as ErrorRequestHandler)(error, request, response, next);
+        await (entry as ErrorRequestHandler)(error.value, request, response, next);
       }
 
       if (nextCalled) {
-        if (typeof control === "string" && control !== "") {
+        if (control === "route" || control === "router") {
           return { ended: false, control, error: undefined };
+        }
+
+        if (control !== undefined && control !== null && control !== "") {
+          error = { value: control };
+          continue;
         }
 
         if (treatAsError) {
@@ -560,20 +557,7 @@ async function invokeHandlers(
 
       return { ended: true };
     } catch (thrownError) {
-      if (
-        thrownError == null ||
-        typeof thrownError === "string" ||
-        typeof thrownError === "number" ||
-        typeof thrownError === "boolean" ||
-        typeof thrownError === "bigint" ||
-        typeof thrownError === "symbol" ||
-        typeof thrownError === "object" ||
-        typeof thrownError === "function"
-      ) {
-        error = thrownError;
-      } else {
-        error = new Error("Route handler threw a non-Error value.");
-      }
+      error = { value: thrownError };
     }
   }
 
@@ -646,14 +630,3 @@ function readProcessedParam(
 
   return undefined;
 }
-
-O<Router>().method(x => x.get_name).family(x => x.get);
-O<Router>().method(x => x.get_route).family(x => x.get);
-O<Router>().method(x => x.param_name).family(x => x.param);
-O<Router>().method(x => x.param_names).family(x => x.param);
-O<Router>().method(x => x.use_path).family(x => x.use);
-O<Router>().method(x => x.use_path_error).family(x => x.use);
-O<Router>().method(x => x.use_path_router).family(x => x.use);
-O<Router>().method(x => x.use_middleware).family(x => x.use);
-O<Router>().method(x => x.use_error).family(x => x.use);
-O<Router>().method(x => x.use_router).family(x => x.use);

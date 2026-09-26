@@ -2,41 +2,46 @@
 
 Express-style routing and middleware for Tsonic applications.
 
-`@tsonic/express` is a first-party Tsonic source package. It is authored in
-TypeScript, consumed through `tsonic.package.json`, and used with the
-`@tsonic/js` surface plus `@tsonic/nodejs`.
+`@tsonic/express` is an ordinary ESM TypeScript source package. It uses the
+JavaScript source surface and standard `node:*` imports. Install the Node
+capability package for the selected target.
 
 ## Target support
 
-`@tsonic/express` supports the default C# target. The package declares this in
-`tsonic.package.json` with `"supportedTargets": ["csharp"]`. Application code
-imports `@tsonic/express` directly; no target suffix is part of the public
-package name or import path.
+Application code imports `@tsonic/express` directly; the source package does
+not contain a target switch. A native build also requires that the selected
+target can lower every feature used by the application.
 
 ## Install
 
 ```bash
-tsonic init --surface @tsonic/js
-tsonic add npm @tsonic/nodejs
-tsonic add npm @tsonic/express
-tsonic restore
+npm create tsonic@latest my-app -- --target csharp --surface js
+cd my-app
+npm install --save-dev @tsonic/csharp-nodejs@^0.1.0
+npm install @tsonic/express
+npm run build
 ```
+
+For a Rust project, select `--target rust` and install
+`@tsonic/rust-nodejs@^0.1.0` instead. The JS surface is selected in
+`tsonic.json`; Node is an installed capability, not another source surface.
 
 ## Quick start
 
 ```ts
 import { express } from "@tsonic/express/index.js";
 
-export async function main(): Promise<void> {
-  const app = express.create();
+const app = express.create();
 
-  app.get("/", async (_req, res, _next) => {
-    res.send("hello");
-  });
+app.get("/", (_req, res) => {
+  res.send("hello");
+});
 
-  app.listen(3000, "127.0.0.1");
-}
+app.listen(3000, "127.0.0.1");
 ```
+
+This is a C# executable entry module. A Rust binary places the same setup in
+an exported `main()` function; see the target's entrypoint rules.
 
 ## Runtime model
 
@@ -71,8 +76,11 @@ import type { Request, Response, NextFunction } from "@tsonic/express/index.js";
 npm run selftest
 ```
 
-The selftest builds the TypeScript package, runs runtime tests, and compiles a
-Tsonic source-package fixture.
+The selftest builds the TypeScript package and runs its runtime and native
+source-package tests. In a separate checkout tree, set
+`TSONIC_TOOLCHAIN_ROOT` to the directory containing the Tsonic host and target
+checkouts. The native test uses their already-built packages without writing
+to those repositories.
 
 ## Documentation
 

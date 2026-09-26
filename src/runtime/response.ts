@@ -1,7 +1,9 @@
-import { overloads as O } from "@tsonic/core/lang.js";
-import type { JsValue } from "@tsonic/core/types.js";
-import { basename, extname, isAbsolute, resolve, sep } from "node:path";
-import { existsSync, readFileSync, statSync, type Stats } from "node:fs";
+import { Buffer } from "node:buffer";
+import { createReadStream } from "node:fs";
+import { realpath, stat } from "node:fs/promises";
+import { basename, extname, isAbsolute, relative, resolve, sep } from "node:path";
+import { Readable, type Transform } from "node:stream";
+import { createBrotliCompress, createDeflate, createGzip } from "node:zlib";
 import type { Application } from "./application.js";
 import type {
   DownloadOptions,
@@ -36,7 +38,7 @@ export type FormatHandlers = Record<string, FormatHandler>;
 
 export type SendFileCallback = (error: Error | null) => void;
 
-export type JsonRecord = Record<string, JsValue>;
+export type JsonRecord = Record<string, unknown>;
 
 class HttpError extends Error {
   statusCode: number;
@@ -51,9 +53,11 @@ export class Response {
   readonly #transport: TransportResponse;
   readonly #headers: Record<string, string> = {};
   #statusCode: number = 200;
+  #completion: Promise<void> = Promise.resolve(undefined);
+  #compression: "br" | "gzip" | "deflate" | undefined;
 
   req?: Request;
-  readonly locals: Record<string, JsValue> = {};
+  readonly locals: Record<string, unknown> = {};
   headersSent: boolean = false;
 
   constructor(transport: TransportResponse, request?: Request) {
@@ -67,6 +71,14 @@ export class Response {
 
   get app(): Application | undefined {
     return this.req?.app;
+  }
+
+  get completion(): Promise<void> {
+    return this.#completion;
+  }
+
+  enableCompression(encoding: "br" | "gzip" | "deflate"): void {
+    this.#compression = encoding;
   }
 
   get statusCode(): number {
@@ -102,8 +114,8 @@ export class Response {
   }
 
   cookie(name: string, value: JsonRecord, options?: CookieOptions): this;
-  cookie(name: string, value: JsValue, options?: CookieOptions): this;
-  cookie(name: string, value: JsValue, options?: CookieOptions): this {
+  cookie(name: string, value: unknown, options?: CookieOptions): this;
+  cookie(name: string, value: unknown, options?: CookieOptions): this {
     return this.cookie_value(name, value, options);
   }
 
@@ -111,11 +123,11 @@ export class Response {
     return this.writeCookie(name, value, options);
   }
 
-  cookie_value(name: string, value: JsValue, options?: CookieOptions): this {
+  cookie_value(name: string, value: unknown, options?: CookieOptions): this {
     return this.writeCookie(name, value, options);
   }
 
-  private writeCookie(name: string, value: JsValue, options?: CookieOptions): this {
+  private writeCookie(name: string, value: unknown, options?: CookieOptions): this {
     let payload = stringifyResponseJsonValue(value);
     if (options !== undefined && options.signed === true) {
       const configuredSecret = this.app?.get("cookie secret");
@@ -210,13 +222,13 @@ export class Response {
     );
   }
 
-  header(field: string, value: JsValue): this {
+  header(field: string, value: unknown): this {
     return this.set(field, value);
   }
 
   json(body: JsonRecord): this;
-  json(body?: JsValue): this;
-  json(body?: JsValue): this {
+  json(body?: unknown): this;
+  json(body?: unknown): this {
     return this.json_value(body);
   }
 
@@ -224,18 +236,18 @@ export class Response {
     return this.writeJson(body);
   }
 
-  json_value(body?: JsValue): this {
+  json_value(body?: unknown): this {
     return this.writeJson(body);
   }
 
-  private writeJson(body?: JsValue): this {
+  private writeJson(body?: unknown): this {
     this.type("application/json");
     return this.send(stringifyOptionalResponseJsonValue(body));
   }
 
   jsonp(body: JsonRecord): this;
-  jsonp(body?: JsValue): this;
-  jsonp(body?: JsValue): this {
+  jsonp(body?: unknown): this;
+  jsonp(body?: unknown): this {
     return this.jsonp_value(body);
   }
 
@@ -243,11 +255,11 @@ export class Response {
     return this.writeJsonp(body);
   }
 
-  jsonp_value(body?: JsValue): this {
+  jsonp_value(body?: unknown): this {
     return this.writeJsonp(body);
   }
 
-  private writeJsonp(body?: JsValue): this {
+  private writeJsonp(body?: unknown): this {
     const configuredCallbackName = this.app?.get("jsonp callback name");
     const callbackName =
       typeof configuredCallbackName === "string"
@@ -258,7 +270,7 @@ export class Response {
     return this.send(`${callbackName}(${payload})`);
   }
 
-  render(view: string, locals?: Record<string, JsValue>, callback?: TemplateCallback): this {
+  render(view: string, locals?: Record<string, unknown>, callback?: TemplateCallback): this {
     const engine = this.app?.resolveEngine(view);
     const viewLocals = locals ?? this.locals;
 
@@ -313,37 +325,32 @@ export class Response {
     options: DownloadOptions,
     callback: SendFileCallback
   ): this;
-  download(...args: any[]): any {
-    if (args.length === 1) {
-      return this.download_path(args[0]);
+  download(
+    path: string,
+    filenameOrOptionsOrCallback?: string | DownloadOptions | SendFileCallback,
+    optionsOrCallback?: DownloadOptions | SendFileCallback,
+    callback?: SendFileCallback
+  ): this {
+    if (typeof filenameOrOptionsOrCallback === "function") {
+      return this.download_path_callback(path, filenameOrOptionsOrCallback);
     }
-
-    if (args.length === 2) {
-      if (typeof args[1] === "function") {
-        return this.download_path_callback(args[0], args[1]);
+    if (typeof filenameOrOptionsOrCallback === "string") {
+      if (typeof optionsOrCallback === "function") {
+        return this.download_path_filename_callback(path, filenameOrOptionsOrCallback, optionsOrCallback);
       }
-      if (typeof args[1] === "string") {
-        return this.download_path_filename(args[0], args[1]);
+      if (optionsOrCallback !== undefined) {
+        return callback === undefined
+          ? this.download_path_filename_options(path, filenameOrOptionsOrCallback, optionsOrCallback)
+          : this.download_path_filename_options_callback(path, filenameOrOptionsOrCallback, optionsOrCallback, callback);
       }
-      return this.download_path_options(args[0], args[1]);
+      return this.download_path_filename(path, filenameOrOptionsOrCallback);
     }
-
-    if (args.length === 3) {
-      if (typeof args[1] === "string") {
-        if (typeof args[2] === "function") {
-          return this.download_path_filename_callback(args[0], args[1], args[2]);
-        }
-        return this.download_path_filename_options(args[0], args[1], args[2]);
-      }
-      return this.download_path_options_callback(args[0], args[1], args[2]);
+    if (filenameOrOptionsOrCallback !== undefined) {
+      return typeof optionsOrCallback === "function"
+        ? this.download_path_options_callback(path, filenameOrOptionsOrCallback, optionsOrCallback)
+        : this.download_path_options(path, filenameOrOptionsOrCallback);
     }
-
-    return this.download_path_filename_options_callback(
-      args[0],
-      args[1],
-      args[2],
-      args[3]
-    );
+    return this.download_path(path);
   }
 
   download_path(path: string): this {
@@ -403,7 +410,7 @@ export class Response {
     return this.sendFile_impl(path, options, callback);
   }
 
-  end(body?: JsValue): this {
+  end(body?: unknown): this {
     return this.send(body);
   }
 
@@ -461,8 +468,9 @@ export class Response {
 
   redirect(path: string): this;
   redirect(status: number, path: string): this;
-  redirect(statusOrPath: any, maybePath?: any): any {
+  redirect(statusOrPath: string | number, maybePath?: string): this {
     if (typeof statusOrPath === "number") {
+      if (maybePath === undefined) throw new Error("Redirect path is required.");
       return this.redirect_status(statusOrPath, maybePath);
     }
 
@@ -480,8 +488,8 @@ export class Response {
   }
 
   send(body: JsonRecord): this;
-  send(body?: JsValue): this;
-  send(body?: JsValue): this {
+  send(body?: unknown): this;
+  send(body?: unknown): this {
     return this.send_value(body);
   }
 
@@ -489,32 +497,76 @@ export class Response {
     return this.writeSend(body);
   }
 
-  send_value(body?: JsValue): this {
+  send_value(body?: unknown): this {
     return this.writeSend(body);
   }
 
-  private writeSend(body?: JsValue): this {
+  private writeSend(body?: unknown): this {
     this.#transport.statusCode = this.#statusCode;
 
     const contentType = this.get("content-type");
     if (body == null) {
       void this.#transport.sendText("");
+    } else if (body instanceof Buffer) {
+      if (!contentType) {
+        this.type("application/octet-stream");
+      }
+      if (this.prepareCompression(body.length)) {
+        this.#completion = this.pipeCompressed(Readable.from([body]));
+      } else {
+        this.#transport.sendBytes(body);
+      }
     } else if (body instanceof Uint8Array) {
       if (!contentType) {
         this.type("application/octet-stream");
       }
-      void this.#transport.sendBytes(body);
-    } else if (typeof body === "string") {
-      void this.#transport.sendText(body);
-    } else {
-      if (!contentType) {
-        this.type("application/json");
+      const bytes = Buffer.from(body);
+      if (this.prepareCompression(bytes.length)) {
+        this.#completion = this.pipeCompressed(Readable.from([bytes]));
+      } else {
+        this.#transport.sendBytes(bytes);
       }
-      void this.#transport.sendText(stringifyJsonValue(body));
+    } else {
+      const text = typeof body === "string" ? body : stringifyJsonValue(body);
+      if (!contentType) this.type(typeof body === "string" ? "text/html; charset=utf-8" : "application/json");
+      if (this.prepareCompression(Buffer.byteLength(text))) {
+        this.#completion = this.pipeCompressed(Readable.from([Buffer.from(text)]));
+      } else {
+        this.#transport.sendText(text);
+      }
     }
 
     this.headersSent = true;
     return this;
+  }
+
+  private prepareCompression(size: number): boolean {
+    if (this.#compression === undefined || size < 1024 || this.#statusCode !== 200 ||
+        this.req?.method === "HEAD" || this.get("content-encoding") !== undefined ||
+        this.get("content-range") !== undefined ||
+        this.get("cache-control")?.includes("no-transform") === true ||
+        !isCompressibleType(this.get("content-type"))) return false;
+    this.set("Content-Encoding", this.#compression);
+    delete this.#headers["content-length"];
+    this.#transport.removeHeader("Content-Length");
+    return true;
+  }
+
+  private async pipeCompressed(source: Readable): Promise<void> {
+    const codec: Transform = this.#compression === "br"
+      ? createBrotliCompress()
+      : this.#compression === "deflate"
+        ? createDeflate()
+        : createGzip();
+    const onSourceError = (error: Error): void => { codec.destroy(error); };
+    source.once("error", onSourceError);
+    try {
+      await this.#transport.pipeFrom(source.pipe(codec));
+    } finally {
+      source.off("error", onSourceError);
+      source.destroy();
+      codec.destroy();
+    }
   }
 
   sendStatus(code: number): this {
@@ -525,19 +577,16 @@ export class Response {
   sendFile(path: string, callback: SendFileCallback): this;
   sendFile(path: string, options: SendFileOptions): this;
   sendFile(path: string, options: SendFileOptions, callback: SendFileCallback): this;
-  sendFile(...args: any[]): any {
-    if (args.length === 1) {
-      return this.sendFile_path(args[0]);
+  sendFile(path: string, optionsOrCallback?: SendFileOptions | SendFileCallback, callback?: SendFileCallback): this {
+    if (typeof optionsOrCallback === "function") {
+      return this.sendFile_path_callback(path, optionsOrCallback);
     }
-
-    if (args.length === 2) {
-      if (typeof args[1] === "function") {
-        return this.sendFile_path_callback(args[0], args[1]);
-      }
-      return this.sendFile_path_options(args[0], args[1]);
+    if (optionsOrCallback !== undefined) {
+      return callback === undefined
+        ? this.sendFile_path_options(path, optionsOrCallback)
+        : this.sendFile_path_options_callback(path, optionsOrCallback, callback);
     }
-
-    return this.sendFile_path_options_callback(args[0], args[1], args[2]);
+    return this.sendFile_path(path);
   }
 
   sendFile_path(path: string): this {
@@ -568,64 +617,114 @@ export class Response {
     options?: FileTransferOptions,
     callback?: SendFileCallback
   ): this {
-    try {
-      const filePath = resolveSendFilePath(path, options?.root);
-      const fileName = basename(filePath);
-      if (fileName.startsWith(".") && options?.dotfiles !== "allow") {
-        throw createHttpError(
-          options?.dotfiles === "deny" ? 403 : 404,
-          options?.dotfiles === "deny" ? "Forbidden" : "Not Found"
-        );
-      }
-
-      if (!existsSync(filePath)) {
-        throw createHttpError(404, "Not Found");
-      }
-
-      const stats: Stats = statSync(filePath);
-
-      if (options?.headers) {
-        for (const key in options.headers) {
-          this.set(key, options.headers[key]!);
+    this.headersSent = true;
+    this.#completion = this.streamFile(path, options).then(
+      () => callback?.(null),
+      (error) => {
+        const failure = error instanceof Error ? error : new Error("sendFile failed");
+        if (!this.#transport.headersSent) this.headersSent = false;
+        if (callback) {
+          callback(failure);
+          return;
         }
+        if (!this.#transport.headersSent) {
+          this.status(readHttpStatusCode(failure)).send(failure.message);
+          return;
+        }
+        throw failure;
       }
-
-      if (options?.lastModified !== false) {
-        this.set("Last-Modified", stats.mtime.toUTCString());
-      }
-
-      if (options?.acceptRanges !== false) {
-        this.set("Accept-Ranges", "bytes");
-      }
-
-      applyCacheHeaders(this, options);
-
-      if (options?.headers?.["content-type"] === undefined && !this.get("content-type")) {
-        this.type(lookupMimeType(fileName));
-      }
-
-      const bytes = new Uint8Array(readFileSync(filePath));
-      this.send(bytes);
-      if (callback) {
-        callback(null);
-      }
-    } catch (error) {
-      const resolved = error instanceof Error ? error : new Error("sendFile failed");
-      if (callback) {
-        callback(resolved);
-        return this;
-      }
-
-      const statusCode = readHttpStatusCode(resolved);
-      return this.status(statusCode).send(resolved.message);
-    }
-
+    );
     return this;
   }
 
-  set(field: string, value: JsValue): this;
-  set(fields: Record<string, JsValue>): this;
-  set(fieldOrFields: string | Record<string, JsValue>, value?: JsValue): this {
+  private async streamFile(path: string, options?: FileTransferOptions): Promise<void> {
+    const filePath = resolveSendFilePath(path, options?.root);
+    const fileName = basename(filePath);
+    const rootRelativePath = options?.root === undefined
+      ? filePath
+      : relative(resolve(options.root), filePath);
+    if (rootRelativePath.split(sep).some((segment) => segment.startsWith(".") && segment.length > 1) &&
+        options?.dotfiles !== "allow") {
+      throw createHttpError(
+        options?.dotfiles === "deny" ? 403 : 404,
+        options?.dotfiles === "deny" ? "Forbidden" : "Not Found"
+      );
+    }
+
+    const canonicalPath = await realpath(filePath);
+    if (options?.root !== undefined) {
+      const canonicalRoot = await realpath(options.root);
+      const inside = relative(canonicalRoot, canonicalPath);
+      if (inside === ".." || inside.startsWith(`..${sep}`) || isAbsolute(inside)) {
+        throw createHttpError(403, "Forbidden");
+      }
+    }
+    const stats = await stat(canonicalPath);
+    if (!stats.isFile()) throw createHttpError(404, "Not Found");
+
+    options?.setHeaders?.(this, canonicalPath, { size: stats.size, modifiedAt: new Date(stats.mtimeMs) });
+
+    const etag = options?.etag === false
+      ? undefined
+      : `W/"${String(stats.size)}-${String(stats.mtimeMs)}"`;
+    if (etag !== undefined) this.set("ETag", etag);
+
+    if (options?.headers) {
+      for (const key in options.headers) this.set(key, options.headers[key]!);
+    }
+    if (options?.lastModified !== false) {
+      this.set("Last-Modified", new Date(stats.mtimeMs).toUTCString());
+    }
+    if (options?.acceptRanges !== false) {
+      this.set("Accept-Ranges", "bytes");
+    }
+    applyCacheHeaders(this, options);
+    if (options?.headers?.["content-type"] === undefined && !this.get("content-type")) {
+      this.type(lookupMimeType(fileName));
+    }
+
+    const requestEtag = this.req?.get("if-none-match");
+    const requestModifiedSince = this.req?.get("if-modified-since");
+    const unchanged = requestEtag !== undefined
+      ? etag !== undefined && requestEtag.split(",").some((value) => value.trim() === etag || value.trim() === "*")
+      : requestModifiedSince !== undefined && options?.lastModified !== false &&
+        Number.isFinite(Date.parse(requestModifiedSince)) &&
+        Math.floor(stats.mtimeMs / 1000) <= Math.floor(Date.parse(requestModifiedSince) / 1000);
+    if (unchanged && (this.req?.method === "GET" || this.req?.method === "HEAD")) {
+      this.statusCode = 304;
+      this.#transport.sendText("");
+      return;
+    }
+
+    let start = 0;
+    let end = stats.size - 1;
+    if (options?.acceptRanges !== false && this.req?.get("range") !== undefined) {
+      const selected = this.req.range(stats.size);
+      if (selected === -1) {
+        this.set("Content-Range", `bytes */${String(stats.size)}`);
+        throw createHttpError(416, "Range Not Satisfiable");
+      }
+      if (typeof selected !== "number" && selected.ranges.length === 1) {
+        start = selected.ranges[0]!.start;
+        end = selected.ranges[0]!.end;
+        this.statusCode = 206;
+        this.set("Content-Range", `bytes ${String(start)}-${String(end)}/${String(stats.size)}`);
+      }
+    }
+    const compress = this.prepareCompression(stats.size === 0 ? 0 : end - start + 1);
+    if (!compress) this.set("Content-Length", String(stats.size === 0 ? 0 : end - start + 1));
+    if (this.req?.method === "HEAD" || stats.size === 0) {
+      this.#transport.sendText("");
+      return;
+    }
+    const source = createReadStream(canonicalPath, { start, end });
+    if (compress) await this.pipeCompressed(source);
+    else await this.#transport.pipeFrom(source);
+  }
+
+  set(field: string, value: unknown): this;
+  set(fields: Record<string, unknown>): this;
+  set(fieldOrFields: string | Record<string, unknown>, value?: unknown): this {
     if (typeof fieldOrFields === "string") {
       return this.set_one(fieldOrFields, value);
     }
@@ -633,14 +732,14 @@ export class Response {
     return this.set_many(fieldOrFields);
   }
 
-  set_one(field: string, value: JsValue = ""): this {
+  set_one(field: string, value: unknown = ""): this {
     const rendered = value == null ? "" : String(value);
     this.#headers[field.toLowerCase()] = rendered;
     this.#transport.setHeader(field, rendered);
     return this;
   }
 
-  set_many(fields: Record<string, JsValue>): this {
+  set_many(fields: Record<string, unknown>): this {
     const keys = Object.keys(fields);
     for (let index = 0; index < keys.length; index += 1) {
       const key = keys[index]!;
@@ -688,7 +787,7 @@ export class Response {
   }
 }
 
-function stringifyResponseJsonValue(value: JsValue): string {
+function stringifyResponseJsonValue(value: unknown): string {
   if (typeof value === "string") {
     return value;
   }
@@ -696,17 +795,17 @@ function stringifyResponseJsonValue(value: JsValue): string {
   return stringifyJsonValue(value);
 }
 
-function stringifyOptionalResponseJsonValue(value: JsValue | undefined): string {
+function stringifyOptionalResponseJsonValue(value: unknown | undefined): string {
   return value === undefined ? "null" : stringifyResponseJsonValue(value);
 }
 
-function stringifyJsonValue(value: JsValue): string {
+function stringifyJsonValue(value: unknown): string {
   const serialized = stringifyJsonMemberValue(value, []);
   return serialized === undefined ? "null" : serialized;
 }
 
 function stringifyJsonMemberValue(
-  value: JsValue | undefined,
+  value: unknown | undefined,
   seen: object[]
 ): string | undefined {
   if (value === undefined) {
@@ -716,7 +815,7 @@ function stringifyJsonMemberValue(
   return stringifyJsonDefinedValue(value, seen);
 }
 
-function stringifyJsonDefinedValue(value: JsValue, seen: object[]): string | undefined {
+function stringifyJsonDefinedValue(value: unknown, seen: object[]): string | undefined {
   if (value === null) {
     return "null";
   }
@@ -743,7 +842,7 @@ function stringifyJsonDefinedValue(value: JsValue, seen: object[]): string | und
 
   const nextSeen = [...seen, value];
   if (Array.isArray(value)) {
-    const array = value as JsValue[];
+    const array = value as unknown[];
     const items: string[] = [];
     for (let index = 0; index < array.length; index += 1) {
       items.push(stringifyJsonMemberValue(array[index], nextSeen) ?? "null");
@@ -751,7 +850,7 @@ function stringifyJsonDefinedValue(value: JsValue, seen: object[]): string | und
     return `[${items.join(",")}]`;
   }
 
-  const record = value as Record<string, JsValue | undefined>;
+  const record = value as Record<string, unknown | undefined>;
   const keys = Object.keys(record);
   const properties: string[] = [];
   for (let index = 0; index < keys.length; index += 1) {
@@ -848,32 +947,6 @@ function hexDigit(value: number): string {
   }
 }
 
-O<Response>().method(x => x.append_one).family(x => x.append);
-O<Response>().method(x => x.append_many).family(x => x.append);
-O<Response>().method(x => x.cookie_record).family(x => x.cookie);
-O<Response>().method(x => x.cookie_value).family(x => x.cookie);
-O<Response>().method(x => x.download_path).family(x => x.download);
-O<Response>().method(x => x.download_path_callback).family(x => x.download);
-O<Response>().method(x => x.download_path_filename).family(x => x.download);
-O<Response>().method(x => x.download_path_filename_callback).family(x => x.download);
-O<Response>().method(x => x.download_path_options).family(x => x.download);
-O<Response>().method(x => x.download_path_options_callback).family(x => x.download);
-O<Response>().method(x => x.download_path_filename_options).family(x => x.download);
-O<Response>().method(x => x.download_path_filename_options_callback).family(x => x.download);
-O<Response>().method(x => x.json_record).family(x => x.json);
-O<Response>().method(x => x.json_value).family(x => x.json);
-O<Response>().method(x => x.jsonp_record).family(x => x.jsonp);
-O<Response>().method(x => x.jsonp_value).family(x => x.jsonp);
-O<Response>().method(x => x.redirect_path).family(x => x.redirect);
-O<Response>().method(x => x.set_one).family(x => x.set);
-O<Response>().method(x => x.set_many).family(x => x.set);
-O<Response>().method(x => x.redirect_status).family(x => x.redirect);
-O<Response>().method(x => x.send_record).family(x => x.send);
-O<Response>().method(x => x.send_value).family(x => x.send);
-O<Response>().method(x => x.sendFile_path).family(x => x.sendFile);
-O<Response>().method(x => x.sendFile_path_callback).family(x => x.sendFile);
-O<Response>().method(x => x.sendFile_path_options).family(x => x.sendFile);
-O<Response>().method(x => x.sendFile_path_options_callback).family(x => x.sendFile);
 
 function readHeader(
   headers: Record<string, string>,
@@ -1015,6 +1088,17 @@ function lookupMimeType(path: string): string {
     default:
       return "application/octet-stream";
   }
+}
+
+function isCompressibleType(type: string | undefined): boolean {
+  if (type === undefined) return false;
+  const mediaType = type.split(";", 1)[0]!.trim().toLowerCase();
+  return mediaType.startsWith("text/") ||
+    mediaType === "application/json" ||
+    mediaType === "application/javascript" ||
+    mediaType === "application/xml" ||
+    mediaType === "application/xhtml+xml" ||
+    mediaType === "image/svg+xml";
 }
 
 function normalizeFormatType(value: string): string {

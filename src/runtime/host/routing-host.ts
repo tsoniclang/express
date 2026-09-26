@@ -41,11 +41,11 @@ export interface RoutingHost {
 
   // Middleware ------------------------------------------------------------
   use(first: PathSpec, ...handlers: RequestHandler[]): this;
-  use(first: PathSpec, ...handlers: ErrorRequestHandler[]): this;
   use(first: PathSpec, ...routers: Router[]): this;
   use(...handlers: RequestHandler[]): this;
-  use(...handlers: ErrorRequestHandler[]): this;
   use(...routers: Router[]): this;
+  useError(path: PathSpec, ...handlers: ErrorRequestHandler[]): this;
+  useError(...handlers: ErrorRequestHandler[]): this;
   // Param handlers -------------------------------------------------------
   param(name: string, callback: ParamHandler): this;
   param(name: string[], callback: ParamHandler): this;

@@ -16,6 +16,7 @@ export type {
   NextFunction,
   ParamHandler,
   RequestHandler,
+  RequestHeaders,
   TemplateCallback,
   TemplateEngine,
   TransportContext,

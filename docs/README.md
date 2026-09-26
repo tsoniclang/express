@@ -9,40 +9,41 @@ title: Express Package
 ## Package model
 
 - `@tsonic/express` is the package application code depends on.
-- The package is a first-party `tsonic-source-package`.
-- Applications use it with the `@tsonic/js` surface and `@tsonic/nodejs`.
-- The package supports the default C# target through `supportedTargets`
-  metadata; imports remain `@tsonic/express`.
+- The package is ordinary ESM TypeScript source, exported through `package.json`.
+- Applications select `surfaces: ["js"]` and install the Node capability for
+  their target. Imports remain `@tsonic/express`.
 - The package owns routing, middleware, request helpers, response helpers, and
   HTTP hosting integration.
 
 ## Quick start
 
 ```bash
-tsonic init --surface @tsonic/js
-tsonic add npm @tsonic/nodejs
-tsonic add npm @tsonic/express
-tsonic run
+npm create tsonic@latest my-app -- --target csharp --surface js
+cd my-app
+npm install --save-dev @tsonic/csharp-nodejs@^0.1.0
+npm install @tsonic/express
+npm start
 ```
 
 ```ts
 import { express } from "@tsonic/express/index.js";
 
-export async function main(): Promise<void> {
-  const app = express.create();
-  app.get("/health", async (_req, res, _next) => {
-    res.json({ ok: true });
-  });
-  app.listen(3000, "127.0.0.1");
-}
+const app = express.create();
+app.get("/health", (_req, res) => {
+  res.json({ ok: true });
+});
+app.listen(3000, "127.0.0.1");
 ```
+
+This entrypoint is for a C# executable. A Rust binary uses an exported
+`main(): void` function around the same setup.
 
 ## Typical stack
 
 For Node/HTTP-style applications, the normal authored stack is:
 
-- `@tsonic/js`
-- `@tsonic/nodejs`
+- `surfaces: ["js"]` in `tsonic.json`
+- the target's `@tsonic/*-nodejs` package
 - `@tsonic/express`
 
 ## Pages

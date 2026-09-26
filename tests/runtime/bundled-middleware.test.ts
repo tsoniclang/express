@@ -1,4 +1,3 @@
-import type { JsValue } from "@tsonic/core/types.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -203,7 +202,7 @@ test("json text raw and urlencoded middleware parse request bodies", async () =>
     res.send(String(body.length));
   });
   app.post("/form", express.urlencoded(), (req, res) => {
-    const body = req.body as Record<string, JsValue>;
+    const body = req.body as Record<string, unknown>;
     const value = body["name"];
     res.send(Array.isArray(value) ? value.join("|") : String(value));
   });
@@ -250,7 +249,7 @@ test("body parsing middleware enforces byte limits", async () => {
   app.post("/text", express.text({ limit: "4b" }), (_req, res) => {
     res.send("parsed");
   });
-  app.use(errorHandler);
+  app.useError(errorHandler);
 
   const jsonContext = createContext("POST", "/json", {
     headers: { "content-type": "application/json" },
@@ -272,7 +271,7 @@ test("body parsing middleware enforces byte limits", async () => {
 test("urlencoded middleware preserves percent-decoded text around escaped bytes", async () => {
   const app = express.create();
   app.post("/form", express.urlencoded(), (req, res) => {
-    const body = req.body as Record<string, JsValue>;
+    const body = req.body as Record<string, unknown>;
     res.json({
       username: body["username"],
       tags: body["tags"],
@@ -298,7 +297,7 @@ test("multipart parses fields and files for single upload", async () => {
   const upload = express.multipart();
   app.use(upload.single("avatar"));
   app.post("/upload", (req, res) => {
-    const body = req.body as Record<string, JsValue> | undefined;
+    const body = req.body as Record<string, unknown> | undefined;
     res.json({
       title: body?.["title"],
       file: req.file?.originalname,

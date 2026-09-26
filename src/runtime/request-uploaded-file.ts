@@ -1,5 +1,6 @@
 import { Buffer } from "node:buffer";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { createReadStream } from "node:fs";
+import { copyFile, mkdir, readFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import type { Readable } from "node:stream";
 
@@ -21,7 +22,8 @@ export interface TransportFile {
   /** Return a readable stream for the file contents. */
   stream(): Readable;
   /** Return the full file contents as bytes. */
-  buffer(): Promise<Uint8Array>;
+  buffer(): Promise<Buffer>;
+  save(path: string): Promise<void>;
 }
 
 export class UploadedFile {
@@ -42,28 +44,51 @@ export class UploadedFile {
   }
 
   /** Return the file contents as a `Uint8Array`. */
-  async bytes(): Promise<Uint8Array> {
+  async bytes(): Promise<Buffer> {
     return await this.#transport.buffer();
   }
 
   /** Return the file contents decoded as UTF-8 text. */
   async text(): Promise<string> {
     const bytes = await this.#transport.buffer();
-    return Buffer.from(bytes).toString("utf-8");
+    return bytes.toString("utf-8");
   }
 
   async save(path: string): Promise<void> {
-    const parent = dirname(path);
-    if (parent !== "." && !existsSync(parent)) {
-      mkdirSync(parent, { recursive: true });
-    }
-
-    const bytes = await this.#transport.buffer();
-    writeFileSync(path, Buffer.from(bytes).toString("latin1"), "latin1");
+    await this.#transport.save(path);
   }
 
   /** @internal – expose the underlying readable for piping. */
   stream(): Readable {
     return this.#transport.stream();
+  }
+}
+
+export class DiskTransportFile implements TransportFile {
+  readonly fieldname: string;
+  readonly originalname: string;
+  readonly mimetype: string;
+  readonly size: number;
+  readonly #path: string;
+
+  constructor(path: string, fieldname: string, originalname: string, mimetype: string, size: number) {
+    this.#path = path;
+    this.fieldname = fieldname;
+    this.originalname = originalname;
+    this.mimetype = mimetype;
+    this.size = size;
+  }
+
+  stream(): Readable {
+    return createReadStream(this.#path);
+  }
+
+  async buffer(): Promise<Buffer> {
+    return await readFile(this.#path);
+  }
+
+  async save(path: string): Promise<void> {
+    await mkdir(dirname(path), { recursive: true });
+    await copyFile(this.#path, path);
   }
 }

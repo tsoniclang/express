@@ -8,8 +8,8 @@ Use it as a normal first-party source package in JS-surface projects.
 
 Typical stack:
 
-- `@tsonic/js`
-- `@tsonic/nodejs`
+- `surfaces: ["js"]` in the consuming project's `tsonic.json`
+- `@tsonic/csharp-nodejs` or `@tsonic/rust-nodejs`, matching the target
 - `@tsonic/express`
 
 ## What the package exports
@@ -73,4 +73,4 @@ Users should think in terms of:
 
 - one package dependency
 - one authored TypeScript source package
-- one runtime model expressed through package code and package metadata
+- one runtime model expressed through ordinary ESM package source

@@ -142,7 +142,7 @@ test("error handling catches thrown errors and invokes error handler", async () 
   const errorHandler: ErrorRequestHandler = (_error, _req, res, _next) => {
     res.status(500).send("handled");
   };
-  app.use(errorHandler);
+  app.useError(errorHandler);
 
   await assertRoute(app, "GET", "/boom", "handled", 500);
 });

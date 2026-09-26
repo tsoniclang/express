@@ -1,194 +1,134 @@
+import assert from "node:assert/strict";
+import { spawn } from "node:child_process";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 import test from "node:test";
-import { join } from "node:path";
 
-import { copyNativeSources, repoRoot, run, runTsonic, withTempFixture, writeFixtureApp } from "../helpers/tsonic-fixture.js";
+import { packLocalPackage, repoRoot, run, runTsonic, withTempFixture, writeFixtureApp } from "../helpers/tsonic-fixture.js";
 
-test("native express sources compile and run through tsonic", () => {
-  withTempFixture((dir) => {
-    runTsonic(dir, ["init", "--surface", "@tsonic/js"]);
-    run(dir, "npm", ["install", `file:${join(repoRoot, "..", "js", "versions", "10")}`]);
-    run(
-      dir,
-      "npm",
-      ["install", `file:${join(repoRoot, "..", "nodejs", "versions", "10")}`]
-    );
-    const projectName = dir.split("/").filter(Boolean).at(-1);
-    if (!projectName) {
-      throw new Error("missing project name");
+test("one installed Express source package compiles and serves through C# and Rust", async (suite) => {
+  await withTempFixture(async (directory) => {
+    const nodePackages = resolve(repoRoot, "..");
+    const toolchainRoot = process.env.TSONIC_TOOLCHAIN_ROOT ?? nodePackages;
+    const toolchainPackages = {
+      "@tsonic/cli": join(toolchainRoot, "tsonic", "packages", "cli"),
+      "@tsonic/host": join(toolchainRoot, "tsonic", "packages", "host"),
+      "@tsonic/target-api": join(toolchainRoot, "tsonic", "packages", "target-api"),
+      "@tsonic/tsts": join(toolchainRoot, "tsonic", "packages", "tsts"),
+      "@tsonic/source-core": join(toolchainRoot, "tsonic", "packages", "source-core"),
+      "@tsonic/js-source-profile": join(toolchainRoot, "tsonic", "packages", "js-source-profile"),
+      "@tsonic/target-csharp": join(toolchainRoot, "tsonic-csharp"),
+      "@tsonic/target-rust": join(toolchainRoot, "tsonic-rust"),
+      "@tsonic/csharp-runtime": join(toolchainRoot, "csharp-runtime"),
+      "@tsonic/csharp-js": join(toolchainRoot, "csharp-js"),
+      "@tsonic/rust-runtime": join(toolchainRoot, "rust-runtime"),
+      "@tsonic/rust-js": join(toolchainRoot, "rust-js"),
+      "@tsonic/csharp-nodejs": join(nodePackages, "csharp-nodejs"),
+      "@tsonic/rust-nodejs": join(nodePackages, "rust-nodejs")
+    };
+    for (const [packageName, path] of Object.entries(toolchainPackages)) {
+      assert.ok(existsSync(join(path, "package.json")), `${packageName} is unavailable at ${path}`);
     }
-    const projectSrcDir = join(dir, "packages", projectName, "src");
-    copyNativeSources(projectSrcDir);
-
+    const packageFile = packLocalPackage(directory);
+    const packageJson = {
+      name: "express-source-package-proof",
+      version: "0.0.0",
+      private: true,
+      type: "module",
+      dependencies: {
+        "@tsonic/express": `file:${packageFile}`
+      },
+      devDependencies: Object.fromEntries(Object.entries(toolchainPackages).map(
+        ([packageName, path]) => [packageName, `file:${path}`]
+      ))
+    };
+    writeFileSync(join(directory, "package.json"), JSON.stringify(packageJson, null, 2));
+    run(directory, "npm", ["install", "--ignore-scripts", "--install-links=true", "--no-audit", "--no-fund"], {
+      npm_config_cache: join(repoRoot, ".temp", "npm-cache")
+    });
     writeFixtureApp(
-      dir,
-      `import { express } from "./express/index.js";
-import type { TransportContext, TransportResponse } from "./express/runtime/types.js";
-import { HttpClient } from "@tsonic/dotnet/System.Net.Http.js";
-
-class MemoryResponse implements TransportResponse {
-  statusCode: number = 200;
-  headersSent: boolean = false;
-  headers: Record<string, string> = {};
-  bodyText: string = "";
-
-  appendHeader(name: string, value: string): void {
-    const key = name.toLowerCase();
-    const current = this.headers[key];
-    this.headers[key] = current ? current + ", " + value : value;
-  }
-
-  getHeader(name: string): string | undefined {
-    return this.headers[name.toLowerCase()];
-  }
-
-  setHeader(name: string, value: string): void {
-    this.headers[name.toLowerCase()] = value;
-  }
-
-  sendBytes(_bytes: Uint8Array): void {
-    this.headersSent = true;
-  }
-
-  sendText(text: string): void {
-    this.bodyText = text;
-    this.headersSent = true;
-  }
-}
-
-export async function main(): Promise<void> {
-  const app = express.create();
-  let mounted = false;
-
-  app.set("jsonp callback name", "cb");
-  app.engine("tpl", (_view, locals, callback) => callback(null, "hello " + locals["name"]));
-  app.param("id", async (_req, _res, next, _value, _name) => {
-    await next();
-  });
-  app.get("/probe/:id", async (req, res, _next) => {
-    res.send("probe:" + String(req.param("id")));
-  });
-
-  const child = express.create();
-  child.get("/child", async (_req, res, _next) => {
-    res.send("child");
-  });
-  app.use("/api", child);
-  app.get("/items/:id",
-    async (_req, _res, next) => {
-      await next("route");
-    },
-    async (_req, res, _next) => {
-      res.send("wrong");
-    });
-  app.get("/items/:id", async (req, res, _next) => {
-    res.cookie("sid", "abc", { path: "/" });
-    res.render("home.tpl", { name: req.param("id") });
-  });
-
-  const response = new MemoryResponse();
-  const probeResponse = new MemoryResponse();
-  await express.dispatch(app, {
-    request: {
-      method: "GET",
-      path: "/probe/world",
-      headers: {}
-    },
-    response: probeResponse
-  });
-  if (probeResponse.bodyText !== "probe:world") {
-    throw new Error("param route failed: body=" + probeResponse.bodyText);
-  }
-
-  const context: TransportContext = {
-    request: {
-      method: "GET",
-      path: "/items/world",
-      headers: {}
-    },
-    response
-  };
-
-  await express.dispatch(app, context);
-  if (response.bodyText !== "hello world") {
-    throw new Error("render failed: body=" + response.bodyText + "; cookie=" + String(response.getHeader("set-cookie")));
-  }
-  if (response.getHeader("set-cookie")?.includes("sid=abc") !== true) throw new Error("cookie failed");
-
-  const mountedResponse = new MemoryResponse();
-  await express.dispatch(app, {
-    request: {
-      method: "GET",
-      path: "/api/child",
-      headers: {}
-    },
-    response: mountedResponse
-  });
-  if (mountedResponse.bodyText !== "child") throw new Error("mounted child failed");
-
-  const jsonpResponse = new MemoryResponse();
-  app.get("/jsonp", async (_req, res, _next) => {
-    res.jsonp({ ok: true });
-  });
-  await express.dispatch(app, {
-    request: {
-      method: "GET",
-      path: "/jsonp",
-      headers: {}
-    },
-    response: jsonpResponse
-  });
-  if (!jsonpResponse.bodyText.startsWith("cb(")) throw new Error("jsonp failed");
-
-  const errorResponse = new MemoryResponse();
-  app.get("/boom", () => {
-    throw new Error("boom");
-  });
-  app.use(async (_error, _req, res, _next) => {
-    res.status(500).send("handled");
-  });
-  await express.dispatch(app, {
-    request: {
-      method: "GET",
-      path: "/boom",
-      headers: {}
-    },
-    response: errorResponse
-  });
-  if (errorResponse.statusCode !== 500) throw new Error("error handler failed");
-  if (errorResponse.bodyText !== "handled") throw new Error("error response failed");
-
-  const liveApp = express.create();
-  liveApp.use(express.json());
-  liveApp.use(express.urlencoded());
-  liveApp.get("/health", async (_req, res, _next) => {
-    res.json({ ok: true });
-  });
-
-  const server = liveApp.listen(0, "127.0.0.1");
-  const port = server.port;
-  if (typeof port !== "number") throw new Error("server port missing");
-
-  const client = new HttpClient();
-  try {
-    const liveBody = await client.GetStringAsync(\`http://127.0.0.1:\${String(port)}/health\`);
-    if (liveBody !== "{\\"ok\\":true}") throw new Error("live listen failed");
-  } finally {
-    client.Dispose();
-    await new Promise<void>((resolve, reject) => {
-      server.close((error) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-        resolve();
-      });
-    });
-  }
-}
-`
+      directory,
+      readFileSync(join(repoRoot, "tests", "tsonic", "fixture-app.ts"), "utf-8")
     );
 
-    runTsonic(dir, ["build"]);
-    run(join(dir, "packages", projectName, "out"), `./${projectName}`, []);
+    const targets = [
+      {
+        id: "rust",
+        options: { crateName: "express_source_proof", edition: "2024", outputType: "bin" },
+        command: "cargo",
+        args: ["run", "--manifest-path", "out/rust/Cargo.toml", "--quiet"]
+      },
+      {
+        id: "csharp",
+        options: { namespace: "ExpressSourceProof", assemblyName: "ExpressSourceProof", outputType: "Exe" },
+        command: "dotnet",
+        args: ["run", "--project", "out/csharp/ExpressSourceProof.csproj"]
+      }
+    ] as const;
+
+    for (const target of targets) {
+      await suite.test(target.id, async () => {
+        const configPath = `tsonic.${target.id}.json`;
+        writeFileSync(join(directory, configPath), JSON.stringify({
+          $schema: "https://tsonic.org/schema/v1.json",
+          entryPoint: "App.ts",
+          rootDir: "src",
+          outDir: `out-${target.id}`,
+          targets: [{ id: target.id, surfaces: ["js"], options: target.options }]
+        }, null, 2));
+        runTsonic(directory, ["build", "-p", configPath]);
+        await runNativeApp(directory, target.command, target.args.map((argument) =>
+          argument.replace("out/", `out-${target.id}/`)
+        ));
+      });
+    }
   });
 });
+
+async function runNativeApp(directory: string, command: string, args: string[]): Promise<void> {
+  const child = spawn(command, args, {
+    cwd: directory,
+    stdio: ["ignore", "pipe", "pipe"],
+    env: {
+      ...process.env,
+      CARGO_TARGET_DIR: join(directory, ".cargo-target"),
+      DOTNET_CLI_HOME: join(directory, ".dotnet"),
+      NUGET_PACKAGES: join(repoRoot, ".temp", "nuget-packages")
+    }
+  });
+  let output = "";
+  let errors = "";
+  child.stderr.setEncoding("utf-8");
+  child.stderr.on("data", (data: string) => { errors += data; });
+  const exit = new Promise<number | null>((resolveExit) => {
+    child.once("exit", (code) => resolveExit(code));
+  });
+  const port = new Promise<number>((resolvePort, rejectPort) => {
+    child.stdout.setEncoding("utf-8");
+    child.stdout.on("data", (data: string) => {
+      output += data;
+      const match = /TSONIC_EXPRESS_PORT:(\d+)/.exec(output);
+      if (match) resolvePort(Number(match[1]));
+    });
+    child.once("exit", (code) => {
+      if (!output.includes("TSONIC_EXPRESS_PORT:")) {
+        rejectPort(new Error(`${command} exited ${String(code)} before listening\n${output}\n${errors}`));
+      }
+    });
+    child.once("error", rejectPort);
+  });
+  const timer = setTimeout(() => child.kill("SIGKILL"), 120_000);
+  try {
+    const address = `http://127.0.0.1:${await port}`;
+    const health = await fetch(`${address}/health`, { signal: AbortSignal.timeout(10_000) });
+    assert.equal(health.status, 200);
+    assert.equal(await health.text(), '{"ok":true}');
+    const stopped = await fetch(`${address}/stop`, { signal: AbortSignal.timeout(10_000) });
+    assert.equal(stopped.status, 200);
+    assert.equal(await stopped.text(), "stopped");
+    assert.equal(await exit, 0, `${command} failed\n${output}\n${errors}`);
+  } finally {
+    clearTimeout(timer);
+    child.kill("SIGKILL");
+  }
+}

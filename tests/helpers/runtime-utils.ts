@@ -1,7 +1,6 @@
-import type { JsValue } from "@tsonic/core/types.js";
 import type { Application } from "../../src/index.js";
 import { createContext, MemoryResponse } from "./memory-context.js";
-import type { TransportContext, TransportRequest } from "../../src/index.js";
+import type { TransportContext } from "../../src/index.js";
 
 export type TestContext = TransportContext & { response: MemoryResponse };
 
@@ -26,7 +25,7 @@ export function createTestContext(
     headers["host"] = options.host;
   }
 
-  const overrides: Partial<TransportRequest> = { headers };
+  const overrides: Parameters<typeof createContext>[2] = { headers };
 
   if (options?.body !== undefined) {
     overrides.bodyText = options.body;
@@ -47,9 +46,9 @@ export function readBody(context: TestContext): string {
   return context.response.bodyText;
 }
 
-function parseQueryString(qs: string): Record<string, JsValue> {
+function parseQueryString(qs: string): Record<string, unknown> {
   const clean = qs.startsWith("?") ? qs.slice(1) : qs;
-  const result: Record<string, JsValue> = {};
+  const result: Record<string, unknown> = {};
 
   for (const pair of clean.split("&")) {
     const eqIndex = pair.indexOf("=");

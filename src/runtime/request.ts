@@ -1,5 +1,4 @@
-import { overloads as O } from "@tsonic/core/lang.js";
-import type { JsValue } from "@tsonic/core/types.js";
+import type { Readable } from "node:stream";
 import type { Application } from "./application.js";
 import type { RangeOptions } from "./options.js";
 import { Params } from "./params.js";
@@ -33,11 +32,12 @@ export class ParsedRangeResult {
 
 export class Request {
   readonly #transport: TransportRequest;
-  readonly #headers: Record<string, string> = {};
+  readonly #headers: Record<string, string[]> = {};
+  #bodyClaimed = false;
 
   app?: Application;
   baseUrl: string = "";
-  body: JsValue | undefined = undefined;
+  body: unknown | undefined = undefined;
   readonly cookies: Cookies = new Cookies();
   file?: UploadedFile;
   readonly files: Files = new Files();
@@ -46,7 +46,7 @@ export class Request {
   originalUrl: string = "/";
   readonly params: Params = new Params();
   path: string = "/";
-  query: Record<string, JsValue> = {};
+  query: Record<string, unknown> = {};
   res?: Response;
   route?: Route;
   signed: boolean = false;
@@ -60,12 +60,7 @@ export class Request {
     this.originalUrl = transport.path;
     this.query = transport.query ?? {};
 
-    const headers = transport.headers ?? {};
-    for (const key in headers) {
-      this.#headers[key.toLowerCase()] = headers[key]!;
-    }
-
-    const rawCookies = readHeader(this.#headers, "cookie");
+    const rawCookies = this.get("cookie");
     if (rawCookies) {
       populateCookies(this.cookies, rawCookies);
     }
@@ -73,6 +68,14 @@ export class Request {
 
   get transport(): TransportRequest {
     return this.#transport;
+  }
+
+  takeBody(): Readable {
+    if (this.#bodyClaimed) {
+      throw new Error("Request body already has a consumer.");
+    }
+    this.#bodyClaimed = true;
+    return this.#transport.body;
   }
 
   get protocol(): string {
@@ -165,7 +168,13 @@ export class Request {
   }
 
   get(name: string): string | undefined {
-    return readHeader(this.#headers, name.toLowerCase());
+    const key = name.toLowerCase();
+    return readHeader(this.#headers, key) ?? this.#transport.headers[key]?.[0];
+  }
+
+  getAll(name: string): string[] {
+    const key = name.toLowerCase();
+    return [...(this.#headers[key] ?? this.#transport.headers[key] ?? [])];
   }
 
   header(name: string): string | undefined {
@@ -176,12 +185,12 @@ export class Request {
     return this.params.get(name);
   }
 
-  setParam(name: string, value: JsValue): void {
+  setParam(name: string, value: unknown): void {
     this.params.set(name, value);
   }
 
   setHeader(name: string, value: string): void {
-    this.#headers[name.toLowerCase()] = value;
+    this.#headers[name.toLowerCase()] = [value];
   }
 
   entries(): [string, string][] {
@@ -190,12 +199,8 @@ export class Request {
 
   accepts(): string[];
   accepts(typeOrTypes: string | string[]): string | false;
-  accepts(...typesOrArray: any[]): any {
-    if (typesOrArray.length === 0) {
-      return this.accepts_none();
-    }
-
-    return this.accepts_selected(typesOrArray.length === 1 ? typesOrArray[0] : typesOrArray);
+  accepts(typeOrTypes?: string | string[]): string[] | string | false {
+    return typeOrTypes === undefined ? this.accepts_none() : this.accepts_selected(typeOrTypes);
   }
 
   accepts_none(): string[] {
@@ -211,14 +216,10 @@ export class Request {
 
   acceptsCharsets(): string[];
   acceptsCharsets(charsetOrCharsets: string | string[]): string | false;
-  acceptsCharsets(...charsetsOrArray: any[]): any {
-    if (charsetsOrArray.length === 0) {
-      return this.acceptsCharsets_none();
-    }
-
-    return this.acceptsCharsets_selected(
-      charsetsOrArray.length === 1 ? charsetsOrArray[0] : charsetsOrArray
-    );
+  acceptsCharsets(charsetOrCharsets?: string | string[]): string[] | string | false {
+    return charsetOrCharsets === undefined
+      ? this.acceptsCharsets_none()
+      : this.acceptsCharsets_selected(charsetOrCharsets);
   }
 
   acceptsCharsets_none(): string[] {
@@ -236,14 +237,10 @@ export class Request {
 
   acceptsEncodings(): string[];
   acceptsEncodings(encodingOrEncodings: string | string[]): string | false;
-  acceptsEncodings(...encodingsOrArray: any[]): any {
-    if (encodingsOrArray.length === 0) {
-      return this.acceptsEncodings_none();
-    }
-
-    return this.acceptsEncodings_selected(
-      encodingsOrArray.length === 1 ? encodingsOrArray[0] : encodingsOrArray
-    );
+  acceptsEncodings(encodingOrEncodings?: string | string[]): string[] | string | false {
+    return encodingOrEncodings === undefined
+      ? this.acceptsEncodings_none()
+      : this.acceptsEncodings_selected(encodingOrEncodings);
   }
 
   acceptsEncodings_none(): string[] {
@@ -263,14 +260,10 @@ export class Request {
 
   acceptsLanguages(): string[];
   acceptsLanguages(languageOrLanguages: string | string[]): string | false;
-  acceptsLanguages(...languagesOrArray: any[]): any {
-    if (languagesOrArray.length === 0) {
-      return this.acceptsLanguages_none();
-    }
-
-    return this.acceptsLanguages_selected(
-      languagesOrArray.length === 1 ? languagesOrArray[0] : languagesOrArray
-    );
+  acceptsLanguages(languageOrLanguages?: string | string[]): string[] | string | false {
+    return languageOrLanguages === undefined
+      ? this.acceptsLanguages_none()
+      : this.acceptsLanguages_selected(languageOrLanguages);
   }
 
   acceptsLanguages_none(): string[] {
@@ -335,10 +328,11 @@ export class Request {
       return -2;
     }
 
-    const ranges = spec
-      .split(",")
-      .map((entry) => parseByteRange(entry.trim(), size))
-      .filter((entry): entry is { start: number; end: number } => entry !== null);
+    const ranges: ParsedByteRange[] = [];
+    for (const entry of spec.split(",")) {
+      const parsed = parseByteRange(entry.trim(), size);
+      if (parsed !== null) ranges.push(parsed);
+    }
 
     if (ranges.length === 0) {
       return -1;
@@ -354,16 +348,10 @@ export class Request {
 }
 
 function readHeader(
-  headers: Record<string, string>,
+  headers: Record<string, string[] | undefined>,
   name: string
 ): string | undefined {
-  for (const currentKey in headers) {
-    if (currentKey === name) {
-      return headers[currentKey];
-    }
-  }
-
-  return undefined;
+  return headers[name]?.[0];
 }
 
 function populateCookies(store: Cookies, headerValue: string): void {
@@ -412,12 +400,13 @@ function parseQualityHeader(header: string | undefined): string[] {
     return ["*"];
   }
 
-  return header
-    .split(",")
-    .map((entry) => parseWeightedValue(entry))
-    .filter((entry): entry is { value: string; quality: number } => entry !== null)
-    .sort((left, right) => right.quality - left.quality)
-    .map((entry) => entry.value);
+  const weighted: Array<{ value: string; quality: number }> = [];
+  for (const entry of header.split(",")) {
+    const parsed = parseWeightedValue(entry);
+    if (parsed !== null) weighted.push(parsed);
+  }
+  weighted.sort((left, right) => right.quality - left.quality);
+  return weighted.map((entry) => entry.value);
 }
 
 function parseWeightedValue(
@@ -628,14 +617,3 @@ function combineRanges(
 
   return combined;
 }
-
-O<Request>().method(x => x.accepts_none).family(x => x.accepts);
-O<Request>().method(x => x.accepts_selected).family(x => x.accepts);
-O<Request>().method(x => x.acceptsCharsets_none).family(x => x.acceptsCharsets);
-O<Request>().method(x => x.acceptsCharsets_selected).family(x => x.acceptsCharsets);
-O<Request>().method(x => x.acceptsEncodings_none).family(x => x.acceptsEncodings);
-O<Request>().method(x => x.acceptsEncodings_selected).family(x => x.acceptsEncodings);
-O<Request>().method(x => x.acceptsLanguages_none).family(x => x.acceptsLanguages);
-O<Request>().method(x => x.acceptsLanguages_selected).family(x => x.acceptsLanguages);
-O<Request>().method(x => x.is_one).family(x => x.is);
-O<Request>().method(x => x.is_many).family(x => x.is);

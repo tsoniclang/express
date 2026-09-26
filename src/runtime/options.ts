@@ -1,4 +1,4 @@
-import type { JsValue } from "@tsonic/core/types.js";
+import type { Buffer } from "node:buffer";
 import type { Request } from "./request.js";
 import type { Response } from "./response.js";
 
@@ -9,7 +9,7 @@ import type { Response } from "./response.js";
 export type VerifyBodyHandler = (
   req: Request,
   res: Response,
-  buffer: Uint8Array,
+  buffer: Buffer,
   encoding?: string
 ) => void;
 
@@ -38,7 +38,7 @@ export interface RouterOptions {
 export interface JsonOptions {
   inflate?: boolean;
   limit?: string | number;
-  reviver?: JsValue;
+  reviver?: unknown;
   strict?: boolean;
   type?: string | string[];
   verify?: VerifyBodyHandler;
@@ -123,6 +123,8 @@ export interface StaticOptions {
 // ---------------------------------------------------------------------------
 
 export interface FileTransferOptions {
+  etag?: boolean;
+  setHeaders?: SetHeadersHandler;
   maxAge?: number | string;
   root?: string;
   lastModified?: boolean;

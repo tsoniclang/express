@@ -1,5 +1,4 @@
-import type { JsValue } from "@tsonic/core/types.js";
-import { Buffer } from "node:buffer";
+import type { Buffer } from "node:buffer";
 import type {
   JsonOptions,
   RawOptions,
@@ -7,9 +6,11 @@ import type {
   UrlEncodedOptions
 } from "../options.js";
 import { decodePercentEncoded } from "../percent-decoding.js";
+import { requireSafeRecordKey } from "../safe-record-key.js";
 import type { NextFunction, RequestHandler } from "../types.js";
 import type { Request } from "../request.js";
 import type { Response } from "../response.js";
+import { readBoundedBody } from "./bounded-body.js";
 
 export function createJsonMiddleware(options?: JsonOptions): RequestHandler {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -18,8 +19,7 @@ export function createJsonMiddleware(options?: JsonOptions): RequestHandler {
       return undefined;
     }
 
-    const bytes = readBodyBytes(req);
-    enforceBodyLimit(bytes, options?.limit);
+    const bytes = await readBodyBytes(req, options?.limit, options?.inflate);
     const body = bytesToText(bytes);
     if (body.trim().length === 0) {
       req.body = null;
@@ -41,8 +41,7 @@ export function createRawMiddleware(options?: RawOptions): RequestHandler {
       return undefined;
     }
 
-    const bytes = readBodyBytes(req);
-    enforceBodyLimit(bytes, options?.limit);
+    const bytes = await readBodyBytes(req, options?.limit, options?.inflate);
     options?.verify?.(req, res, bytes, undefined);
     req.body = bytes;
     await next(undefined);
@@ -57,8 +56,7 @@ export function createTextMiddleware(options?: TextOptions): RequestHandler {
       return undefined;
     }
 
-    const bytes = readBodyBytes(req);
-    enforceBodyLimit(bytes, options?.limit);
+    const bytes = await readBodyBytes(req, options?.limit, options?.inflate);
     options?.verify?.(req, res, bytes, "utf-8");
     req.body = bytesToText(bytes);
     await next(undefined);
@@ -77,8 +75,7 @@ export function createUrlEncodedMiddleware(
       return undefined;
     }
 
-    const bytes = readBodyBytes(req);
-    enforceBodyLimit(bytes, options?.limit);
+    const bytes = await readBodyBytes(req, options?.limit, options?.inflate);
     options?.verify?.(req, res, bytes, "utf-8");
     req.body = parseUrlEncoded(bytesToText(bytes));
     await next(undefined);
@@ -114,8 +111,8 @@ function matchesType(
   return contentType.toLowerCase().includes(configuredType.toLowerCase());
 }
 
-function parseUrlEncoded(body: string): Record<string, JsValue> {
-  const result: Record<string, JsValue> = {};
+function parseUrlEncoded(body: string): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
   if (body.length === 0) {
     return result;
   }
@@ -129,6 +126,7 @@ function parseUrlEncoded(body: string): Record<string, JsValue> {
     const rawKey = separator >= 0 ? pair.slice(0, separator) : pair;
     const rawValue = separator >= 0 ? pair.slice(separator + 1) : "";
     const key = decodeFormComponent(rawKey);
+    requireSafeRecordKey(key);
     const value = decodeFormComponent(rawValue);
     appendBodyField(result, key, value);
   }
@@ -137,7 +135,7 @@ function parseUrlEncoded(body: string): Record<string, JsValue> {
 }
 
 function appendBodyField(
-  target: Record<string, JsValue>,
+  target: Record<string, unknown>,
   key: string,
   value: string
 ): void {
@@ -164,46 +162,21 @@ function decodeFormComponent(value: string): string {
   }
 }
 
-export function readBodyBytes(req: Request): Uint8Array {
-  const rawBytes = req.transport.bodyBytes;
-  if (rawBytes !== undefined) {
-    return rawBytes;
-  }
-
-  const rawText = req.transport.bodyText;
-  if (rawText !== undefined) {
-    return toUint8Array(Buffer.from(rawText, "utf-8"));
-  }
-
-  return new Uint8Array(0);
+export async function readBodyBytes(
+  req: Request,
+  limit?: string | number,
+  inflate: boolean = true
+): Promise<Buffer> {
+  return await readBoundedBody(req, parseBodyLimit(limit), inflate);
 }
 
-function readBodyText(req: Request): string {
-  if (req.transport.bodyText !== undefined) {
-    return req.transport.bodyText;
-  }
-
-  return bytesToText(readBodyBytes(req));
+function bytesToText(bytes: Buffer): string {
+  return bytes.toString("utf-8");
 }
 
-function bytesToText(bytes: Uint8Array): string {
-  return Buffer.from(bytes).toString("utf-8");
-}
-
-function enforceBodyLimit(bytes: Uint8Array, limit: string | number | undefined): void {
-  const maxBytes = parseBodyLimit(limit);
-  if (maxBytes === undefined) {
-    return;
-  }
-
-  if (bytes.length > maxBytes) {
-    throw new Error("request entity too large");
-  }
-}
-
-function parseBodyLimit(limit: string | number | undefined): number | undefined {
+function parseBodyLimit(limit: string | number | undefined): number {
   if (limit === undefined) {
-    return undefined;
+    return 100 * 1024;
   }
 
   if (typeof limit === "number") {
@@ -235,7 +208,7 @@ function parseBodyLimit(limit: string | number | undefined): number | undefined 
 }
 
 function validateBodyLimit(limit: number): number {
-  if (!Number.isFinite(limit) || limit < 0) {
+  if (!Number.isSafeInteger(limit) || limit < 0) {
     throw new Error("Invalid body size limit");
   }
   return Math.floor(limit);
@@ -251,13 +224,4 @@ function replacePluses(value: string): string {
     result += value[index] === "+" ? " " : value[index]!;
   }
   return result;
-}
-
-
-function toUint8Array(buffer: Buffer): Uint8Array {
-  const bytes = new Uint8Array(buffer.length);
-  for (let index = 0; index < buffer.length; index += 1) {
-    bytes[index] = buffer.readUInt8(index) & 0xff;
-  }
-  return bytes;
 }

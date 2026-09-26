@@ -150,11 +150,41 @@ test("error handler with four args is invoked after thrown error", async () => {
   app.get("/boom", () => {
     throw new Error("boom");
   });
-  app.use(errorHandler);
+  app.useError(errorHandler);
 
   const context = createContext("GET", "/boom");
   await app.handle(context, app);
 
   assert.equal(context.response.statusCode, 500);
   assert.equal(context.response.bodyText, "handled");
+});
+
+test("next(Error) reaches error middleware instead of a later route", async () => {
+  const app = express.create();
+  app.get("/boom", (_req, _res, next) => next(new Error("broken")));
+  app.get("/boom", (_req, res) => res.send("wrong"));
+  app.useError((error, _req, res) => {
+    res.status(500).send(error instanceof Error ? error.message : "wrong error");
+  });
+  const context = createContext("GET", "/boom");
+  await app.handle(context, app);
+  assert.equal(context.response.bodyText, "broken");
+});
+
+test("an error handler can recover with next() and resume ordinary middleware", async () => {
+  const app = express.create();
+  app.get("/recover", (_req, _res, next) => next(new Error("recoverable")));
+  app.useError((_error, _req, _res, next) => next());
+  app.use((_req, res) => res.send("recovered"));
+  const context = createContext("GET", "/recover");
+  await app.handle(context, app);
+  assert.equal(context.response.bodyText, "recovered");
+});
+
+test("unhandled thrown values remain failures, including undefined", async () => {
+  const app = express.create();
+  app.get("/boom", () => { throw new Error("unhandled"); });
+  app.get("/undefined", () => { throw undefined; });
+  await assert.rejects(app.handle(createContext("GET", "/boom"), app), /unhandled/);
+  await assert.rejects(app.handle(createContext("GET", "/undefined"), app));
 });

@@ -1,4 +1,3 @@
-import type { JsValue } from "@tsonic/core/types.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 
@@ -8,15 +7,7 @@ import { createContext } from "../helpers/memory-context.js";
 test("json middleware parses json payload", async () => {
   const app = express.create();
 
-  app.use(async (req, _res, next) => {
-    if (
-      req.get("content-type") === "application/json" &&
-      req.transport.bodyText
-    ) {
-      req.body = JSON.parse(req.transport.bodyText);
-    }
-    await next(null);
-  });
+  app.use(express.json());
 
   app.post("/json", (req, res) => res.json(req.body));
 
@@ -33,15 +24,7 @@ test("json middleware parses json payload", async () => {
 test("text middleware parses text payload", async () => {
   const app = express.create();
 
-  app.use(async (req, _res, next) => {
-    if (
-      req.get("content-type") === "text/plain" &&
-      req.transport.bodyText
-    ) {
-      req.body = req.transport.bodyText;
-    }
-    await next(null);
-  });
+  app.use(express.text());
 
   app.post("/text", (req, res) => res.send(req.body as string));
 
@@ -57,15 +40,7 @@ test("text middleware parses text payload", async () => {
 test("raw middleware parses binary payload", async () => {
   const app = express.create();
 
-  app.use(async (req, _res, next) => {
-    if (
-      req.get("content-type") === "application/octet-stream" &&
-      req.transport.bodyBytes
-    ) {
-      req.body = req.transport.bodyBytes;
-    }
-    await next(null);
-  });
+  app.use(express.raw());
 
   app.post("/raw", (req, res) => {
     const bytes = req.body as Uint8Array;
@@ -84,28 +59,10 @@ test("raw middleware parses binary payload", async () => {
 test("urlencoded middleware parses form payload", async () => {
   const app = express.create();
 
-  app.use(async (req, _res, next) => {
-    if (
-      req.get("content-type") === "application/x-www-form-urlencoded" &&
-      req.transport.bodyText
-    ) {
-      const body: Record<string, JsValue> = {};
-      for (const pair of req.transport.bodyText.split("&")) {
-        const eqIndex = pair.indexOf("=");
-        if (eqIndex < 0) {
-          continue;
-        }
-        const key = decodeURIComponent(pair.slice(0, eqIndex));
-        const value = decodeURIComponent(pair.slice(eqIndex + 1));
-        body[key] = value;
-      }
-      req.body = body;
-    }
-    await next(null);
-  });
+  app.use(express.urlencoded());
 
   app.post("/form", (req, res) => {
-    const body = req.body as Record<string, JsValue>;
+    const body = req.body as Record<string, unknown>;
     res.send(body["name"] as string);
   });
 
