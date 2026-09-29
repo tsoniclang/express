@@ -9,7 +9,7 @@ export function createCookieParser(secret: string): RequestHandler {
   }
 
   return async (req: Request, _res: Response, next: NextFunction) => {
-    if (req.app) {
+    if (req.app !== undefined) {
       req.app.set("cookie secret", secret);
     }
 

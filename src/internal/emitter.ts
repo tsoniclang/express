@@ -13,7 +13,7 @@ export class Emitter {
 
   emit(eventName: string, ...args: unknown[]): boolean {
     const listeners = readListeners(this.#listeners, eventName);
-    if (!listeners || listeners.length === 0) {
+    if (listeners === undefined || listeners.length === 0) {
       return false;
     }
 

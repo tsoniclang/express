@@ -61,7 +61,7 @@ export class Request {
     this.query = transport.query ?? {};
 
     const rawCookies = this.get("cookie");
-    if (rawCookies) {
+    if (rawCookies !== undefined && rawCookies.length > 0) {
       populateCookies(this.cookies, rawCookies);
     }
   }
@@ -80,7 +80,7 @@ export class Request {
 
   get protocol(): string {
     const forwarded = this.get("x-forwarded-proto");
-    if (forwarded) {
+    if (forwarded !== undefined && forwarded.length > 0) {
       const first = forwarded.split(",")[0]!.trim().toLowerCase();
       if (first.length > 0) {
         return first;
@@ -96,7 +96,7 @@ export class Request {
 
   get hostname(): string {
     const host = this.host;
-    if (!host) {
+    if (host.length === 0) {
       return "";
     }
 
@@ -105,7 +105,7 @@ export class Request {
 
   get ip(): string {
     const forwardedFor = this.get("x-forwarded-for");
-    if (!forwardedFor) {
+    if (forwardedFor === undefined || forwardedFor.length === 0) {
       return "";
     }
 
@@ -115,7 +115,7 @@ export class Request {
 
   get ips(): string[] {
     const forwardedFor = this.get("x-forwarded-for");
-    if (!forwardedFor) {
+    if (forwardedFor === undefined || forwardedFor.length === 0) {
       return [];
     }
 
@@ -128,7 +128,7 @@ export class Request {
 
   get subdomains(): string[] {
     const hostname = this.hostname;
-    if (!hostname) {
+    if (hostname.length === 0) {
       return [];
     }
 
@@ -297,7 +297,7 @@ export class Request {
 
   is_many(types: string[]): string | false {
     const contentType = readContentType(this.get("content-type"));
-    if (!contentType) {
+    if (contentType === undefined || contentType.length === 0) {
       return false;
     }
 
@@ -313,7 +313,7 @@ export class Request {
 
   range(size: number, options?: RangeOptions): ParsedRangeResult | number {
     const header = this.get("range");
-    if (!header) {
+    if (header === undefined || header.length === 0) {
       return -2;
     }
 
@@ -396,7 +396,7 @@ function normalizeHostname(value: string): string {
 }
 
 function parseQualityHeader(header: string | undefined): string[] {
-  if (!header || header.trim().length === 0) {
+  if (header === undefined || header.trim().length === 0) {
     return ["*"];
   }
 
@@ -528,7 +528,7 @@ function normalizeMediaType(value: string): string {
 }
 
 function readContentType(value: string | undefined): string | undefined {
-  if (!value) {
+  if (value === undefined || value.length === 0) {
     return undefined;
   }
 
@@ -542,7 +542,10 @@ function mediaTypeMatches(candidate: string, accepted: string): boolean {
 
   const [candidateType, candidateSubtype] = candidate.split("/");
   const [acceptedType, acceptedSubtype] = accepted.split("/");
-  if (!candidateType || !candidateSubtype || !acceptedType || !acceptedSubtype) {
+  if (candidateType === undefined || candidateType.length === 0 ||
+      candidateSubtype === undefined || candidateSubtype.length === 0 ||
+      acceptedType === undefined || acceptedType.length === 0 ||
+      acceptedSubtype === undefined || acceptedSubtype.length === 0) {
     return candidate === accepted;
   }
 

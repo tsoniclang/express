@@ -63,7 +63,7 @@ export class Response {
   constructor(transport: TransportResponse, request?: Request) {
     this.#transport = transport;
     this.req = request;
-    if (request) {
+    if (request !== undefined) {
       request.res = this;
     }
     this.#statusCode = transport.statusCode;
@@ -135,7 +135,7 @@ export class Response {
       if (typeof configuredSecret === "string") {
         secret = configuredSecret;
       }
-      if (!secret) {
+      if (secret === undefined || secret.length === 0) {
         throw new Error(
           "Cannot set signed cookie without a secret. Install cookieParser() first."
         );
@@ -274,9 +274,9 @@ export class Response {
     const engine = this.app?.resolveEngine(view);
     const viewLocals = locals ?? this.locals;
 
-    if (!engine) {
+    if (engine === undefined) {
       const html = `<rendered:${view}>`;
-      if (callback) {
+      if (callback !== undefined) {
         callback(null, html);
         return this;
       }
@@ -284,7 +284,7 @@ export class Response {
       return this.send(html);
     }
 
-    if (callback) {
+    if (callback !== undefined) {
       engine(view, viewLocals, callback);
       return this;
     }
@@ -296,7 +296,7 @@ export class Response {
   }
 
   attachment(filename?: string): this {
-    if (filename) {
+    if (filename !== undefined && filename.length > 0) {
       const safeName = basename(filename);
       this.type(lookupMimeType(safeName));
       return this.set(
@@ -417,7 +417,7 @@ export class Response {
   format(handlers: FormatHandlers): this {
     this.vary("Accept");
     const req = this.req;
-    if (!req) {
+    if (req === undefined) {
       return this.status(500).send("Response.format requires an attached request.");
     }
 
@@ -433,7 +433,7 @@ export class Response {
 
     if (selectedType.length > 0) {
       const selectedHandler = handlers[selectedType];
-      if (!selectedHandler) {
+      if (selectedHandler === undefined) {
         return this.status(406).send("Not Acceptable");
       }
 
@@ -443,7 +443,7 @@ export class Response {
     }
 
     const defaultHandler = handlers["default"];
-    if (defaultHandler) {
+    if (defaultHandler !== undefined) {
       defaultHandler(req, this, next);
       return this;
     }
@@ -508,7 +508,7 @@ export class Response {
     if (body == null) {
       void this.#transport.sendText("");
     } else if (body instanceof Buffer) {
-      if (!contentType) {
+      if (contentType === undefined || contentType.length === 0) {
         this.type("application/octet-stream");
       }
       if (this.prepareCompression(body.length)) {
@@ -517,7 +517,7 @@ export class Response {
         this.#transport.sendBytes(body);
       }
     } else if (body instanceof Uint8Array) {
-      if (!contentType) {
+      if (contentType === undefined || contentType.length === 0) {
         this.type("application/octet-stream");
       }
       const bytes = Buffer.from(body);
@@ -528,7 +528,7 @@ export class Response {
       }
     } else {
       const text = typeof body === "string" ? body : stringifyJsonValue(body);
-      if (!contentType) this.type(typeof body === "string" ? "text/html; charset=utf-8" : "application/json");
+      if (contentType === undefined || contentType.length === 0) this.type(typeof body === "string" ? "text/html; charset=utf-8" : "application/json");
       if (this.prepareCompression(Buffer.byteLength(text))) {
         this.#completion = this.pipeCompressed(Readable.from([Buffer.from(text)]));
       } else {
@@ -623,7 +623,7 @@ export class Response {
       (error) => {
         const failure = error instanceof Error ? error : new Error("sendFile failed");
         if (!this.#transport.headersSent) this.headersSent = false;
-        if (callback) {
+        if (callback !== undefined) {
           callback(failure);
           return;
         }
@@ -669,7 +669,7 @@ export class Response {
       : `W/"${String(stats.size)}-${String(stats.mtimeMs)}"`;
     if (etag !== undefined) this.set("ETag", etag);
 
-    if (options?.headers) {
+    if (options?.headers !== undefined) {
       for (const key in options.headers) this.set(key, options.headers[key]!);
     }
     if (options?.lastModified !== false) {
@@ -679,8 +679,9 @@ export class Response {
       this.set("Accept-Ranges", "bytes");
     }
     applyCacheHeaders(this, options);
-    if (options?.headers?.["content-type"] === undefined && !this.get("content-type")) {
-      this.type(lookupMimeType(fileName));
+    if (options?.headers?.["content-type"] === undefined) {
+      const contentType = this.get("content-type");
+      if (contentType === undefined || contentType.length === 0) this.type(lookupMimeType(fileName));
     }
 
     const requestEtag = this.req?.get("if-none-match");
@@ -763,7 +764,7 @@ export class Response {
 
   vary(field: string): this {
     const current = this.get("vary");
-    if (!current) {
+    if (current === undefined || current.length === 0) {
       return this.set("Vary", field);
     }
 
@@ -984,11 +985,11 @@ function resolveDownloadArgs(
 
   if (typeof optionsOrCallback === "function") {
     callback = optionsOrCallback;
-  } else if (optionsOrCallback) {
+  } else if (optionsOrCallback !== undefined) {
     options = optionsOrCallback;
   }
 
-  if (maybeCallback) {
+  if (maybeCallback !== undefined) {
     callback = maybeCallback;
   }
 
@@ -996,7 +997,7 @@ function resolveDownloadArgs(
 }
 
 function resolveSendFilePath(path: string, root?: string): string {
-  if (!root) {
+  if (root === undefined || root.length === 0) {
     return resolve(path);
   }
 
@@ -1040,7 +1041,7 @@ function normalizeMaxAge(value: number | string | undefined): number {
   }
 
   const match = /^(\d+)(ms|s|m|h|d)$/.exec(trimmed);
-  if (!match) {
+  if (match === null) {
     return 0;
   }
 

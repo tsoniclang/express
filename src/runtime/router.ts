@@ -304,7 +304,7 @@ export class Router {
 
       processedParams[dedupeKey] = true;
       const handlers = readParamHandlers(this.#paramHandlers, key.toLowerCase());
-      if (!handlers) {
+      if (handlers === undefined) {
         continue;
       }
 

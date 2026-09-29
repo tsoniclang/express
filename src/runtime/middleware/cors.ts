@@ -8,7 +8,7 @@ export function createCorsMiddleware(options?: CorsOptions): RequestHandler {
 
   return async (req: Request, res: Response, next: NextFunction) => {
     const origin = req.get("origin");
-    if (!origin || origin.trim().length === 0) {
+    if (origin === undefined || origin.trim().length === 0) {
       await next(undefined);
       return undefined;
     }
@@ -22,17 +22,17 @@ export function createCorsMiddleware(options?: CorsOptions): RequestHandler {
     }
 
     const allowOrigin =
-      allowAny && !resolved.credentials ? "*" : origin;
+      allowAny && resolved.credentials !== true ? "*" : origin;
     res.set("Access-Control-Allow-Origin", allowOrigin);
     if (allowOrigin !== "*") {
       res.vary("Origin");
     }
 
-    if (resolved.credentials) {
+    if (resolved.credentials === true) {
       res.set("Access-Control-Allow-Credentials", "true");
     }
 
-    if (resolved.exposedHeaders && resolved.exposedHeaders.length > 0) {
+    if (resolved.exposedHeaders !== undefined && resolved.exposedHeaders.length > 0) {
       res.set(
         "Access-Control-Expose-Headers",
         resolved.exposedHeaders.join(", ")
@@ -40,35 +40,35 @@ export function createCorsMiddleware(options?: CorsOptions): RequestHandler {
     }
 
     if (req.method.toUpperCase() === "OPTIONS") {
-      if (resolved.methods && resolved.methods.length > 0) {
+      if (resolved.methods !== undefined && resolved.methods.length > 0) {
         res.set("Access-Control-Allow-Methods", resolved.methods.join(", "));
       } else {
         const requestedMethod = req.get("access-control-request-method");
         res.set(
           "Access-Control-Allow-Methods",
-          requestedMethod && requestedMethod.trim().length > 0
+          requestedMethod !== undefined && requestedMethod.trim().length > 0
             ? requestedMethod
             : "GET, HEAD, PUT, PATCH, POST, DELETE"
         );
       }
 
-      if (resolved.allowedHeaders && resolved.allowedHeaders.length > 0) {
+      if (resolved.allowedHeaders !== undefined && resolved.allowedHeaders.length > 0) {
         res.set(
           "Access-Control-Allow-Headers",
           resolved.allowedHeaders.join(", ")
         );
       } else {
         const requestedHeaders = req.get("access-control-request-headers");
-        if (requestedHeaders && requestedHeaders.trim().length > 0) {
+        if (requestedHeaders !== undefined && requestedHeaders.trim().length > 0) {
           res.set("Access-Control-Allow-Headers", requestedHeaders);
         }
       }
 
-      if (resolved.maxAgeSeconds && resolved.maxAgeSeconds > 0) {
+      if (resolved.maxAgeSeconds !== undefined && resolved.maxAgeSeconds > 0) {
         res.set("Access-Control-Max-Age", String(resolved.maxAgeSeconds));
       }
 
-      if (!resolved.preflightContinue) {
+      if (resolved.preflightContinue !== true) {
         res.status(resolved.optionsSuccessStatus ?? 204).end();
         return undefined;
       }

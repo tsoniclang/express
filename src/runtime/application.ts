@@ -204,12 +204,12 @@ export class Application extends Router {
     } else if (localsOrCallback !== undefined) {
       locals = localsOrCallback;
     }
-    if (!callback) {
+    if (callback === undefined) {
       throw new Error("render callback is required");
     }
 
     const engine = this.resolveEngine(view);
-    if (!engine) {
+    if (engine === undefined) {
       callback(null, `<rendered:${view}>`);
       return;
     }

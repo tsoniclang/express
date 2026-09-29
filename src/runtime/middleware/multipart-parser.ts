@@ -220,9 +220,9 @@ class MultipartParser {
   async beginPart(rawHeaders: string): Promise<void> {
     const headers = parseHeaders(rawHeaders);
     const disposition = headers["content-disposition"];
-    if (!disposition) throw new Error("Multipart part is missing Content-Disposition.");
+    if (disposition === undefined || disposition.length === 0) throw new Error("Multipart part is missing Content-Disposition.");
     const name = readHeaderParameter(disposition, "name");
-    if (!name) throw new Error("Multipart part is missing a field name.");
+    if (name === undefined || name.length === 0) throw new Error("Multipart part is missing a field name.");
     requireSafeRecordKey(name);
     const filename = readHeaderParameter(disposition, "filename");
     const part: ActivePart = {
@@ -281,7 +281,7 @@ class MultipartParser {
       part.fieldChunks.push(bytes);
       return;
     }
-    if (part.error) throw part.error;
+    if (part.error !== undefined) throw part.error;
     if (part.sink.write(bytes)) return;
     await new Promise<void>((resolve, reject) => {
       const onDrain = (): void => { part.sink!.off("error", onError); resolve(); };
@@ -289,7 +289,7 @@ class MultipartParser {
       part.sink!.once("drain", onDrain);
       part.sink!.once("error", onError);
     });
-    if (part.error) throw part.error;
+    if (part.error !== undefined) throw part.error;
   }
 
   async endPart(): Promise<void> {
@@ -304,7 +304,7 @@ class MultipartParser {
         part.sink!.once("error", onError);
         part.sink!.end();
       });
-      if (part.error) throw part.error;
+      if (part.error !== undefined) throw part.error;
       this.#files.push(new DiskTransportFile(
         part.path, part.name, part.filename, part.mimetype, part.size
       ));

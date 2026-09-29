@@ -50,24 +50,24 @@ export class AppServer {
 
   close(callback?: (error?: Error) => void): void {
     if (!this.#listening) {
-      if (callback) {
+      if (callback !== undefined) {
         callback();
       }
       return;
     }
 
     try {
-      if (this.#closeAction) {
+      if (this.#closeAction !== undefined) {
         this.#closeAction((error) => {
-          if (error) {
-            if (callback) {
+          if (error !== undefined) {
+            if (callback !== undefined) {
               callback(error);
             }
             return;
           }
 
           this.#listening = false;
-          if (callback) {
+          if (callback !== undefined) {
             callback();
           }
         });
@@ -75,11 +75,11 @@ export class AppServer {
       }
 
       this.#listening = false;
-      if (callback) {
+      if (callback !== undefined) {
         callback();
       }
     } catch (ex) {
-      if (callback) {
+      if (callback !== undefined) {
         if (ex instanceof Error) {
           callback(ex);
           return;
