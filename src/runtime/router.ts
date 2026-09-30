@@ -251,7 +251,8 @@ export class Router {
         request.baseUrl = layer.path === "/" ? "" : normalizePath(layer.path);
       }
 
-      if (!layer.middleware && layer.method && layer.method !== request.method.toUpperCase()) {
+      if (!layer.middleware && layer.method !== null && layer.method.length !== 0 &&
+          layer.method !== request.method.toUpperCase()) {
         continue;
       }
 

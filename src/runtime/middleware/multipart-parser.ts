@@ -113,7 +113,7 @@ class MultipartParser {
   readonly #cleanup: Array<() => Promise<void>>;
   readonly #fields: Record<string, unknown> = {};
   readonly #files: TransportFile[] = [];
-  readonly #allowedCounts: Record<string, number> = {};
+  readonly #allowedCounts: Record<string, number | undefined> = {};
   #fieldCount = 0;
   #fieldBytes = 0;
   #pending: Buffer = Buffer.alloc(0);
@@ -318,8 +318,8 @@ class MultipartParser {
   }
 }
 
-function parseHeaders(raw: string): Record<string, string> {
-  const headers: Record<string, string> = {};
+function parseHeaders(raw: string): Record<string, string | undefined> {
+  const headers: Record<string, string | undefined> = {};
   for (const line of raw.split("\r\n")) {
     const separator = line.indexOf(":");
     if (separator <= 0) throw new Error("Malformed multipart part header.");

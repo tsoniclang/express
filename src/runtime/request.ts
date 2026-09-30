@@ -8,7 +8,7 @@ import { Cookies } from "./request-cookies.js";
 import { Files } from "./request-files.js";
 import type { Route } from "./route.js";
 import type { Response } from "./response.js";
-import type { TransportRequest } from "./types.js";
+import type { RequestHeaders, TransportRequest } from "./types.js";
 
 export class ParsedByteRange {
   start: number;
@@ -32,7 +32,7 @@ export class ParsedRangeResult {
 
 export class Request {
   readonly #transport: TransportRequest;
-  readonly #headers: Record<string, string[]> = {};
+  readonly #headers: RequestHeaders = {};
   #bodyClaimed = false;
 
   app?: Application;
@@ -348,7 +348,7 @@ export class Request {
 }
 
 function readHeader(
-  headers: Record<string, string[] | undefined>,
+  headers: RequestHeaders,
   name: string
 ): string | undefined {
   return headers[name]?.[0];

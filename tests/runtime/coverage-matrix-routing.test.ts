@@ -84,6 +84,18 @@ test("routing path matching covers regex and arrays", async () => {
   await assertRoute(app, "GET", "/array-b", "array");
 });
 
+test("method selection distinguishes all, empty, matching and mismatched verbs", async () => {
+  const app = express.create();
+  app.all("/all", (_request, response) => response.send("all"));
+  app.method("", "/empty", (_request, response) => response.send("empty"));
+  app.get("/selected", (_request, response) => response.send("get"));
+  app.post("/selected", (_request, response) => response.send("post"));
+  await assertRoute(app, "DELETE", "/all", "all");
+  await assertRoute(app, "PATCH", "/empty", "empty");
+  await assertRoute(app, "POST", "/selected", "post");
+  await assertRoute(app, "GET", "/selected", "get");
+});
+
 test("splat middleware and param routes work together", async () => {
   const app = express.create();
 

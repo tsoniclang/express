@@ -42,6 +42,34 @@ test("request body is available after middleware sets it", async () => {
   assert.equal(context.response.bodyText, "hello");
 });
 
+test("request getAll preserves absent, native, and overridden header values", async () => {
+  const app = express.create();
+  app.get("/", (request, response) => {
+    assert.deepEqual(request.getAll("missing"), []);
+    assert.deepEqual(request.getAll("X-Test"), ["before"]);
+    const copied = request.getAll("x-test");
+    copied.push("not a header mutation");
+    assert.deepEqual(request.getAll("x-test"), ["before"]);
+    request.setHeader("x-test", "after");
+    assert.deepEqual(request.getAll("X-Test"), ["after"]);
+    response.send("ok");
+  });
+  const context = createContext("GET", "/", { headers: { "x-test": "before" } });
+  await app.handle(context, app);
+  assert.equal(context.response.bodyText, "ok");
+});
+
+test("response format reports a missing default handler without inventing one", async () => {
+  const app = express.create();
+  app.get("/", (_request, response) => {
+    response.format({ "application/json": (_request, response) => response.send("json") });
+  });
+  const context = createContext("GET", "/", { headers: { accept: "text/plain" } });
+  await app.handle(context, app);
+  assert.equal(context.response.statusCode, 406);
+  assert.equal(context.response.bodyText, "Not Acceptable");
+});
+
 test("response header and cookie helpers work without http context", () => {
   // Testing response in isolation via app route
   const app = express.create();

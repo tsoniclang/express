@@ -34,7 +34,7 @@ export type FormatHandler = (
   next: () => void
 ) => void;
 
-export type FormatHandlers = Record<string, FormatHandler>;
+export type FormatHandlers = Record<string, FormatHandler | undefined>;
 
 export type SendFileCallback = (error: Error | null) => void;
 
