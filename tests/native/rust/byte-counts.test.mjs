@@ -31,6 +31,7 @@ fn native_count_domains_and_field_bound() {
     }
     assert_eq!(index::fieldLength(65_536).unwrap(), 65_536);
     assert!(index::fieldLength(65_537).is_err());
+    assert_eq!(index::concatBinarySample().unwrap(), "0080ff");
 }
 `);
   runCargo(root, ["generate-lockfile", "--offline"]);

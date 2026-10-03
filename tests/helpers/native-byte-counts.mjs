@@ -19,6 +19,9 @@ export function concatChunks(chunks: Buffer[]): Buffer {
   for (const chunk of chunks) total += chunk.length;
   return Buffer.concat(chunks, total);
 }
+export function concatBinarySample(): string {
+  return concatChunks([Buffer.from("00", "hex"), Buffer.from("80ff", "hex")]).toString("hex");
+}
 export function fieldLength(value: FileByteLength): BufferByteLength {
   if (value < 0 || value > 64 * 1024) throw new Error("field limit");
   return value as BufferByteLength;

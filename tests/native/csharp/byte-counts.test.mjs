@@ -19,11 +19,14 @@ test("Express buffer and streamed byte counts retain the selected C# native doma
 if (Tsonic.Generated.Index.echoBuffered(int.MaxValue) != int.MaxValue ||
     Tsonic.Generated.Index.echoStreamed(long.MaxValue) != long.MaxValue ||
     Tsonic.Generated.Index.echoStreamed(9007199254740993L) != 9007199254740993L ||
-    Tsonic.Generated.Index.fieldLength(65536L) != 65536)
+    Tsonic.Generated.Index.fieldLength(65536L) != 65536 ||
+    Tsonic.Generated.Index.concatBinarySample() != "0080ff")
     throw new System.Exception("native byte count domain");
-var rejected = false;
-try { Tsonic.Generated.Index.fieldLength(65537L); }
-catch (System.Exception) { rejected = true; }
-if (!rejected) throw new System.Exception("field limit not enforced");
+foreach (var value in new long[] { -1L, 65537L }) {
+    var rejected = false;
+    try { Tsonic.Generated.Index.fieldLength(value); }
+    catch (System.Exception) { rejected = true; }
+    if (!rejected) throw new System.Exception("field limit not enforced");
+}
 `);
 });
