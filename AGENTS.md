@@ -1,5 +1,8 @@
 # Agent Notes (express)
 
+Read and follow `../tsonic/docs/architecture/workspace-agent-policy.md` before
+any work. This file contains only Express-specific ownership and commands.
+
 This repo is the canonical native Tsonic implementation of `@tsonic/express`.
 
 ## Branch Hygiene (IMPORTANT)
