@@ -23,6 +23,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && node --test dist/tests/runtime/*.test.js dist/tests/tsonic/*.test.js",
+    "test:native": "bash ../tsonic/test/scripts/bounded-run.sh host bash -c 'node --import ../tsonic-rust/scripts/register-tsonic-root-loader.mjs --test --test-concurrency=\"$TSONIC_TEST_WORKERS\" tests/native/*/*.test.mjs'",
     "selftest": "bash scripts/selftest.sh",
     "check:branches": "bash scripts/check-branch-hygiene.sh",
     "publish:npm": "bash scripts/selftest.sh && npm publish --access public"

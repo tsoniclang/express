@@ -6,11 +6,12 @@ import type { RequestHandler } from "../types.js";
 
 export function createStaticMiddleware(root: string, options?: StaticOptions): RequestHandler {
   const rootPath = resolve(root);
-  const indexes = options?.index === false
+  const configuredIndex = options?.index;
+  const indexes = configuredIndex === false
     ? []
-    : typeof options?.index === "string"
-      ? [options.index]
-      : options?.index ?? ["index.html"];
+    : typeof configuredIndex === "string"
+      ? [configuredIndex]
+      : configuredIndex ?? ["index.html"];
 
   return async (req, res, next) => {
     if (req.method !== "GET" && req.method !== "HEAD") {

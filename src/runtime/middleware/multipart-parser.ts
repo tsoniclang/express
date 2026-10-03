@@ -6,6 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import type { MultipartField } from "../options.js";
 import type { Request } from "../request.js";
+import type { RequestFailure, TransportError } from "../types.js";
 import { readHeaderParameter } from "../header-parameters.js";
 import { requireSafeRecordKey } from "../safe-record-key.js";
 import { DiskTransportFile, type TransportFile } from "../request-uploaded-file.js";
@@ -32,7 +33,7 @@ interface ActivePart {
   sink?: WriteStream;
   readonly fieldChunks: Buffer[];
   size: number;
-  error?: Error;
+  error?: TransportError;
 }
 
 const CRLF = Buffer.from("\r\n");
@@ -64,7 +65,7 @@ export async function parseMultipartStream(
       source.off("error", onError);
       source.off("close", onClose);
     };
-    const fail = (error: Error): void => {
+    const fail = (error: RequestFailure): void => {
       if (settled) return;
       settled = true;
       detach();
@@ -95,7 +96,7 @@ export async function parseMultipartStream(
       sourceEnded = true;
       void finish().catch(failUnknown);
     };
-    const onError = (error: Error): void => fail(error);
+    const onError = (error: TransportError): void => fail(error);
     const onClose = (): void => {
       if (!sourceEnded) fail(new Error("Multipart request closed before completion."));
     };
@@ -248,7 +249,7 @@ class MultipartParser {
       this.#cleanup.push(async () => { await rm(path, { force: true }); });
       const sink = createWriteStream(path, { flags: "wx", mode: 0o600 });
       part.sink = sink;
-      sink.on("error", (error: Error) => { part.error = error; });
+      sink.on("error", (error: TransportError) => { part.error = error; });
     }
     this.#active = part;
   }
@@ -285,7 +286,7 @@ class MultipartParser {
     if (part.sink.write(bytes)) return;
     await new Promise<void>((resolve, reject) => {
       const onDrain = (): void => { part.sink!.off("error", onError); resolve(); };
-      const onError = (error: Error): void => { part.sink!.off("drain", onDrain); reject(error); };
+      const onError = (error: TransportError): void => { part.sink!.off("drain", onDrain); reject(error); };
       part.sink!.once("drain", onDrain);
       part.sink!.once("error", onError);
     });
@@ -299,7 +300,7 @@ class MultipartParser {
     if (part.sink !== undefined && part.path !== undefined && part.filename !== undefined) {
       await new Promise<void>((resolve, reject) => {
         const onFinish = (): void => { part.sink!.off("error", onError); resolve(); };
-        const onError = (error: Error): void => { part.sink!.off("finish", onFinish); reject(error); };
+        const onError = (error: TransportError): void => { part.sink!.off("finish", onFinish); reject(error); };
         part.sink!.once("finish", onFinish);
         part.sink!.once("error", onError);
         part.sink!.end();

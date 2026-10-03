@@ -12,7 +12,8 @@ import type {
 } from "./options.js";
 import { sign } from "./response-cookie-signature.js";
 import type { Request } from "./request.js";
-import type { TemplateCallback, TransportResponse } from "./types.js";
+import type { FileOffset } from "./request-ranges.js";
+import type { TemplateCallback, TransportError, TransportResponse } from "./types.js";
 
 export interface CookieOptions {
   encode?: (value: string) => string;
@@ -39,6 +40,7 @@ export type FormatHandlers = Record<string, FormatHandler | undefined>;
 export type SendFileCallback = (error: Error | null) => void;
 
 export type JsonRecord = Record<string, unknown>;
+export type ResponseBody = string | number | boolean | null | JsonRecord | unknown[] | Buffer | Uint8Array;
 
 class HttpError extends Error {
   statusCode: number;
@@ -163,7 +165,7 @@ export class Response {
       priority = options.priority;
     }
 
-    const encoded = encode ? encode(payload) : payload;
+    const encoded = encode !== undefined ? encode(payload) : payload;
     const segments = [`${name}=${encoded}`, `Path=${path}`];
 
     if (domain !== undefined && domain.length > 0) {
@@ -410,7 +412,7 @@ export class Response {
     return this.sendFile_impl(path, options, callback);
   }
 
-  end(body?: unknown): this {
+  end(body?: ResponseBody): this {
     return this.send(body);
   }
 
@@ -488,8 +490,8 @@ export class Response {
   }
 
   send(body: JsonRecord): this;
-  send(body?: unknown): this;
-  send(body?: unknown): this {
+  send(body?: ResponseBody): this;
+  send(body?: ResponseBody): this {
     return this.send_value(body);
   }
 
@@ -497,11 +499,11 @@ export class Response {
     return this.writeSend(body);
   }
 
-  send_value(body?: unknown): this {
+  send_value(body?: ResponseBody): this {
     return this.writeSend(body);
   }
 
-  private writeSend(body?: unknown): this {
+  private writeSend(body?: ResponseBody): this {
     this.#transport.statusCode = this.#statusCode;
 
     const contentType = this.get("content-type");
@@ -540,7 +542,7 @@ export class Response {
     return this;
   }
 
-  private prepareCompression(size: number): boolean {
+  private prepareCompression(size: FileOffset): boolean {
     if (this.#compression === undefined || size < 1024 || this.#statusCode !== 200 ||
         this.req?.method === "HEAD" || this.get("content-encoding") !== undefined ||
         this.get("content-range") !== undefined ||
@@ -558,7 +560,7 @@ export class Response {
       : this.#compression === "deflate"
         ? createDeflate()
         : createGzip();
-    const onSourceError = (error: Error): void => { codec.destroy(error); };
+    const onSourceError = (error: TransportError): void => { codec.destroy(error); };
     source.once("error", onSourceError);
     try {
       await this.#transport.pipeFrom(source.pipe(codec));
@@ -697,7 +699,7 @@ export class Response {
       return;
     }
 
-    let start = 0;
+    let start: FileOffset = 0;
     let end = stats.size - 1;
     if (options?.acceptRanges !== false && this.req?.get("range") !== undefined) {
       const selected = this.req.range(stats.size);
@@ -781,7 +783,7 @@ export class Response {
   private appendValue(field: string, value: string): this {
     const key = field.toLowerCase();
     const current = readHeader(this.#headers, key);
-    const next = current ? `${current}, ${value}` : value;
+    const next = current !== undefined && current.length > 0 ? `${current}, ${value}` : value;
     this.#headers[key] = next;
     this.#transport.appendHeader(field, value);
     return this;
@@ -801,151 +803,7 @@ function stringifyOptionalResponseJsonValue(value: unknown | undefined): string 
 }
 
 function stringifyJsonValue(value: unknown): string {
-  const serialized = stringifyJsonMemberValue(value, []);
-  return serialized === undefined ? "null" : serialized;
-}
-
-function stringifyJsonMemberValue(
-  value: unknown | undefined,
-  seen: object[]
-): string | undefined {
-  if (value === undefined) {
-    return undefined;
-  }
-
-  return stringifyJsonDefinedValue(value, seen);
-}
-
-function stringifyJsonDefinedValue(value: unknown, seen: object[]): string | undefined {
-  if (value === null) {
-    return "null";
-  }
-
-  if (typeof value === "string") {
-    return quoteJsonString(value);
-  }
-
-  if (typeof value === "number") {
-    return Number.isFinite(value) ? String(value) : "null";
-  }
-
-  if (typeof value === "boolean") {
-    return value ? "true" : "false";
-  }
-
-  if (typeof value !== "object") {
-    return undefined;
-  }
-
-  if (hasSeenJsonObject(value, seen)) {
-    throw new Error("Converting circular structure to JSON.");
-  }
-
-  const nextSeen = [...seen, value];
-  if (Array.isArray(value)) {
-    const array = value as unknown[];
-    const items: string[] = [];
-    for (let index = 0; index < array.length; index += 1) {
-      items.push(stringifyJsonMemberValue(array[index], nextSeen) ?? "null");
-    }
-    return `[${items.join(",")}]`;
-  }
-
-  const record = value as Record<string, unknown | undefined>;
-  const keys = Object.keys(record);
-  const properties: string[] = [];
-  for (let index = 0; index < keys.length; index += 1) {
-    const key = keys[index]!;
-    const renderedValue = stringifyJsonMemberValue(record[key], nextSeen);
-    if (renderedValue !== undefined) {
-      properties.push(`${quoteJsonString(key)}:${renderedValue}`);
-    }
-  }
-  return `{${properties.join(",")}}`;
-}
-
-function hasSeenJsonObject(value: object, seen: object[]): boolean {
-  for (let index = 0; index < seen.length; index += 1) {
-    if (seen[index] === value) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function quoteJsonString(value: string): string {
-  let result = "\"";
-  for (let index = 0; index < value.length; index += 1) {
-    const current = value[index]!;
-    const code = value.charCodeAt(index);
-    if (current === "\"") {
-      result += "\\\"";
-    } else if (current === "\\") {
-      result += "\\\\";
-    } else if (current === "\b") {
-      result += "\\b";
-    } else if (current === "\f") {
-      result += "\\f";
-    } else if (current === "\n") {
-      result += "\\n";
-    } else if (current === "\r") {
-      result += "\\r";
-    } else if (current === "\t") {
-      result += "\\t";
-    } else if (code < 32) {
-      result += unicodeEscape(code);
-    } else {
-      result += current;
-    }
-  }
-
-  return `${result}\"`;
-}
-
-function unicodeEscape(code: number): string {
-  const first = Math.floor(code / 4096);
-  const second = Math.floor((code - first * 4096) / 256);
-  const third = Math.floor((code - first * 4096 - second * 256) / 16);
-  const fourth = code - first * 4096 - second * 256 - third * 16;
-  return `\\u${hexDigit(first)}${hexDigit(second)}${hexDigit(third)}${hexDigit(fourth)}`;
-}
-
-function hexDigit(value: number): string {
-  switch (value) {
-    case 0:
-      return "0";
-    case 1:
-      return "1";
-    case 2:
-      return "2";
-    case 3:
-      return "3";
-    case 4:
-      return "4";
-    case 5:
-      return "5";
-    case 6:
-      return "6";
-    case 7:
-      return "7";
-    case 8:
-      return "8";
-    case 9:
-      return "9";
-    case 10:
-      return "a";
-    case 11:
-      return "b";
-    case 12:
-      return "c";
-    case 13:
-      return "d";
-    case 14:
-      return "e";
-    default:
-      return "f";
-  }
+  return JSON.stringify(value) ?? "null";
 }
 
 

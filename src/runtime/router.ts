@@ -3,6 +3,7 @@ import { Response } from "./response.js";
 import { Route } from "./route.js";
 import { Params } from "./params.js";
 import { decodePercentEncoded } from "./percent-decoding.js";
+import { isPathSpec } from "./path-spec.js";
 import type { Application } from "./application.js";
 import type {
   ErrorRequestHandler,
@@ -159,7 +160,7 @@ export class Router {
   use(...routers: Router[]): this;
   use(first: PathSpec | MiddlewareLike, ...rest: MiddlewareLike[]): this {
     if (isPathSpec(first)) {
-      this.addMiddlewareLayer(first, rest);
+      this.addMiddlewareLayer(first, [...rest]);
       return this;
     }
 
@@ -167,7 +168,7 @@ export class Router {
   }
 
   use_path(path: PathSpec, ...handlers: RequestHandler[]): this {
-    this.addMiddlewareLayer(path, handlers);
+    this.addMiddlewareLayer(path, [...handlers]);
     return this;
   }
 
@@ -175,7 +176,7 @@ export class Router {
   useError(...handlers: ErrorRequestHandler[]): this;
   useError(first: PathSpec | ErrorRequestHandler, ...rest: ErrorRequestHandler[]): this {
     if (isPathSpec(first)) {
-      this.addMiddlewareLayer(first, rest, true);
+      this.addMiddlewareLayer(first, [...rest], true);
     } else {
       this.addMiddlewareLayer("/", [first, ...rest], true);
     }
@@ -183,17 +184,17 @@ export class Router {
   }
 
   use_path_router(path: PathSpec, ...routers: Router[]): this {
-    this.addMiddlewareLayer(path, routers);
+    this.addMiddlewareLayer(path, [...routers]);
     return this;
   }
 
   use_middleware(...handlers: RequestHandler[]): this {
-    this.addMiddlewareLayer("/", handlers);
+    this.addMiddlewareLayer("/", [...handlers]);
     return this;
   }
 
   use_router(...routers: Router[]): this {
-    this.addMiddlewareLayer("/", routers);
+    this.addMiddlewareLayer("/", [...routers]);
     return this;
   }
 
@@ -203,14 +204,14 @@ export class Router {
         path,
         method,
         false,
-        flattenRouteHandlers(handlers),
+        [...handlers],
         false
       )
     );
   }
 
   addMiddlewareLayer(path: PathSpec, handlers: readonly (MiddlewareLike | ErrorRequestHandler)[], handlesError = false): void {
-    for (const handler of flattenMiddlewareEntries(handlers)) {
+    for (const handler of handlers) {
       if (handler instanceof Router) {
         for (const exported of handler.export(path)) {
           this.#layers.push(exported);
@@ -299,7 +300,7 @@ export class Router {
   ): Promise<void> {
     for (const [key, value] of request.entries()) {
       const dedupeKey = `${key}:${value}`;
-      if (readProcessedParam(processedParams, dedupeKey)) {
+      if (readProcessedParam(processedParams, dedupeKey) === true) {
         continue;
       }
 
@@ -341,39 +342,6 @@ function combinePath(left: PathSpec, right: PathSpec): PathSpec {
   }
 
   return `${lhs}/${rhs}`;
-}
-
-function flattenRouteHandlers(handlers: readonly RouteHandler[]): RouteHandler[] {
-  const result: RouteHandler[] = [];
-
-  for (const handler of handlers) {
-    if (typeof handler !== "function") {
-      throw new Error("route handlers must be functions");
-    }
-
-    result.push(handler as RouteHandler);
-  }
-
-  return result;
-}
-
-function flattenMiddlewareEntries(handlers: readonly (MiddlewareLike | ErrorRequestHandler)[]): Array<MiddlewareLike | ErrorRequestHandler> {
-  const result: Array<MiddlewareLike | ErrorRequestHandler> = [];
-
-  for (const handler of handlers) {
-    if (handler instanceof Router) {
-      result.push(handler as Router);
-      continue;
-    }
-
-    if (typeof handler !== "function") {
-      throw new Error("middleware handlers must be functions");
-    }
-
-    result.push(handler as MiddlewareHandler);
-  }
-
-  return result;
 }
 
 function matchesLayer(layer: RouteLayer, requestPath: string, parameters: Params): boolean {
@@ -482,29 +450,6 @@ function normalizePath(path: string): string {
   }
 
   return normalized;
-}
-
-function isPathSpec(value: unknown): value is PathSpec {
-  if (typeof value === "string" || value instanceof RegExp) {
-    return true;
-  }
-
-  if (!Array.isArray(value)) {
-    return false;
-  }
-
-  const items = value as readonly unknown[];
-  for (let index = 0; index < items.length; index += 1) {
-    if (!isPathSpec(items[index])) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function isMiddlewareHandler(handler: unknown): handler is MiddlewareHandler {
-  return typeof handler === "function";
 }
 
 async function invokeHandlers(

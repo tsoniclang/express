@@ -158,24 +158,6 @@ export interface CookieOptions {
 }
 
 // ---------------------------------------------------------------------------
-// Range parsing
-// ---------------------------------------------------------------------------
-
-export interface RangeOptions {
-  combine?: boolean;
-}
-
-export interface ByteRange {
-  start: number;
-  end: number;
-}
-
-export interface RangeResult {
-  type: string;
-  ranges: ByteRange[];
-}
-
-// ---------------------------------------------------------------------------
 // File stat (used by static file serving)
 // ---------------------------------------------------------------------------
 

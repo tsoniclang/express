@@ -1,4 +1,6 @@
-type CloseCallback = (error?: Error) => void;
+import type { RequestFailure } from "../types.js";
+
+type CloseCallback = (error?: RequestFailure) => void;
 type CloseAction = (callback?: CloseCallback) => void;
 
 /**
@@ -48,7 +50,7 @@ export class AppServer {
     this.path = path;
   }
 
-  close(callback?: (error?: Error) => void): void {
+  close(callback?: CloseCallback): void {
     if (!this.#listening) {
       if (callback !== undefined) {
         callback();

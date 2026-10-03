@@ -1,6 +1,6 @@
 import type { Readable } from "node:stream";
 import type { Application } from "./application.js";
-import type { RangeOptions } from "./options.js";
+import { parseRangeHeader, type FileOffset, type ParsedRangeResult, type RangeOptions } from "./request-ranges.js";
 import { Params } from "./params.js";
 import { decodePercentEncoded } from "./percent-decoding.js";
 import type { UploadedFile } from "./request-uploaded-file.js";
@@ -9,26 +9,6 @@ import { Files } from "./request-files.js";
 import type { Route } from "./route.js";
 import type { Response } from "./response.js";
 import type { RequestHeaders, TransportRequest } from "./types.js";
-
-export class ParsedByteRange {
-  start: number;
-  end: number;
-
-  constructor(start: number, end: number) {
-    this.start = start;
-    this.end = end;
-  }
-}
-
-export class ParsedRangeResult {
-  type: string;
-  ranges: ParsedByteRange[];
-
-  constructor(type: string, ranges: ParsedByteRange[]) {
-    this.type = type;
-    this.ranges = ranges;
-  }
-}
 
 export class Request {
   readonly #transport: TransportRequest;
@@ -311,39 +291,8 @@ export class Request {
     return false;
   }
 
-  range(size: number, options?: RangeOptions): ParsedRangeResult | number {
-    const header = this.get("range");
-    if (header === undefined || header.length === 0) {
-      return -2;
-    }
-
-    const equalsIndex = header.indexOf("=");
-    if (equalsIndex <= 0) {
-      return -2;
-    }
-
-    const unit = header.slice(0, equalsIndex).trim().toLowerCase();
-    const spec = header.slice(equalsIndex + 1).trim();
-    if (unit !== "bytes" || spec.length === 0) {
-      return -2;
-    }
-
-    const ranges: ParsedByteRange[] = [];
-    for (const entry of spec.split(",")) {
-      const parsed = parseByteRange(entry.trim(), size);
-      if (parsed !== null) ranges.push(parsed);
-    }
-
-    if (ranges.length === 0) {
-      return -1;
-    }
-
-    return new ParsedRangeResult(
-      unit,
-      options !== undefined && options.combine === true
-        ? combineRanges(ranges)
-        : ranges
-    );
+  range(size: FileOffset, options?: RangeOptions): ParsedRangeResult | number {
+    return parseRangeHeader(this.get("range"), size, options);
   }
 }
 
@@ -553,70 +502,4 @@ function mediaTypeMatches(candidate: string, accepted: string): boolean {
     (acceptedType === "*" || acceptedType === candidateType) &&
     (acceptedSubtype === "*" || acceptedSubtype === candidateSubtype)
   );
-}
-
-function parseByteRange(
-  entry: string,
-  size: number
-): ParsedByteRange | null {
-  const dashIndex = entry.indexOf("-");
-  if (dashIndex < 0) {
-    return null;
-  }
-
-  const startText = entry.slice(0, dashIndex).trim();
-  const endText = entry.slice(dashIndex + 1).trim();
-
-  if (startText.length === 0) {
-    const suffixLength = Number(endText);
-    if (!Number.isInteger(suffixLength) || suffixLength <= 0) {
-      return null;
-    }
-
-    const end = size - 1;
-    const start = Math.max(0, size - suffixLength);
-    return start <= end ? new ParsedByteRange(start, end) : null;
-  }
-
-  const start = Number(startText);
-  if (!Number.isInteger(start) || start < 0 || start >= size) {
-    return null;
-  }
-
-  let end = size - 1;
-  if (endText.length > 0) {
-    end = Number(endText);
-    if (!Number.isInteger(end) || end < start) {
-      return null;
-    }
-  }
-
-  if (end >= size) {
-    end = size - 1;
-  }
-
-  return new ParsedByteRange(start, end);
-}
-
-function combineRanges(
-  ranges: readonly ParsedByteRange[]
-): ParsedByteRange[] {
-  if (ranges.length <= 1) {
-    return [...ranges];
-  }
-
-  const ordered = [...ranges].sort((left, right) => left.start - right.start);
-  const combined: ParsedByteRange[] = [ordered[0]!];
-  for (let index = 1; index < ordered.length; index += 1) {
-    const current = ordered[index]!;
-    const last = combined[combined.length - 1]!;
-    if (current.start <= last.end + 1) {
-      last.end = Math.max(last.end, current.end);
-      continue;
-    }
-
-    combined.push(new ParsedByteRange(current.start, current.end));
-  }
-
-  return combined;
 }

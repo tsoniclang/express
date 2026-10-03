@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import type { Readable } from "node:stream";
 import { createBrotliDecompress, createGunzip, createInflate } from "node:zlib";
 import type { Request } from "../request.js";
+import type { RequestFailure, TransportError } from "../types.js";
 
 export async function readBoundedBody(req: Request, maxBytes: number, inflate: boolean = true): Promise<Buffer> {
   if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) {
@@ -16,7 +17,7 @@ export async function readBoundedBody(req: Request, maxBytes: number, inflate: b
       : encoding === "br" ? createBrotliDecompress() : undefined;
   if (decoder === undefined) throw new Error("Unsupported request content encoding");
   const source = req.takeBody();
-  const onSourceError = (error: Error): void => { decoder.destroy(error); };
+  const onSourceError = (error: TransportError): void => { decoder.destroy(error); };
   source.once("error", onSourceError);
   try {
     return await collectBounded(source.pipe(decoder), maxBytes);
@@ -39,7 +40,7 @@ export async function collectBounded(source: Readable, maxBytes: number): Promis
       source.off("error", onError);
       source.off("close", onClose);
     };
-    const fail = (error: Error): void => {
+    const fail = (error: RequestFailure): void => {
       if (settled) return;
       settled = true;
       detach();
@@ -60,7 +61,7 @@ export async function collectBounded(source: Readable, maxBytes: number): Promis
       detach();
       resolve(Buffer.concat(chunks, total));
     };
-    const onError = (error: Error): void => fail(error);
+    const onError = (error: TransportError): void => fail(error);
     const onClose = (): void => fail(new Error("request body closed before completion"));
 
     source.on("data", onData);

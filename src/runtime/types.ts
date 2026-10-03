@@ -1,4 +1,5 @@
 import type { Buffer } from "node:buffer";
+import type { IncomingMessage } from "node:http";
 import type { Readable } from "node:stream";
 import type { Request } from "./request.js";
 import type { Response } from "./response.js";
@@ -7,13 +8,16 @@ import type { Router } from "./router.js";
 export interface TransportRequest {
   method: string;
   path: string;
-  headers: RequestHeaders;
+  headers: IncomingMessage["headersDistinct"];
   body: Readable;
   cleanup: Array<() => Promise<void>>;
   query?: Record<string, unknown>;
 }
 
 export type RequestHeaders = Record<string, string[] | undefined>;
+
+export type TransportError = NonNullable<Parameters<Readable["destroy"]>[0]>;
+export type RequestFailure = Error | TransportError;
 
 export interface TransportResponse {
   statusCode: number;
@@ -33,13 +37,12 @@ export interface TransportContext {
 }
 
 export type PathSpec = string | RegExp | readonly PathSpec[];
-export type NextControl = string | Error | null | undefined;
+export type NextControl = string | RequestFailure | null | undefined;
 export type NextFunction = (value?: NextControl) => void | Promise<void>;
 export type IgnoredHandlerResult =
   | void
-  | unknown
   | Response
-  | Promise<void | unknown | Response>;
+  | Promise<void | Response>;
 export interface RequestHandler {
   (
     req: Request,
@@ -58,6 +61,7 @@ export interface ErrorRequestHandler {
 }
 
 export type RouteHandler = RequestHandler;
+export type MiddlewareEntry = RequestHandler | ErrorRequestHandler | Router;
 export type TemplateCallback = (error: Error | null, html?: string) => void;
 export type TemplateEngine = (
   view: string,

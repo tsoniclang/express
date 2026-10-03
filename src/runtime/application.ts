@@ -1,9 +1,11 @@
 import { Emitter } from "../internal/emitter.js";
 import { Router } from "./router.js";
+import { isPathSpec } from "./path-spec.js";
 import { AppServer } from "./host/app-server.js";
 import { listenOnPath, listenOnPort } from "./host/node-server.js";
 import type {
   ErrorRequestHandler,
+  MiddlewareEntry,
   ParamHandler,
   PathSpec,
   RequestHandler,
@@ -231,8 +233,9 @@ export class Application extends Router {
     ...rest: Array<RequestHandler | Router>
   ): this {
     if (isPathSpec(first)) {
-      this.addMiddlewareLayer(first, rest);
-      this.mountApplications(first, rest);
+      const entries: MiddlewareEntry[] = [...rest];
+      this.addMiddlewareLayer(first, entries);
+      this.mountApplications(first, entries);
       return this;
     }
 
@@ -240,30 +243,32 @@ export class Application extends Router {
   }
 
   override use_path(path: PathSpec, ...handlers: RequestHandler[]): this {
-    this.addMiddlewareLayer(path, handlers);
+    this.addMiddlewareLayer(path, [...handlers]);
     return this;
   }
 
   override use_path_router(path: PathSpec, ...routers: Router[]): this {
-    this.addMiddlewareLayer(path, routers);
-    this.mountApplications(path, routers);
+    const entries: MiddlewareEntry[] = [...routers];
+    this.addMiddlewareLayer(path, entries);
+    this.mountApplications(path, entries);
     return this;
   }
 
   override use_middleware(...handlers: RequestHandler[]): this {
-    this.addMiddlewareLayer("/", handlers);
+    this.addMiddlewareLayer("/", [...handlers]);
     return this;
   }
 
   override use_router(...routers: Router[]): this {
-    this.addMiddlewareLayer("/", routers);
-    this.mountApplications("/", routers);
+    const entries: MiddlewareEntry[] = [...routers];
+    this.addMiddlewareLayer("/", entries);
+    this.mountApplications("/", entries);
     return this;
   }
 
   private mountApplications(
     mountedAt: PathSpec,
-    candidates: readonly (RequestHandler | Router)[]
+    candidates: readonly MiddlewareEntry[]
   ): void {
     for (let index = 0; index < candidates.length; index += 1) {
       const candidate = candidates[index]!;
@@ -285,7 +290,7 @@ export class Application extends Router {
     first: RequestHandler | Router,
     rest: readonly (RequestHandler | Router)[]
   ): this {
-    const handlers: Array<RequestHandler | Router> = [
+    const handlers: MiddlewareEntry[] = [
       first,
       ...rest,
     ];
@@ -299,25 +304,6 @@ export class Application extends Router {
     const extension = dotIndex >= 0 ? view.slice(dotIndex + 1) : "";
     return readEngine(this.#engines, extension);
   }
-}
-
-function isPathSpec(value: unknown): value is PathSpec {
-  if (typeof value === "string" || value instanceof RegExp) {
-    return true;
-  }
-
-  if (!Array.isArray(value)) {
-    return false;
-  }
-
-  const items = value as readonly unknown[];
-  for (let index = 0; index < items.length; index += 1) {
-    if (!isPathSpec(items[index])) {
-      return false;
-    }
-  }
-
-  return true;
 }
 
 function trimLeadingDot(value: string): string {

@@ -6,7 +6,7 @@ import type { Application } from "../application.js";
 import { toHttpStatusCode } from "../numeric.js";
 import { decodePercentEncoded } from "../percent-decoding.js";
 import { requireSafeRecordKey } from "../safe-record-key.js";
-import type { TransportContext, TransportRequest, TransportResponse } from "../types.js";
+import type { RequestFailure, TransportContext, TransportError, TransportRequest, TransportResponse } from "../types.js";
 import { AppServer } from "./app-server.js";
 
 export function listenOnPath(app: Application, path: string, callback?: () => void): AppServer {
@@ -216,7 +216,7 @@ class NodeTransportResponse implements TransportResponse {
         this.#response.off("error", onResponseError);
         this.#response.off("close", onClose);
       };
-      const fail = (error: Error): void => {
+      const fail = (error: RequestFailure): void => {
         if (settled) return;
         settled = true;
         detach();
@@ -224,8 +224,8 @@ class NodeTransportResponse implements TransportResponse {
         this.#response.destroy();
         reject(error);
       };
-      const onSourceError = (error: Error): void => fail(error);
-      const onResponseError = (error: Error): void => fail(error);
+      const onSourceError = (error: TransportError): void => fail(error);
+      const onResponseError = (error: TransportError): void => fail(error);
       const onClose = (): void => fail(new Error("response closed before stream completion"));
       const onFinish = (): void => {
         if (settled) return;
