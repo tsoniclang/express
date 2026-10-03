@@ -1,4 +1,5 @@
 import type { MultipartField, MultipartOptions } from "../options.js";
+import type { FileByteLength } from "../byte-counts.js";
 import type { Request } from "../request.js";
 import { readHeaderParameter } from "../header-parameters.js";
 import { UploadedFile } from "../request-uploaded-file.js";
@@ -8,18 +9,18 @@ import { parseMultipartStream, type MultipartMode } from "./multipart-parser.js"
 export class Multipart {
   readonly #type: string;
   readonly #maxFileCount: number | undefined;
-  readonly #maxFileSizeBytes: number | undefined;
+  readonly #maxFileSizeBytes: FileByteLength | undefined;
 
   constructor(options?: MultipartOptions) {
     this.#type = options?.type ?? "multipart/form-data";
     this.#maxFileCount = options?.maxFileCount;
     this.#maxFileSizeBytes = options?.maxFileSizeBytes;
     if (this.#maxFileCount !== undefined &&
-        (!Number.isSafeInteger(this.#maxFileCount) || this.#maxFileCount < 0)) {
+        (!Number.isInteger(this.#maxFileCount) || this.#maxFileCount < 0)) {
       throw new Error("Invalid multipart file count limit.");
     }
     if (this.#maxFileSizeBytes !== undefined &&
-        (!Number.isSafeInteger(this.#maxFileSizeBytes) || this.#maxFileSizeBytes < 0)) {
+        (!Number.isInteger(this.#maxFileSizeBytes) || this.#maxFileSizeBytes < 0)) {
       throw new Error("Invalid multipart file size limit.");
     }
   }
@@ -50,7 +51,7 @@ async function parse(
   next: NextFunction,
   expectedType: string,
   maxFileCount: number | undefined,
-  maxFileSizeBytes: number | undefined
+  maxFileSizeBytes: FileByteLength | undefined
 ): Promise<void> {
   const contentType = req.get("content-type") ?? "";
   if (!contentType.toLowerCase().includes(expectedType.toLowerCase())) {

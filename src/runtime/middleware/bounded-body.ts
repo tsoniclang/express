@@ -1,11 +1,12 @@
 import { Buffer } from "node:buffer";
 import type { Readable } from "node:stream";
 import { createBrotliDecompress, createGunzip, createInflate } from "node:zlib";
+import type { BufferByteLength } from "../byte-counts.js";
 import type { Request } from "../request.js";
 import type { RequestFailure, TransportError } from "../types.js";
 
-export async function readBoundedBody(req: Request, maxBytes: number, inflate: boolean = true): Promise<Buffer> {
-  if (!Number.isSafeInteger(maxBytes) || maxBytes < 0) {
+export async function readBoundedBody(req: Request, maxBytes: BufferByteLength, inflate: boolean = true): Promise<Buffer> {
+  if (!Number.isInteger(maxBytes) || maxBytes < 0) {
     throw new Error("Invalid body size limit");
   }
 
@@ -28,10 +29,10 @@ export async function readBoundedBody(req: Request, maxBytes: number, inflate: b
   }
 }
 
-export async function collectBounded(source: Readable, maxBytes: number): Promise<Buffer> {
+export async function collectBounded(source: Readable, maxBytes: BufferByteLength): Promise<Buffer> {
   return await new Promise<Buffer>((resolve, reject) => {
     const chunks: Buffer[] = [];
-    let total = 0;
+    let total: BufferByteLength = 0;
     let settled = false;
 
     const detach = (): void => {

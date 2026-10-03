@@ -1,4 +1,5 @@
 import type { Buffer } from "node:buffer";
+import type { BufferByteLength } from "../byte-counts.js";
 import type {
   JsonOptions,
   RawOptions,
@@ -164,7 +165,7 @@ function decodeFormComponent(value: string): string {
 
 export async function readBodyBytes(
   req: Request,
-  limit?: string | number,
+  limit?: string | BufferByteLength,
   inflate: boolean = true
 ): Promise<Buffer> {
   return await readBoundedBody(req, parseBodyLimit(limit), inflate);
@@ -174,7 +175,7 @@ function bytesToText(bytes: Buffer): string {
   return bytes.toString("utf-8");
 }
 
-function parseBodyLimit(limit: string | number | undefined): number {
+function parseBodyLimit(limit: string | BufferByteLength | undefined): BufferByteLength {
   if (limit === undefined) {
     return 100 * 1024;
   }
@@ -204,14 +205,14 @@ function parseBodyLimit(limit: string | number | undefined): number {
     multiplier = 1024 * 1024 * 1024;
   }
 
-  return validateBodyLimit(Math.floor(rawValue * multiplier));
+  return validateBodyLimit(Math.floor(rawValue * multiplier)) as BufferByteLength;
 }
 
-function validateBodyLimit(limit: number): number {
-  if (!Number.isSafeInteger(limit) || limit < 0) {
+function validateBodyLimit<Length extends number>(limit: Length): Length {
+  if (!Number.isInteger(limit) || limit < 0) {
     throw new Error("Invalid body size limit");
   }
-  return Math.floor(limit);
+  return limit;
 }
 
 function replacePluses(value: string): string {

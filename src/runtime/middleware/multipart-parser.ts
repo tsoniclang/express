@@ -4,6 +4,7 @@ import { createWriteStream, type WriteStream } from "node:fs";
 import { rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import type { BufferByteLength, FileByteLength } from "../byte-counts.js";
 import type { MultipartField } from "../options.js";
 import type { Request } from "../request.js";
 import type { RequestFailure, TransportError } from "../types.js";
@@ -17,7 +18,7 @@ export interface MultipartRules {
   readonly mode: MultipartMode;
   readonly allowList?: readonly MultipartField[];
   readonly maxFileCount?: number;
-  readonly maxFileSizeBytes?: number;
+  readonly maxFileSizeBytes?: FileByteLength;
 }
 
 export interface ParsedMultipart {
@@ -32,7 +33,7 @@ interface ActivePart {
   path?: string;
   sink?: WriteStream;
   readonly fieldChunks: Buffer[];
-  size: number;
+  size: FileByteLength;
   error?: TransportError;
 }
 
@@ -116,9 +117,9 @@ class MultipartParser {
   readonly #files: TransportFile[] = [];
   readonly #allowedCounts: Record<string, number | undefined> = {};
   #fieldCount = 0;
-  #fieldBytes = 0;
+  #fieldBytes: BufferByteLength = 0;
   #pending: Buffer = Buffer.alloc(0);
-  #phase: "opening" | "headers" | "body" | "done" = "opening";
+  #phase: "opening" | "headers" | "body" | "closing" | "done" = "opening";
   #active: ActivePart | undefined;
 
   constructor(boundary: string, rules: MultipartRules, cleanup: Array<() => Promise<void>>) {
@@ -136,6 +137,10 @@ class MultipartParser {
     this.#pending = this.#pending.length === 0
       ? chunk
       : Buffer.concat([this.#pending, chunk]);
+    if (this.#phase === "closing") {
+      this.consumeClosingSuffix();
+      return;
+    }
 
     while (true) {
       if (this.#phase === "opening") {
@@ -146,7 +151,8 @@ class MultipartParser {
         const suffix = this.#opening.length;
         if (this.#pending.readUInt8(suffix) === 45 && this.#pending.readUInt8(suffix + 1) === 45) {
           this.#pending = this.#pending.subarray(suffix + 2);
-          this.#phase = "done";
+          this.#phase = "closing";
+          this.consumeClosingSuffix();
           return;
         }
         if (!hasCrLf(this.#pending, suffix)) throw new Error("Malformed multipart boundary.");
@@ -182,13 +188,9 @@ class MultipartParser {
         const suffix = position + this.#delimiter.length;
         const final = this.#pending.readUInt8(suffix) === 45;
         this.#pending = this.#pending.subarray(suffix + 2);
-        this.#phase = final ? "done" : "headers";
+        this.#phase = final ? "closing" : "headers";
         if (final) {
-          if (this.#pending.length !== 0 &&
-              !(this.#pending.length === 2 && hasCrLf(this.#pending, 0))) {
-            throw new Error("Unexpected multipart epilogue.");
-          }
-          this.#pending = Buffer.alloc(0);
+          this.consumeClosingSuffix();
           return;
         }
       }
@@ -196,11 +198,25 @@ class MultipartParser {
   }
 
   async complete(): Promise<ParsedMultipart> {
-    if (this.#phase !== "done") throw new Error("Multipart body ended before its closing boundary.");
+    if (this.#phase !== "done" && !(this.#phase === "closing" && this.#pending.length === 0)) {
+      throw new Error("Multipart body ended before its closing boundary.");
+    }
     return {
       body: Object.keys(this.#fields).length > 0 ? this.#fields : undefined,
       files: this.#files
     };
+  }
+
+  private consumeClosingSuffix(): void {
+    if (this.#pending.length > 2 ||
+        this.#pending.length > 0 && this.#pending.readUInt8(0) !== 13 ||
+        this.#pending.length === 2 && this.#pending.readUInt8(1) !== 10) {
+      throw new Error("Unexpected multipart epilogue.");
+    }
+    if (this.#pending.length === 2) {
+      this.#pending = Buffer.alloc(0);
+      this.#phase = "done";
+    }
   }
 
   findDelimiter(): number {
@@ -311,7 +327,7 @@ class MultipartParser {
       ));
       return;
     }
-    const value = Buffer.concat(part.fieldChunks, part.size).toString("utf-8");
+    const value = Buffer.concat(part.fieldChunks, part.size as BufferByteLength).toString("utf-8");
     const prior = this.#fields[part.name];
     if (prior === undefined) this.#fields[part.name] = value;
     else if (Array.isArray(prior)) (prior as string[]).push(value);

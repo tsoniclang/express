@@ -1,4 +1,5 @@
 export { express } from "./runtime/express-api.js";
+export type { BufferByteLength, FileByteLength } from "./runtime/byte-counts.js";
 export { Application } from "./runtime/application.js";
 export { AppServer } from "./runtime/host/app-server.js";
 export { dispatch } from "./runtime/dispatch-helper.js";

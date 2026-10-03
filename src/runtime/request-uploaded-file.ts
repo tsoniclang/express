@@ -3,6 +3,7 @@ import { createReadStream } from "node:fs";
 import { copyFile, mkdir, readFile } from "node:fs/promises";
 import { dirname } from "node:path";
 import type { Readable } from "node:stream";
+import type { FileByteLength } from "./byte-counts.js";
 
 /**
  * Represents a single file received via a multipart upload.
@@ -18,7 +19,7 @@ export interface TransportFile {
   /** MIME type reported by the client. */
   readonly mimetype: string;
   /** Size in bytes (may be 0 until the stream has been fully consumed). */
-  readonly size: number;
+  readonly size: FileByteLength;
   /** Return a readable stream for the file contents. */
   stream(): Readable;
   /** Return the full file contents as bytes. */
@@ -32,7 +33,7 @@ export class UploadedFile {
   readonly fieldname: string;
   readonly originalname: string;
   readonly mimetype: string;
-  readonly size: number;
+  readonly size: FileByteLength;
 
   /** @internal */
   constructor(transport: TransportFile) {
@@ -68,10 +69,10 @@ export class DiskTransportFile implements TransportFile {
   readonly fieldname: string;
   readonly originalname: string;
   readonly mimetype: string;
-  readonly size: number;
+  readonly size: FileByteLength;
   readonly #path: string;
 
-  constructor(path: string, fieldname: string, originalname: string, mimetype: string, size: number) {
+  constructor(path: string, fieldname: string, originalname: string, mimetype: string, size: FileByteLength) {
     this.#path = path;
     this.fieldname = fieldname;
     this.originalname = originalname;

@@ -1,4 +1,5 @@
 import type { Buffer } from "node:buffer";
+import type { BufferByteLength, FileByteLength } from "./byte-counts.js";
 import type { Request } from "./request.js";
 import type { Response } from "./response.js";
 
@@ -37,7 +38,7 @@ export interface RouterOptions {
 
 export interface JsonOptions {
   inflate?: boolean;
-  limit?: string | number;
+  limit?: string | BufferByteLength;
   reviver?: unknown;
   strict?: boolean;
   type?: string | string[];
@@ -46,7 +47,7 @@ export interface JsonOptions {
 
 export interface RawOptions {
   inflate?: boolean;
-  limit?: string | number;
+  limit?: string | BufferByteLength;
   type?: string | string[];
   verify?: VerifyBodyHandler;
 }
@@ -54,7 +55,7 @@ export interface RawOptions {
 export interface TextOptions {
   defaultCharset?: string;
   inflate?: boolean;
-  limit?: string | number;
+  limit?: string | BufferByteLength;
   type?: string | string[];
   verify?: VerifyBodyHandler;
 }
@@ -62,7 +63,7 @@ export interface TextOptions {
 export interface UrlEncodedOptions {
   extended?: boolean;
   inflate?: boolean;
-  limit?: string | number;
+  limit?: string | BufferByteLength;
   parameterLimit?: number;
   type?: string | string[];
   verify?: VerifyBodyHandler;
@@ -81,7 +82,7 @@ export interface MultipartField {
 export interface MultipartOptions {
   type?: string;
   maxFileCount?: number;
-  maxFileSizeBytes?: number;
+  maxFileSizeBytes?: FileByteLength;
 }
 
 // ---------------------------------------------------------------------------
