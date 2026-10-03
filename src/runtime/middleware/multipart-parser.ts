@@ -39,11 +39,11 @@ interface ActivePart {
 
 const CRLF = Buffer.from("\r\n");
 const HEADER_END = Buffer.from("\r\n\r\n");
-const MAX_PART_HEADERS = 16 * 1024;
-const MAX_FIELD_BYTES = 64 * 1024;
-const MAX_TOTAL_FIELD_BYTES = 1024 * 1024;
+const MAX_PART_HEADERS: BufferByteLength = 16 * 1024;
+const MAX_FIELD_BYTES: FileByteLength = 64 * 1024;
+const MAX_TOTAL_FIELD_BYTES: BufferByteLength = 1024 * 1024;
 const MAX_FIELDS = 128;
-const DEFAULT_MAX_FILE_BYTES = 64 * 1024 * 1024;
+const DEFAULT_MAX_FILE_BYTES: FileByteLength = 64 * 1024 * 1024;
 const DEFAULT_MAX_FILES = 64;
 
 export async function parseMultipartStream(
