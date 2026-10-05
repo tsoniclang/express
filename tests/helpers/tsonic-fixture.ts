@@ -42,10 +42,16 @@ export async function withTempFixture(runFixture: (dir: string) => Promise<void>
   const fixtureRoot = join(repoRoot, ".temp");
   mkdirSync(fixtureRoot, { recursive: true });
   const dir = mkdtempSync(join(fixtureRoot, "express-fixture-"));
+  let succeeded = false;
   try {
     await runFixture(dir);
+    succeeded = true;
   } finally {
-    rmSync(dir, { recursive: true, force: true });
+    if (succeeded) {
+      rmSync(dir, { recursive: true, force: true });
+    } else {
+      process.stderr.write(`Failed Express fixture retained at ${dir}\n`);
+    }
   }
 }
 

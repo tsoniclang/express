@@ -65,6 +65,38 @@ test("static files stream, support ranges and validators, and remain rooted", as
   }
 });
 
+test("file header defaults distinguish native membership from required entry reads", async () => {
+  const root = mkdtempSync(join(tmpdir(), "express-file-headers-"));
+  try {
+    const file = join(root, "file.txt");
+    writeFileSync(file, "headers");
+    const cases: readonly {
+      readonly headers: Record<string, string> | undefined;
+      readonly expected: string;
+    }[] = [
+      { headers: undefined, expected: "text/plain" },
+      { headers: {}, expected: "text/plain" },
+      { headers: { "x-custom": "value" }, expected: "text/plain" },
+      { headers: { "content-type": "application/custom" }, expected: "application/custom" },
+      { headers: { "content-type": "" }, expected: "" },
+    ];
+    for (const { headers, expected } of cases) {
+      const app = express.create();
+      app.get("/file", (_req, res) => { res.sendFile(file, { headers }); });
+      const context = createContext("GET", "/file");
+      await app.handle(context, app);
+      assert.equal(context.response.statusCode, 200);
+      assert.equal(context.response.bodyBytes?.toString(), "headers");
+      assert.equal(context.response.getHeader("content-type"), expected);
+      if (headers !== undefined && Object.hasOwn(headers, "x-custom")) {
+        assert.equal(context.response.getHeader("x-custom"), "value");
+      }
+    }
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test("compression streams eligible bodies and leaves small or binary bodies native", async () => {
   const app = express.create();
   app.use(express.compression());

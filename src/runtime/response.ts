@@ -681,7 +681,7 @@ export class Response {
       this.set("Accept-Ranges", "bytes");
     }
     applyCacheHeaders(this, options);
-    if (options?.headers?.["content-type"] === undefined) {
+    if (options?.headers === undefined || !Object.hasOwn(options.headers, "content-type")) {
       const contentType = this.get("content-type");
       if (contentType === undefined || contentType.length === 0) this.type(lookupMimeType(fileName));
     }
