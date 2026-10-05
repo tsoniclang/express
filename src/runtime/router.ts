@@ -241,56 +241,70 @@ export class Router {
     const response = new Response(context.response, request);
     const processedParams: Record<string, true | undefined> = {};
     let currentError: { value: unknown } | undefined;
+    let routingFailed = false;
 
-    for (const layer of this.#layers) {
-      const extractedParams = new Params();
-      if (!matchesLayer(layer, request.path, extractedParams)) {
-        continue;
+    try {
+      for (const layer of this.#layers) {
+        const extractedParams = new Params();
+        if (!matchesLayer(layer, request.path, extractedParams)) {
+          continue;
+        }
+
+        if (typeof layer.path === "string") {
+          request.baseUrl = layer.path === "/" ? "" : normalizePath(layer.path);
+        }
+
+        if (!layer.middleware && layer.method !== null && layer.method.length !== 0 &&
+            layer.method !== request.method.toUpperCase()) {
+          continue;
+        }
+
+        for (const [key, value] of extractedParams.entries()) {
+          request.setParam(key, value);
+        }
+
+        if (!layer.middleware) {
+          request.route = new Route(this, layer.path);
+        }
+
+        await this.runParamHandlers(request, response, processedParams);
+
+        const control = await invokeHandlers(
+          layer.handlers,
+          request,
+          response,
+          currentError,
+          layer.handlesError
+        );
+        currentError = control.error;
+
+        if (control.ended || response.headersSent) {
+          return;
+        }
+
+        if (control.control === "router") {
+          return;
+        }
+
+        if (control.control === "route") {
+          continue;
+        }
       }
 
-      if (typeof layer.path === "string") {
-        request.baseUrl = layer.path === "/" ? "" : normalizePath(layer.path);
-      }
-
-      if (!layer.middleware && layer.method !== null && layer.method.length !== 0 &&
-          layer.method !== request.method.toUpperCase()) {
-        continue;
-      }
-
-      for (const [key, value] of extractedParams.entries()) {
-        request.setParam(key, value);
-      }
-
-      if (!layer.middleware) {
-        request.route = new Route(this, layer.path);
-      }
-
-      await this.runParamHandlers(request, response, processedParams);
-
-      const control = await invokeHandlers(
-        layer.handlers,
-        request,
-        response,
-        currentError,
-        layer.handlesError
-      );
-      currentError = control.error;
-
-      if (control.ended || response.headersSent) {
+      if (currentError !== undefined) throw currentError.value;
+    } catch (error) {
+      routingFailed = true;
+      throw error;
+    } finally {
+      try {
         await response.completion;
-        return;
-      }
-
-      if (control.control === "router") {
-        return;
-      }
-
-      if (control.control === "route") {
-        continue;
+      } catch (error) {
+        if (!routingFailed) throw error;
+      } finally {
+        if (request.res === response) request.res = undefined;
+        if (response.req === request) response.req = undefined;
       }
     }
-
-    if (currentError !== undefined) throw currentError.value;
   }
 
   private async runParamHandlers(

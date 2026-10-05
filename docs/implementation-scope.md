@@ -31,3 +31,13 @@ This repo is the native source of truth for `@tsonic/express`.
   transport metadata.
 - Response helpers expose status, headers, cookies, body writing, JSON/JSONP,
   redirects, rendering, and file responses.
+
+## Request ownership
+
+The router owns the request/response pair for one dispatch. `req.res` and
+`res.req` remain connected throughout handlers and pending response completion.
+Every exit awaits that completion and disconnects still-matching pair links;
+retained request/response values afterward have absent scoped links. Independent
+replacement links are preserved. A routing error remains primary if completion
+also fails. The source defines this lifetime identically for C#, Rust and Node;
+native ownership does not depend on tracing collection or implicit Weak edges.

@@ -61,6 +61,13 @@ The package owns the Express-style application model directly:
 
 The public package is a source package, not a generated CLR binding package.
 
+`req.res` and `res.req` are request-scope links. They remain live through route
+handlers and response completion, then are cleared when routing exits (including
+errors). Independently replaced links are preserved. Pending response work is
+awaited before cleanup; a secondary completion failure does not replace a
+primary routing failure. This explicit lifetime avoids hidden native ownership
+cycles rather than relying on garbage collection.
+
 ## Imports
 
 Use explicit ESM subpaths:
