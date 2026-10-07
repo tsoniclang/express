@@ -1,3 +1,4 @@
+import { assertNoTargetDiagnostics } from "../../../../tsonic/test/scripts/diagnostic-assertions.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -11,7 +12,7 @@ test("actual byte-range parser preserves unsigned native offsets and bounded dec
   const { result } = compileRust({ surfaces: ["js"], capabilities: [createTsonicPlugin()],
     target: { id: "rust", options: { outputType: "lib", crateName: "native_request_ranges" } },
     files: { ...nativeRequestRangeFiles, "index.ts": nativeRequestRangesSource } });
-  assert.deepEqual(result.diagnostics, []);
+  assertNoTargetDiagnostics(result.diagnostics);
   const output = artifactText(result, "src/index.rs");
   assert.match(output, /fn firstStart\(header: String, size: u64\)/u);
   assert.match(output, /fn firstEnd\(header: String, size: u64\)/u);

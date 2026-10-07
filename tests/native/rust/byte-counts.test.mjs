@@ -1,3 +1,4 @@
+import { assertNoTargetDiagnostics } from "../../../../tsonic/test/scripts/diagnostic-assertions.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -11,7 +12,7 @@ test("Express buffer and streamed byte counts retain the selected Rust native do
   const { result } = compileRust({ surfaces: ["js"], capabilities: [createTsonicPlugin()],
     target: { id: "rust", options: { outputType: "lib", crateName: "native_byte_counts" } },
     files: { ...nativeByteCountFiles, "index.ts": nativeByteCountSource } });
-  assert.deepEqual(result.diagnostics, []);
+  assertNoTargetDiagnostics(result.diagnostics);
   const output = artifactText(result, "src/index.rs");
   assert.match(output, /fn echoBuffered\(value: usize\)/u);
   assert.match(output, /fn echoStreamed\(value: usize\)/u);
