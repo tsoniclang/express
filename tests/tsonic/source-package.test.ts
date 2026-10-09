@@ -1,10 +1,10 @@
 import assert from "node:assert/strict";
-import { spawn } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import test from "node:test";
 
 import { packLocalPackage, repoRoot, run, runTsonic, withTempFixture, writeFixtureApp } from "../helpers/tsonic-fixture.js";
+import { startNativeProcess, terminateNativeProcessGroup } from "../helpers/native-process.js";
 
 test("one installed Express source package compiles and serves through C# and Rust", async (suite) => {
   await withTempFixture(async (directory) => {
@@ -66,7 +66,9 @@ test("one installed Express source package compiles and serves through C# and Ru
       }
     ] as const;
 
+    const failedTargets: string[] = [];
     for (const target of targets) {
+      let completed = false;
       await suite.test(target.id, async () => {
         const configPath = `tsonic.${target.id}.json`;
         writeFileSync(join(directory, configPath), JSON.stringify({
@@ -80,28 +82,27 @@ test("one installed Express source package compiles and serves through C# and Ru
         await runNativeApp(directory, target.command, target.args.map((argument) =>
           argument.replace("out/", `out-${target.id}/`)
         ));
+        completed = true;
       });
+      if (!completed) failedTargets.push(target.id);
     }
+    assert.deepEqual(failedTargets, [], "Every installed target must complete before fixture cleanup.");
   });
 });
 
 async function runNativeApp(directory: string, command: string, args: string[]): Promise<void> {
-  const child = spawn(command, args, {
-    cwd: directory,
-    stdio: ["ignore", "pipe", "pipe"],
-    env: {
-      ...process.env,
-      CARGO_TARGET_DIR: join(directory, ".cargo-target"),
-      DOTNET_CLI_HOME: join(directory, ".dotnet"),
-      NUGET_PACKAGES: join(repoRoot, ".temp", "nuget-packages")
-    }
+  const child = startNativeProcess(command, args, directory, {
+    ...process.env,
+    CARGO_TARGET_DIR: join(directory, ".cargo-target"),
+    DOTNET_CLI_HOME: join(directory, ".dotnet"),
+    NUGET_PACKAGES: join(repoRoot, ".temp", "nuget-packages")
   });
   let output = "";
   let errors = "";
   child.stderr.setEncoding("utf-8");
   child.stderr.on("data", (data: string) => { errors += data; });
   const exit = new Promise<number | null>((resolveExit) => {
-    child.once("exit", (code) => resolveExit(code));
+    child.once("close", (code) => resolveExit(code));
   });
   const port = new Promise<number>((resolvePort, rejectPort) => {
     child.stdout.setEncoding("utf-8");
@@ -117,18 +118,20 @@ async function runNativeApp(directory: string, command: string, args: string[]):
     });
     child.once("error", rejectPort);
   });
-  const timer = setTimeout(() => child.kill("SIGKILL"), 120_000);
+  const timer = setTimeout(() => terminateNativeProcessGroup(child.pid), 120_000);
   try {
     const address = `http://127.0.0.1:${await port}`;
     const health = await fetch(`${address}/health`, { signal: AbortSignal.timeout(10_000) });
-    assert.equal(health.status, 200);
-    assert.equal(await health.text(), '{"ok":true}');
+    const healthBody = await health.text();
+    assert.equal(health.status, 200, `Unexpected health response: ${healthBody.slice(0, 4096)}`);
+    assert.equal(healthBody, '{"ok":true}');
     const stopped = await fetch(`${address}/stop`, { signal: AbortSignal.timeout(10_000) });
     assert.equal(stopped.status, 200);
     assert.equal(await stopped.text(), "stopped");
     assert.equal(await exit, 0, `${command} failed\n${output}\n${errors}`);
   } finally {
     clearTimeout(timer);
-    child.kill("SIGKILL");
+    terminateNativeProcessGroup(child.pid);
+    await exit;
   }
 }
