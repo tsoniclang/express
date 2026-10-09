@@ -88,7 +88,10 @@ class PendingResponse extends MemoryResponse {
     this.started();
     await this.completion;
     if (this.failure !== undefined) {
-      source.destroy();
+      await new Promise<void>(resolve => {
+        source.once("close", resolve);
+        source.destroy();
+      });
       throw this.failure;
     }
     await super.pipeFrom(source);
@@ -113,7 +116,7 @@ for (const scenario of ["success", "completion-error", "routing-and-completion-e
     const sendPendingFile = (selectedRequest: Request, selectedResponse: Response): void => {
       request = selectedRequest;
       response = selectedResponse;
-      selectedResponse.sendFile(file);
+      selectedResponse.sendFile("body.txt", { root: directory });
       if (scenario === "routing-and-completion-error") throw routingFailure;
     };
     if (scenario === "routing-and-completion-error") app.param("entry", sendPendingFile);
