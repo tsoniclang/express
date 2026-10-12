@@ -50,7 +50,7 @@ export function createStaticMiddleware(root: string, options?: StaticOptions): R
       const directory = await existingDirectory(candidate);
       if (directory) {
         if (!pathname.endsWith("/") && options?.redirect !== false) {
-          res.redirect(301, `${req.path}/`);
+          res.redirect(301, `${req.path.replace(/^[/\\]+/, "/")}/`);
           return;
         }
         for (const index of indexes) {

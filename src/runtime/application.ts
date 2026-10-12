@@ -48,13 +48,25 @@ export class Application extends Router {
   }
 
   async handle(context: TransportContext, app?: Application): Promise<void> {
+    let failed = false;
+    let failure: unknown;
     try {
       await super.handle(context, app);
-    } finally {
-      for (const cleanup of context.request.cleanup) {
+    } catch (error) {
+      failed = true;
+      failure = error;
+    }
+    for (const cleanup of context.request.cleanup) {
+      try {
         await cleanup();
+      } catch (error) {
+        if (!failed) {
+          failed = true;
+          failure = error;
+        }
       }
     }
+    if (failed) throw failure;
   }
 
   get(name: string): unknown | undefined;

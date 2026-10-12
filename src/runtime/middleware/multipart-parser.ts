@@ -70,15 +70,22 @@ export async function parseMultipartStream(
       if (settled) return;
       settled = true;
       detach();
-      source.destroy(undefined);
+      void finishFailure(error);
+    };
+    const finishFailure = async (error: RequestFailure): Promise<void> => {
+      const closing = parser.abort().catch(() => {});
+      try { source.destroy(undefined); } catch {}
+      try { await processing; } catch {}
+      await closing;
       reject(error);
     };
     const processChunk = async (previous: Promise<void>, chunk: Buffer): Promise<void> => {
       await previous;
-      await parser.feed(chunk);
+      if (!settled) await parser.feed(chunk);
     };
     const finish = async (): Promise<void> => {
       await processing;
+      if (settled) return;
       const result = await parser.complete();
       if (settled) return;
       settled = true;
@@ -91,7 +98,7 @@ export async function parseMultipartStream(
     const onData = (chunk: Buffer): void => {
       source.pause();
       processing = processChunk(processing, chunk);
-      void processing.then(() => { source.resume(); }, failUnknown);
+      void processing.then(() => { if (!settled) source.resume(); }, failUnknown);
     };
     const onEnd = (): void => {
       sourceEnded = true;
@@ -121,6 +128,7 @@ class MultipartParser {
   #pending: Buffer = Buffer.alloc(0);
   #phase: "opening" | "headers" | "body" | "closing" | "done" = "opening";
   #active: ActivePart | undefined;
+  #aborted = false;
 
   constructor(boundary: string, rules: MultipartRules, cleanup: Array<() => Promise<void>>) {
     this.#opening = Buffer.from(`--${boundary}`);
@@ -130,6 +138,7 @@ class MultipartParser {
   }
 
   async feed(chunk: Buffer): Promise<void> {
+    if (this.#aborted) return;
     if (this.#phase === "done") {
       if (chunk.length !== 0) throw new Error("Unexpected multipart epilogue.");
       return;
@@ -142,7 +151,7 @@ class MultipartParser {
       return;
     }
 
-    while (true) {
+    while (!this.#aborted) {
       if (this.#phase === "opening") {
         if (this.#pending.length < this.#opening.length + 2) return;
         if (this.#pending.indexOf(this.#opening) !== 0) {
@@ -168,6 +177,7 @@ class MultipartParser {
         }
         if (end > MAX_PART_HEADERS) throw new Error("Multipart part headers are too large.");
         await this.beginPart(this.#pending.subarray(0, end).toString("utf-8"));
+        if (this.#aborted) return;
         this.#pending = this.#pending.subarray(end + HEADER_END.length);
         this.#phase = "body";
       }
@@ -184,7 +194,9 @@ class MultipartParser {
         }
 
         await this.writePart(this.#pending.subarray(0, position));
+        if (this.#aborted) return;
         await this.endPart();
+        if (this.#aborted) return;
         const suffix = position + this.#delimiter.length;
         const final = this.#pending.readUInt8(suffix) === 45;
         this.#pending = this.#pending.subarray(suffix + 2);
@@ -205,6 +217,16 @@ class MultipartParser {
       body: Object.keys(this.#fields).length > 0 ? this.#fields : undefined,
       files: this.#files
     };
+  }
+
+  async abort(): Promise<void> {
+    this.#aborted = true;
+    const sink = this.#active?.sink;
+    if (sink === undefined || sink.closed) return;
+    await new Promise<void>((resolve) => {
+      sink.once("close", resolve);
+      sink.destroy(undefined);
+    });
   }
 
   private consumeClosingSuffix(): void {
@@ -301,10 +323,17 @@ class MultipartParser {
     if (part.error !== undefined) throw part.error;
     if (part.sink.write(bytes)) return;
     await new Promise<void>((resolve, reject) => {
-      const onDrain = (): void => { part.sink!.off("error", onError); resolve(); };
-      const onError = (error: TransportError): void => { part.sink!.off("drain", onDrain); reject(error); };
+      const detach = (): void => {
+        part.sink!.off("drain", onDrain);
+        part.sink!.off("error", onError);
+        part.sink!.off("close", onClose);
+      };
+      const onDrain = (): void => { detach(); resolve(); };
+      const onError = (error: TransportError): void => { detach(); reject(error); };
+      const onClose = (): void => { detach(); reject(new Error("Multipart writer closed before draining.")); };
       part.sink!.once("drain", onDrain);
       part.sink!.once("error", onError);
+      part.sink!.once("close", onClose);
     });
     if (part.error !== undefined) throw part.error;
   }
@@ -312,19 +341,28 @@ class MultipartParser {
   async endPart(): Promise<void> {
     const part = this.#active;
     if (part === undefined) throw new Error("Multipart part state is missing.");
-    this.#active = undefined;
     if (part.sink !== undefined && part.path !== undefined && part.filename !== undefined) {
       await new Promise<void>((resolve, reject) => {
-        const onFinish = (): void => { part.sink!.off("error", onError); resolve(); };
-        const onError = (error: TransportError): void => { part.sink!.off("finish", onFinish); reject(error); };
-        part.sink!.once("finish", onFinish);
+        const detach = (): void => {
+          part.sink!.off("close", onClose);
+          part.sink!.off("error", onError);
+        };
+        const onClose = (): void => {
+          detach();
+          if (part.error !== undefined) reject(part.error);
+          else resolve();
+        };
+        const onError = (error: TransportError): void => { detach(); reject(error); };
+        part.sink!.once("close", onClose);
         part.sink!.once("error", onError);
         part.sink!.end();
       });
+      if (this.#aborted) return;
       if (part.error !== undefined) throw part.error;
       this.#files.push(new DiskTransportFile(
         part.path, part.name, part.filename, part.mimetype, part.size
       ));
+      this.#active = undefined;
       return;
     }
     const value = Buffer.concat(part.fieldChunks, part.size as BufferByteLength).toString("utf-8");
@@ -332,6 +370,7 @@ class MultipartParser {
     if (prior === undefined) this.#fields[part.name] = value;
     else if (Array.isArray(prior)) (prior as string[]).push(value);
     else this.#fields[part.name] = [String(prior), value];
+    this.#active = undefined;
   }
 }
 

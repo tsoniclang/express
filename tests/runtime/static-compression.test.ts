@@ -48,6 +48,11 @@ test("static files stream, support ranges and validators, and remain rooted", as
     assert.equal(redirect.response.statusCode, 301);
     assert.equal(redirect.response.getHeader("location"), "/docs/");
 
+    const repeatedSlashes = createContext("GET", "//docs");
+    await app.handle(repeatedSlashes, app);
+    assert.equal(repeatedSlashes.response.statusCode, 301);
+    assert.equal(repeatedSlashes.response.getHeader("location"), "/docs/");
+
     const hidden = createContext("GET", "/.secret");
     await app.handle(hidden, app);
     assert.equal(hidden.response.statusCode, 404);

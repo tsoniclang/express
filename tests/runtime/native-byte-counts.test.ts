@@ -145,6 +145,27 @@ test("multipart fields retain byte limits and repeated values across split bound
   assert.equal(exceeded.request.body.destroyed, true);
 });
 
+test("failed multipart files close processing before request cleanup", async () => {
+  const app = express.create();
+  const boundary = "aborted-file";
+  const prefix = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="proof.txt"\r\n\r\n`;
+  const cases = [
+    { body: `${prefix}unfinished`, limit: 64, message: /closing boundary/ },
+    { body: `${prefix}oversized\r\n--${boundary}--\r\n`, limit: 2, message: /size limit/ },
+  ];
+  for (const current of cases) {
+    const source = Readable.from([Buffer.from(current.body)]);
+    const context = createContext("POST", "/", { body: source });
+    await assert.rejects(parseMultipartStream(new Request(context.request, app), boundary, {
+      mode: "any", maxFileSizeBytes: current.limit,
+    }), current.message);
+    assertDetached(source);
+    assert.equal(source.destroyed, true);
+    assert.equal(context.request.cleanup.length, 1);
+    for (const cleanup of context.request.cleanup) await cleanup();
+  }
+});
+
 test("router absence controls preserve both successful and failed async completions", async () => {
   const app = express.create();
   const failure = new Error("exact failure");

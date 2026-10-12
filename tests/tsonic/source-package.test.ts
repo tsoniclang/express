@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import test from "node:test";
 
@@ -50,6 +50,8 @@ test("one installed Express source package compiles and serves through C# and Ru
       directory,
       readFileSync(join(repoRoot, "tests", "tsonic", "fixture-app.ts"), "utf-8")
     );
+    mkdirSync(join(directory, "assets"));
+    writeFileSync(join(directory, "assets", "proof.txt"), "native static");
 
     const targets = [
       {
@@ -125,6 +127,41 @@ async function runNativeApp(directory: string, command: string, args: string[]):
     const healthBody = await health.text();
     assert.equal(health.status, 200, `Unexpected health response: ${healthBody.slice(0, 4096)}`);
     assert.equal(healthBody, '{"ok":true}');
+    for (const [path, expected] of [
+      ["/users/42", "user:42:42"],
+      ["/route", "selected"],
+      ["/mounted/child", "mounted"],
+      ["/render", "rendered"],
+      ["/assets/proof.txt", "native static"],
+    ]) {
+      const response = await fetch(`${address}${path}`, { signal: AbortSignal.timeout(10_000) });
+      assert.equal(response.status, 200, path);
+      assert.equal(await response.text(), expected, path);
+    }
+    const cookie = await fetch(`${address}/cookie`, { signal: AbortSignal.timeout(10_000) });
+    assert.equal(cookie.status, 200);
+    assert.match(cookie.headers.get("set-cookie") ?? "", /token=native/);
+    assert.match(cookie.headers.get("set-cookie") ?? "", /HttpOnly/i);
+    assert.match(cookie.headers.get("set-cookie") ?? "", /SameSite=Strict/i);
+    assert.equal(await cookie.text(), "cookie");
+    const jsonp = await fetch(`${address}/jsonp?callback=proof`, { signal: AbortSignal.timeout(10_000) });
+    assert.equal(jsonp.status, 200);
+    assert.match(await jsonp.text(), /proof\(\{"ok":true\}\)/);
+    const failed = await fetch(`${address}/failure`, { signal: AbortSignal.timeout(10_000) });
+    assert.equal(failed.status, 500);
+    assert.equal(await failed.text(), "route failure");
+    for (const [bytes, status] of [["upload", 200], ["too many bytes", 500]] as const) {
+      const boundary = "native-acceptance";
+      const payload = `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="proof.txt"\r\n\r\n${bytes}\r\n--${boundary}--\r\n`;
+      const uploaded = await fetch(`${address}/upload`, {
+        method: "POST",
+        headers: { "content-type": `multipart/form-data; boundary=${boundary}` },
+        body: payload,
+        signal: AbortSignal.timeout(10_000),
+      });
+      assert.equal(uploaded.status, status, bytes);
+      assert.equal(await uploaded.text(), status === 200 ? bytes : "Multipart part exceeds its size limit.");
+    }
     const stopped = await fetch(`${address}/stop`, { signal: AbortSignal.timeout(10_000) });
     assert.equal(stopped.status, 200);
     assert.equal(await stopped.text(), "stopped");
